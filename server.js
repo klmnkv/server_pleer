@@ -13,7 +13,13 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Обработка предварительных запросов
+app.options('*', cors(corsOptions));
+
+// Логирование всех запросов
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  next();
+});
 
 // Убедитесь, что директория uploads существует
 const uploadDir = path.join(__dirname, 'uploads');
@@ -34,9 +40,11 @@ const upload = multer({ storage: storage });
 
 app.post('/upload', upload.single('audio'), (req, res) => {
   if (!req.file) {
+    console.log('No file uploaded');
     return res.status(400).send({ error: 'No file uploaded' });
   }
   const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+  console.log(`File uploaded: ${audioUrl}`);
   res.send({ audioUrl });
 });
 
@@ -47,6 +55,7 @@ app.get('/files', (req, res) => {
       return res.status(500).send({ error: 'Unable to retrieve files' });
     }
     const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file}`);
+    console.log(`Files retrieved: ${fileUrls.length}`);
     res.send(fileUrls);
   });
 });
@@ -59,6 +68,7 @@ app.delete('/delete/:filename', (req, res) => {
       console.error('Error deleting file:', err);
       return res.status(500).send({ error: 'Unable to delete file' });
     }
+    console.log(`File deleted: ${filename}`);
     res.send({ message: 'File deleted successfully' });
   });
 });
@@ -66,12 +76,15 @@ app.delete('/delete/:filename', (req, res) => {
 // Промежуточное ПО для обработки прямых ссылок на аудиофайлы
 app.use('/uploads', (req, res, next) => {
   if (req.headers.accept && req.headers.accept.includes('text/html')) {
-    res.redirect(`/?url=${encodeURIComponent(`${req.protocol}://${req.get('host')}${req.originalUrl}`)}`);
+    const redirectUrl = `/?url=${encodeURIComponent(`${req.protocol}://${req.get('host')}${req.originalUrl}`)}`;
+    console.log(`Redirecting to: ${redirectUrl}`);
+    res.redirect(redirectUrl);
   } else {
     next();
   }
 });
 
+// Обслуживание статических файлов из папки uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Обслуживание статических файлов из папки build
