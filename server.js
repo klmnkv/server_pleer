@@ -12,7 +12,6 @@ const corsOptions = {
   origin: 'https://bred-stikers.netlify.app',
   optionsSuccessStatus: 200
 };
-
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions)); // Обработка предварительных запросов
 
@@ -44,6 +43,7 @@ app.post('/upload', upload.single('audio'), (req, res) => {
 app.get('/files', (req, res) => {
   fs.readdir(uploadDir, (err, files) => {
     if (err) {
+      console.error('Error reading upload directory:', err);
       return res.status(500).send({ error: 'Unable to retrieve files' });
     }
     const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file}`);
@@ -51,17 +51,25 @@ app.get('/files', (req, res) => {
   });
 });
 
-// Новый маршрут для удаления файлов
 app.delete('/delete/:filename', (req, res) => {
   const filename = req.params.filename;
   const filePath = path.join(uploadDir, filename);
-
   fs.unlink(filePath, (err) => {
     if (err) {
+      console.error('Error deleting file:', err);
       return res.status(500).send({ error: 'Unable to delete file' });
     }
     res.send({ message: 'File deleted successfully' });
   });
+});
+
+// Промежуточное ПО для обработки прямых ссылок на аудиофайлы
+app.use('/uploads', (req, res, next) => {
+  if (req.headers.accept && req.headers.accept.includes('text/html')) {
+    res.redirect(`/?url=${encodeURIComponent(`${req.protocol}://${req.get('host')}${req.originalUrl}`)}`);
+  } else {
+    next();
+  }
 });
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -74,8 +82,9 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
+// Обработка ошибок
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error('Server error:', err.stack);
   res.status(500).send({ error: 'Something went wrong!' });
 });
 
