@@ -66,6 +66,14 @@ app.delete('/delete/:filename', (req, res) => {
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Обслуживание статических файлов из папки build
+app.use(express.static(path.join(__dirname, 'build')));
+
+// Обслуживание index.html для всех маршрутов
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send({ error: 'Something went wrong!' });
