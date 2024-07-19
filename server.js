@@ -37,7 +37,7 @@ app.post('/upload', upload.single('audio'), (req, res) => {
   if (!req.file) {
     return res.status(400).send({ error: 'No file uploaded' });
   }
-  const audioUrl = `https://server-pleer.onrender.com/uploads/${req.file.filename}`;
+  const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
   res.send({ audioUrl });
 });
 
@@ -46,8 +46,21 @@ app.get('/files', (req, res) => {
     if (err) {
       return res.status(500).send({ error: 'Unable to retrieve files' });
     }
-    const fileUrls = files.map(file => `https://server-pleer.onrender.com/uploads/${file}`);
+    const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file}`);
     res.send(fileUrls);
+  });
+});
+
+// Новый маршрут для удаления файлов
+app.delete('/delete/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(uploadDir, filename);
+
+  fs.unlink(filePath, (err) => {
+    if (err) {
+      return res.status(500).send({ error: 'Unable to delete file' });
+    }
+    res.send({ message: 'File deleted successfully' });
   });
 });
 
@@ -59,5 +72,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server running at https://server-pleer.onrender.com`);
+  console.log(`Server running at port ${port}`);
 });
