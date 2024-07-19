@@ -5,7 +5,7 @@ const cors = require('cors');
 const fs = require('fs');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;  // Использование переменной окружения PORT
 
 app.use(cors());
 
@@ -31,7 +31,7 @@ app.post('/upload', upload.single('audio'), (req, res) => {
     return res.status(400).send({ error: 'No file uploaded' });
   }
 
-  const audioUrl = `https://server-pleer.onrender.com:${port}/uploads/${req.file.filename}`;
+  const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
   res.send({ audioUrl });
 });
 
@@ -41,7 +41,7 @@ app.get('/files', (req, res) => {
       return res.status(500).send({ error: 'Unable to retrieve files' });
     }
 
-    const fileUrls = files.map(file => `https://server-pleer.onrender.com:${port}/uploads/${file}`);
+    const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file}`);
     res.send(fileUrls);
   });
 });
@@ -54,5 +54,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server running at http://https://server-pleer.onrender.com:${port}/`);
+  console.log(`Server running at ${port}`);
 });
