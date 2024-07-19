@@ -31,7 +31,7 @@ app.post('/upload', upload.single('audio'), (req, res) => {
     return res.status(400).send({ error: 'No file uploaded' });
   }
 
-  const audioUrl = `http://localhost:${port}/uploads/${req.file.filename}`;
+  const audioUrl = `https://server-pleer.onrender.com:${port}/uploads/${req.file.filename}`;
   res.send({ audioUrl });
 });
 
@@ -41,7 +41,7 @@ app.get('/files', (req, res) => {
       return res.status(500).send({ error: 'Unable to retrieve files' });
     }
 
-    const fileUrls = files.map(file => `http://localhost:${port}/uploads/${file}`);
+    const fileUrls = files.map(file => `https://server-pleer.onrender.com:${port}/uploads/${file}`);
     res.send(fileUrls);
   });
 });
@@ -54,5 +54,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}/`);
+  console.log(`Server running at http://https://server-pleer.onrender.com:${port}/`);
 });
