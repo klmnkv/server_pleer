@@ -15,6 +15,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
+// Middleware для обработки JSON
+app.use(express.json());
+
 // Логирование всех запросов
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
@@ -36,7 +39,16 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('audio/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only audio files are allowed!'));
+    }
+  }
+});
 
 app.post('/upload', upload.single('audio'), (req, res) => {
   if (!req.file) {
@@ -63,6 +75,11 @@ app.get('/files', (req, res) => {
 app.delete('/delete/:filename', (req, res) => {
   const filename = req.params.filename;
   const filePath = path.join(uploadDir, filename);
+
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).send({ error: 'File not found' });
+  }
+
   fs.unlink(filePath, (err) => {
     if (err) {
       console.error('Error deleting file:', err);
@@ -95,7 +112,15 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-// Обработка ошибок
+// Обработка ошибок multer
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    return res.status(400).send({ error: err.message });
+  }
+  next(err);
+});
+
+// Общая обработка ошибок
 app.use((err, req, res, next) => {
   console.error('Server error:', err.stack);
   res.status(500).send({ error: 'Something went wrong!' });
