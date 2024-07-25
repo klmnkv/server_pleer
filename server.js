@@ -3,24 +3,21 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs').promises;
 const fsSync = require('fs');
+const cors = require('cors');
+const helmet = require('helmet');
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Middleware
+app.use(express.json());
+app.use(cors());
+app.use(helmet());
 
 console.log('Current directory:', __dirname);
 console.log('Contents of client directory:', fsSync.readdirSync('./client'));
 console.log('Contents of client/build directory:', fsSync.readdirSync('./client/build'));
 
-// Middleware для обработки JSON
-app.use(express.json());
-
-// Логирование всех запросов
-app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-  next();
-});
-
-// Убедитесь, что директория uploads существует
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fsSync.existsSync(uploadDir)) {
   fsSync.mkdirSync(uploadDir);
@@ -28,7 +25,11 @@ if (!fsSync.existsSync(uploadDir)) {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, uploadDir);
+    const dir = req.body.directory ? path.join(uploadDir, req.body.directory) : uploadDir;
+    if (!fsSync.existsSync(dir)) {
+      fsSync.mkdirSync(dir, { recursive: true });
+    }
+    cb(null, dir);
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -44,6 +45,12 @@ const upload = multer({
       cb(new Error('Only audio files are allowed!'));
     }
   }
+});
+
+// Logging middleware
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  next();
 });
 
 app.post('/create-directory', async (req, res) => {
@@ -81,9 +88,7 @@ app.delete('/delete-directory/:directoryName', async (req, res) => {
 app.get('/directories', async (req, res) => {
   try {
     const entries = await fs.readdir(uploadDir, { withFileTypes: true });
-    const directories = entries
-      .filter(entry => entry.isDirectory())
-      .map(entry => entry.name);
+    const directories = entries.filter(entry => entry.isDirectory()).map(entry => entry.name);
     res.send(directories);
   } catch (error) {
     console.error('Error reading directories:', error);

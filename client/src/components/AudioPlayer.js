@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { Button, Box, Slider, Typography } from '@mui/material';
 import './AudioPlayer.css';
 
 const AudioPlayer = ({ audioUrl }) => {
@@ -49,16 +50,14 @@ const AudioPlayer = ({ audioUrl }) => {
     }
   };
 
-  const handleVolumeChange = (e) => {
-    const newVolume = parseFloat(e.target.value);
-    setVolume(newVolume);
-    audioRef.current.volume = newVolume;
+  const handleVolumeChange = (e, newValue) => {
+    setVolume(newValue);
+    audioRef.current.volume = newValue;
   };
 
-  const handleSeek = (e) => {
-    const newTime = parseFloat(e.target.value);
-    setCurrentTime(newTime);
-    audioRef.current.currentTime = newTime;
+  const handleSeek = (e, newValue) => {
+    setCurrentTime(newValue);
+    audioRef.current.currentTime = newValue;
   };
 
   const formatTime = (time) => {
@@ -72,43 +71,43 @@ const AudioPlayer = ({ audioUrl }) => {
   }
 
   return (
-    <div className="audio-player">
+    <Box className="audio-player" sx={{ p: 2, border: '1px solid grey', borderRadius: 2 }}>
       <audio ref={audioRef} src={audioUrl} />
-      <div className="controls">
-        <button
+      <Box className="controls" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Button
+          variant="contained"
+          color="primary"
           onClick={handlePlayPauseClick}
           aria-label={isPlaying ? "Pause" : "Play"}
         >
           {isPlaying ? "Pause" : "Play"}
-        </button>
-        <div className="time-control">
-          <input
-            type="range"
-            min="0"
-            max={duration}
+        </Button>
+        <Box className="time-control" sx={{ flexGrow: 1, mx: 2 }}>
+          <Slider
             value={currentTime}
+            min={0}
+            max={duration}
+            step={0.1}
             onChange={handleSeek}
             aria-label="Seek"
           />
-          <div className="time-display" aria-live="polite">
+          <Typography variant="body2" aria-live="polite">
             {formatTime(currentTime)} / {formatTime(duration)}
-          </div>
-        </div>
-        <div className="volume-control">
-          <label htmlFor="volume">Volume:</label>
-          <input
-            id="volume"
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
+          </Typography>
+        </Box>
+        <Box className="volume-control" sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography variant="body2" sx={{ mr: 1 }}>Volume:</Typography>
+          <Slider
             value={volume}
+            min={0}
+            max={1}
+            step={0.01}
             onChange={handleVolumeChange}
             aria-label="Volume"
           />
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
