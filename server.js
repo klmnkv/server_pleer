@@ -15,8 +15,8 @@ app.use(cors());
 app.use(helmet());
 
 console.log('Current directory:', __dirname);
-console.log('Contents of client directory:', fsSync.readdirSync('./client'));
-console.log('Contents of client/build directory:', fsSync.readdirSync('./client/build'));
+console.log('Contents of client directory:', fsSync.readdirSync(path.join(__dirname, 'client')));
+console.log('Contents of client/build directory:', fsSync.readdirSync(path.join(__dirname, 'client/build')));
 
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fsSync.existsSync(uploadDir)) {
