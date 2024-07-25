@@ -7,23 +7,50 @@ const UploadPage = () => {
   const [audioUrl, setAudioUrl] = useState('');
   const [error, setError] = useState('');
   const [files, setFiles] = useState([]);
+  const [directory, setDirectory] = useState('');
+  const [newDirectory, setNewDirectory] = useState('');
 
   useEffect(() => {
-    const fetchFiles = async () => {
-      try {
-        const response = await axios.get('/files');
-        setFiles(response.data);
-      } catch (error) {
-        console.error('Error fetching files:', error);
-        setError(`Error fetching files: ${error.response?.data?.error || error.message}`);
-      }
-    };
-
     fetchFiles();
   }, []);
 
+  const fetchFiles = async () => {
+    try {
+      const response = await axios.get('/files');
+      setFiles(response.data);
+    } catch (error) {
+      console.error('Error fetching files:', error);
+      setError(`Error fetching files: ${error.response?.data?.error || error.message}`);
+    }
+  };
+
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
+  };
+
+  const handleDirectoryChange = (e) => {
+    setDirectory(e.target.value);
+  };
+
+  const handleNewDirectoryChange = (e) => {
+    setNewDirectory(e.target.value);
+  };
+
+  const handleCreateDirectory = async () => {
+    if (!newDirectory) {
+      setError('Please enter a directory name');
+      return;
+    }
+
+    try {
+      await axios.post('/create-directory', { directoryName: newDirectory });
+      setNewDirectory('');
+      setError('');
+      fetchFiles();
+    } catch (error) {
+      console.error('Error creating directory:', error);
+      setError(`Failed to create directory: ${error.response?.data?.error || error.message}`);
+    }
   };
 
   const handleUpload = async () => {
@@ -34,6 +61,9 @@ const UploadPage = () => {
 
     const formData = new FormData();
     formData.append('audio', file);
+    if (directory) {
+      formData.append('directory', directory);
+    }
 
     try {
       const response = await axios.post('/upload', formData, {
@@ -43,7 +73,7 @@ const UploadPage = () => {
       });
       setAudioUrl(response.data.audioUrl);
       setError('');
-      setFiles([...files, response.data.audioUrl]);
+      fetchFiles();
     } catch (error) {
       console.error('Upload error:', error);
       setError(`Upload failed: ${error.response?.data?.error || error.message || 'Unknown error'}`);
@@ -53,7 +83,7 @@ const UploadPage = () => {
   const handleDelete = async (filename) => {
     try {
       await axios.delete(`/delete/${filename}`);
-      setFiles(files.filter(file => !file.includes(filename)));
+      fetchFiles();
     } catch (error) {
       console.error('Delete error:', error);
       setError(`Delete failed: ${error.response?.data?.error || error.message || 'Unknown error'}`);
@@ -63,8 +93,24 @@ const UploadPage = () => {
   return (
     <div className="container">
       <h2>Upload Audio</h2>
-      <input type="file" onChange={handleFileChange} aria-label="Select an audio file to upload" />
-      <button onClick={handleUpload} aria-label="Upload the selected audio file">Upload</button>
+      <div>
+        <input type="file" onChange={handleFileChange} aria-label="Select an audio file to upload" />
+        <select value={directory} onChange={handleDirectoryChange} aria-label="Select a directory">
+          <option value="">Root directory</option>
+          {/* Add options for existing directories */}
+        </select>
+        <button onClick={handleUpload} aria-label="Upload the selected audio file">Upload</button>
+      </div>
+      <div>
+        <input
+          type="text"
+          value={newDirectory}
+          onChange={handleNewDirectoryChange}
+          placeholder="New directory name"
+          aria-label="Enter new directory name"
+        />
+        <button onClick={handleCreateDirectory} aria-label="Create new directory">Create Directory</button>
+      </div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {audioUrl && (
         <div>

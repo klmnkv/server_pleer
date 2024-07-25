@@ -19,6 +19,76 @@ app.use((req, res, next) => {
   next();
 });
 
+
+app.post('/create-directory', async (req, res) => {
+  const { directoryName } = req.body;
+  if (!directoryName) {
+    return res.status(400).send({ error: 'Directory name is required' });
+  }
+
+  const newDirPath = path.join(uploadDir, directoryName);
+
+  try {
+    await fs.mkdir(newDirPath, { recursive: true });
+    console.log(`Directory created: ${newDirPath}`);
+    res.status(201).send({ message: 'Directory created successfully' });
+  } catch (error) {
+    console.error('Error creating directory:', error);
+    res.status(500).send({ error: 'Failed to create directory' });
+  }
+});
+
+// Обновите маршрут загрузки файла, чтобы учитывать директории
+app.post('/upload', upload.single('audio'), (req, res) => {
+  if (!req.file) {
+    console.log('No file uploaded');
+    return res.status(400).send({ error: 'No file uploaded' });
+  }
+
+  const { directory } = req.body;
+  let audioUrl;
+
+  if (directory) {
+    const dirPath = path.join(uploadDir, directory);
+    if (!fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath, { recursive: true });
+    }
+    audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory}/${req.file.filename}`;
+  } else {
+    audioUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+  }
+
+  console.log(`File uploaded: ${audioUrl}`);
+  res.send({ audioUrl });
+});
+
+// Обновите маршрут получения файлов, чтобы включать директории
+app.get('/files', async (req, res) => {
+  try {
+    const files = await getAllFiles(uploadDir);
+    const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/${file}`);
+    console.log(`Files retrieved: ${fileUrls.length}`);
+    res.send(fileUrls);
+  } catch (error) {
+    console.error('Error reading upload directory:', error);
+    res.status(500).send({ error: 'Unable to retrieve files' });
+  }
+});
+
+// Вспомогательная функция для рекурсивного получения всех файлов
+async function getAllFiles(dir) {
+  const entries = await fs.readdir(dir, { withFileTypes: true });
+  const files = await Promise.all(entries.map(async (entry) => {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      return getAllFiles(fullPath);
+    } else {
+      return fullPath.replace(uploadDir, 'uploads');
+    }
+  }));
+  return files.flat();
+}
+
 // Убедитесь, что директория uploads существует
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
