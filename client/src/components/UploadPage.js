@@ -68,7 +68,7 @@ const UploadPage = () => {
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {audioUrl && (
         <div>
-          <p>Audio URL: <Link to={`/play/uploads/${encodeURIComponent(audioUrl.split('/').pop())}`}>{audioUrl}</Link></p>
+          <p>Audio URL: <Link to={`/play/${encodeURIComponent(audioUrl.split('/').pop())}`}>{audioUrl}</Link></p>
           <audio controls src={audioUrl} aria-label="Audio player for the uploaded file" />
         </div>
       )}
@@ -78,7 +78,7 @@ const UploadPage = () => {
           const filename = file.split('/').pop();
           return (
             <li key={index}>
-              <Link to={`/play/uploads/${encodeURIComponent(filename)}`} aria-label={`Play the audio file ${file}`}>{file}</Link>
+              <Link to={`/play/${encodeURIComponent(filename)}`} aria-label={`Play the audio file ${file}`}>{file}</Link>
               <button onClick={() => handleDelete(filename)} aria-label={`Delete the audio file ${file}`}>Delete</button>
             </li>
           );

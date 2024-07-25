@@ -71,11 +71,9 @@ app.get('/files', (req, res) => {
 app.delete('/delete/:filename', (req, res) => {
   const filename = req.params.filename;
   const filePath = path.join(uploadDir, filename);
-
   if (!fs.existsSync(filePath)) {
     return res.status(404).send({ error: 'File not found' });
   }
-
   fs.unlink(filePath, (err) => {
     if (err) {
       console.error('Error deleting file:', err);
@@ -89,7 +87,7 @@ app.delete('/delete/:filename', (req, res) => {
 // Промежуточное ПО для обработки прямых ссылок на аудиофайлы
 app.use('/uploads', (req, res, next) => {
   if (req.headers.accept && req.headers.accept.includes('text/html')) {
-    const redirectUrl = `/?url=${encodeURIComponent(`${req.protocol}://${req.get('host')}${req.originalUrl}`)}`;
+    const redirectUrl = `/play/${encodeURIComponent(path.basename(req.url))}`;
     console.log(`Redirecting to: ${redirectUrl}`);
     res.redirect(redirectUrl);
   } else {
@@ -102,6 +100,11 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Обслуживание статических файлов из папки client/build
 app.use(express.static(path.join(__dirname, 'client/build')));
+
+// Маршрут для проигрывателя
+app.get('/play/:filename', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
 
 // Обслуживание index.html для всех остальных маршрутов
 app.get('*', (req, res) => {
