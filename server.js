@@ -6,7 +6,6 @@ const fs = require('fs');
 const app = express();
 const port = process.env.PORT || 3000;
 
-const fs = require('fs');
 console.log('Current directory:', __dirname);
 console.log('Contents of client directory:', fs.readdirSync('./client'));
 console.log('Contents of client/build directory:', fs.readdirSync('./client/build'));
