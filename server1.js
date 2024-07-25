@@ -1,10 +1,19 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
+const cors = require('cors');
 const fs = require('fs');
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Настройка CORS для вашего фронтенда
+const corsOptions = {
+  origin: 'https://bred-stikers.netlify.app',
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // Middleware для обработки JSON
 app.use(express.json());
@@ -41,7 +50,6 @@ const upload = multer({
   }
 });
 
-// API маршруты
 app.post('/upload', upload.single('audio'), (req, res) => {
   if (!req.file) {
     console.log('No file uploaded');
@@ -96,12 +104,12 @@ app.use('/uploads', (req, res, next) => {
 // Обслуживание статических файлов из папки uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Обслуживание статических файлов из папки client/build
-app.use(express.static(path.join(__dirname, 'client/build')));
+// Обслуживание статических файлов из папки build
+app.use(express.static(path.join(__dirname, 'build')));
 
-// Обслуживание index.html для всех остальных маршрутов
+// Обслуживание index.html для всех маршрутов
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 // Обработка ошибок multer
