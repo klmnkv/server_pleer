@@ -64,6 +64,33 @@ app.post('/create-directory', async (req, res) => {
   }
 });
 
+app.delete('/delete-directory/:directoryName', async (req, res) => {
+  const { directoryName } = req.params;
+  const dirPath = path.join(uploadDir, directoryName);
+
+  try {
+    await fs.rmdir(dirPath, { recursive: true });
+    console.log(`Directory deleted: ${dirPath}`);
+    res.send({ message: 'Directory deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting directory:', error);
+    res.status(500).send({ error: 'Failed to delete directory' });
+  }
+});
+
+app.get('/directories', async (req, res) => {
+  try {
+    const entries = await fs.readdir(uploadDir, { withFileTypes: true });
+    const directories = entries
+      .filter(entry => entry.isDirectory())
+      .map(entry => entry.name);
+    res.send(directories);
+  } catch (error) {
+    console.error('Error reading directories:', error);
+    res.status(500).send({ error: 'Unable to retrieve directories' });
+  }
+});
+
 app.post('/upload', upload.single('audio'), (req, res) => {
   if (!req.file) {
     console.log('No file uploaded');
