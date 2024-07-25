@@ -4,7 +4,6 @@ const path = require('path');
 const fs = require('fs').promises;
 const fsSync = require('fs');
 const cors = require('cors');
-const helmet = require('helmet');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -12,7 +11,6 @@ const port = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
 app.use(cors());
-app.use(helmet());
 
 console.log('Current directory:', __dirname);
 console.log('Contents of client directory:', fsSync.readdirSync(path.join(__dirname, 'client')));
