@@ -76,6 +76,7 @@ const AudioPlayer = ({ audioUrl }) => {
       <audio ref={audioRef} src={audioUrl} aria-hidden="true" />
       <div className="controls">
         <button
+          className="play-pause-button"
           onClick={handlePlayPauseClick}
           aria-label={isPlaying ? "Pause" : "Play"}
           aria-pressed={isPlaying}
