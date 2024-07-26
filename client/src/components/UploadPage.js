@@ -18,9 +18,7 @@ import {
   Box,
   Paper,
 } from '@mui/material';
-
 import DeleteIcon from '@mui/icons-material/Delete';
-
 
 const UploadPage = () => {
   const [file, setFile] = useState(null);
@@ -33,6 +31,7 @@ const UploadPage = () => {
   const [directories, setDirectories] = useState([]);
   const [selectedDirectory, setSelectedDirectory] = useState('');
   const [newDirectory, setNewDirectory] = useState('');
+  const [currentDirectoryFiles, setCurrentDirectoryFiles] = useState([]);
 
   useEffect(() => {
     fetchFiles();
@@ -56,6 +55,16 @@ const UploadPage = () => {
     } catch (error) {
       console.error('Error fetching directories:', error);
       setError(`Error fetching directories: ${error.response?.data?.error || error.message}`);
+    }
+  };
+
+  const fetchDirectoryFiles = async (directory) => {
+    try {
+      const response = await axios.get(`/directories/${directory}/files`);
+      setCurrentDirectoryFiles(response.data);
+    } catch (error) {
+      console.error('Error fetching directory files:', error);
+      setError(`Error fetching directory files: ${error.response?.data?.error || error.message}`);
     }
   };
 
@@ -138,6 +147,10 @@ const UploadPage = () => {
     }
   };
 
+  const handleDirectoryClick = (directory) => {
+    fetchDirectoryFiles(directory);
+  };
+
   return (
     <Container maxWidth="md">
       <Typography variant="h4" gutterBottom>
@@ -202,9 +215,9 @@ const UploadPage = () => {
       </Typography>
       <List>
         {directories.map((dir, index) => (
-          <ListItem key={index} divider>
+          <ListItem button key={index} divider onClick={() => handleDirectoryClick(dir)}>
             <ListItemText primary={dir} />
-            <IconButton onClick={() => handleDeleteDirectory(dir)} aria-label={`Delete directory ${dir}`} edge="end">
+            <IconButton onClick={(e) => {e.stopPropagation(); handleDeleteDirectory(dir);}} aria-label={`Delete directory ${dir}`} edge="end">
               <DeleteIcon />
             </IconButton>
           </ListItem>
@@ -214,19 +227,35 @@ const UploadPage = () => {
         Uploaded Files
       </Typography>
       <List>
-        {files.map((file, index) => {
-          const filename = file.split('/').pop();
-          return (
-            <ListItem key={index} divider>
-              <ListItemText
-                primary={<Link to={`/play/${encodeURIComponent(filename)}`} aria-label={`Play the audio file ${file}`}>{file}</Link>}
-              />
-              <IconButton onClick={() => handleDelete(filename)} aria-label={`Delete the audio file ${file}`} edge="end">
-                <DeleteIcon />
-              </IconButton>
-            </ListItem>
-          );
-        })}
+        {currentDirectoryFiles.length > 0 ? (
+          currentDirectoryFiles.map((file, index) => {
+            const filename = file.split('/').pop();
+            return (
+              <ListItem key={index} divider>
+                <ListItemText
+                  primary={<Link to={`/play/${encodeURIComponent(filename)}`} aria-label={`Play the audio file ${file}`}>{file}</Link>}
+                />
+                <IconButton onClick={() => handleDelete(filename)} aria-label={`Delete the audio file ${file}`} edge="end">
+                  <DeleteIcon />
+                </IconButton>
+              </ListItem>
+            );
+          })
+        ) : (
+          files.map((file, index) => {
+            const filename = file.split('/').pop();
+            return (
+              <ListItem key={index} divider>
+                <ListItemText
+                  primary={<Link to={`/play/${encodeURIComponent(filename)}`} aria-label={`Play the audio file ${file}`}>{file}</Link>}
+                />
+                <IconButton onClick={() => handleDelete(filename)} aria-label={`Delete the audio file ${file}`} edge="end">
+                  <DeleteIcon />
+                </IconButton>
+              </ListItem>
+            );
+          })
+        )}
       </List>
     </Container>
   );

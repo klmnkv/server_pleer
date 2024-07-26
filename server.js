@@ -94,6 +94,20 @@ app.get('/directories', async (req, res) => {
   }
 });
 
+app.get('/directories/:directoryName/files', async (req, res) => {
+  const { directoryName } = req.params;
+  const dirPath = path.join(uploadDir, directoryName);
+
+  try {
+    const entries = await fs.readdir(dirPath, { withFileTypes: true });
+    const files = entries.filter(entry => entry.isFile()).map(entry => path.join(directoryName, entry.name));
+    res.send(files);
+  } catch (error) {
+    console.error('Error reading files in directory:', error);
+    res.status(500).send({ error: 'Unable to retrieve files' });
+  }
+});
+
 app.post('/upload', upload.single('audio'), (req, res) => {
   if (!req.file) {
     console.log('No file uploaded');
