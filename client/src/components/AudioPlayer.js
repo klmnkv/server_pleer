@@ -72,16 +72,16 @@ const AudioPlayer = ({ audioUrl }) => {
   }
 
   return (
-    <div className="audio-player" role="region" aria-label="Audio player">
+    <div className="audio-player" role="region">
       <audio ref={audioRef} src={audioUrl} aria-hidden="true" />
       <div className="controls">
         <button
           className="play-pause-button"
           onClick={handlePlayPauseClick}
-          aria-label={isPlaying ? "Pause" : "Play"}
+          aria-label={isPlaying ? "Пауза" : "Плей"}
           aria-pressed={isPlaying}
         >
-          {isPlaying ? "Pause" : "Play"}
+          {isPlaying ? "Пауза" : "Плей"}
         </button>
         <div className="time-control" role="group" aria-label="Time control">
           <input
@@ -97,7 +97,7 @@ const AudioPlayer = ({ audioUrl }) => {
           </div>
         </div>
         <div className="volume-control" role="group" aria-label="Volume control">
-          <label htmlFor="volume">Volume:</label>
+          <label htmlFor="volume">Громкость:</label>
           <input
             id="volume"
             type="range"
