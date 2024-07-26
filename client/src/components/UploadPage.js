@@ -38,14 +38,12 @@ const UploadPage = () => {
   }, []);
 
   useEffect(() => {
+    console.log('Selected directory changed:', selectedDirectory);
     fetchFiles(selectedDirectory);
   }, [selectedDirectory]);
 
-  useEffect(() => {
-    console.log('Files state updated:', files);
-  }, [files]);
-
   const fetchFiles = async (directory) => {
+    console.log('Fetching files for directory:', directory);
     try {
       const response = await axios.get(directory ? `/directories/${directory}/files` : '/files');
       console.log('Fetched files:', response.data);
@@ -61,11 +59,10 @@ const UploadPage = () => {
   const fetchDirectories = async () => {
     try {
       const response = await axios.get('/directories');
+      console.log('Fetched directories:', response.data);
       setDirectories(response.data);
     } catch (error) {
       console.error('Error fetching directories:', error);
-      // eslint-disable-next-line no-unused-vars
-      const errorMsg = `Error fetching directories: ${error.response?.data?.error || error.message}`;
     }
   };
 
@@ -109,8 +106,6 @@ const UploadPage = () => {
       }
     } catch (error) {
       console.error('Error deleting directory:', error);
-      // eslint-disable-next-line no-unused-vars
-      const errorMsg = `Failed to delete directory: ${error.response?.data?.error || error.message}`;
     }
   };
 
@@ -148,8 +143,6 @@ const UploadPage = () => {
       fetchFiles(selectedDirectory);
     } catch (error) {
       console.error('Delete error:', error);
-      // eslint-disable-next-line no-unused-vars
-      const errorMsg = `Delete failed: ${error.response?.data?.error || error.message || 'Unknown error'}`;
     }
   };
 
@@ -233,24 +226,21 @@ const UploadPage = () => {
         ))}
       </List>
       <Typography variant="h5" gutterBottom>
-        Uploaded Files
+        Uploaded Files (Current directory: {selectedDirectory || 'Root'})
       </Typography>
       {fileError && <Typography color="error">{fileError}</Typography>}
       <List>
         {files.length > 0 ? (
-          files.map((file, index) => {
-            const filename = file.split('/').pop();
-            return (
-              <ListItem key={index} divider>
-                <ListItemText
-                  primary={<Link to={`/play/${encodeURIComponent(filename)}`} aria-label={`Play the audio file ${file}`}>{file}</Link>}
-                />
-                <IconButton onClick={() => handleDelete(filename)} aria-label={`Delete the audio file ${file}`} edge="end">
-                  <DeleteIcon />
-                </IconButton>
-              </ListItem>
-            );
-          })
+          files.map((file, index) => (
+            <ListItem key={index} divider>
+              <ListItemText
+                primary={<Link to={`/play/${encodeURIComponent(file.split('/').pop())}`} aria-label={`Play the audio file ${file}`}>{file}</Link>}
+              />
+              <IconButton onClick={() => handleDelete(file.split('/').pop())} aria-label={`Delete the audio file ${file}`} edge="end">
+                <DeleteIcon />
+              </IconButton>
+            </ListItem>
+          ))
         ) : (
           <Typography>No files in this directory</Typography>
         )}
