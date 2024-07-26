@@ -39,6 +39,7 @@ const UploadPage = () => {
   const fetchFiles = async (directory) => {
     try {
       const response = await axios.get(directory ? `/directories/${directory}/files` : '/files');
+      console.log('Fetched files:', response.data);
       setFiles(response.data);
     } catch (error) {
       console.error('Error fetching files:', error);
@@ -62,9 +63,10 @@ const UploadPage = () => {
     setFile(e.target.files[0]);
   };
 
-  const handleDirectoryChange = (e) => {
-    setSelectedDirectory(e.target.value);
-    fetchFiles(e.target.value);
+  const handleDirectoryChange = (value) => {
+    console.log('Directory changed to:', value);
+    setSelectedDirectory(value);
+    fetchFiles(value);
   };
 
   const handleNewDirectoryChange = (e) => {
@@ -92,6 +94,10 @@ const UploadPage = () => {
     try {
       await axios.delete(`/delete-directory/${directoryName}`);
       fetchDirectories();
+      if (selectedDirectory === directoryName) {
+        setSelectedDirectory('');
+        fetchFiles('');
+      }
     } catch (error) {
       console.error('Error deleting directory:', error);
       // eslint-disable-next-line no-unused-vars
@@ -148,7 +154,11 @@ const UploadPage = () => {
           <input type="file" onChange={handleFileChange} aria-label="Select an audio file to upload" />
           <FormControl fullWidth sx={{ marginTop: 2 }}>
             <InputLabel>Select Directory</InputLabel>
-            <Select value={selectedDirectory} onChange={handleDirectoryChange} aria-label="Select a directory">
+            <Select
+              value={selectedDirectory}
+              onChange={(e) => handleDirectoryChange(e.target.value)}
+              aria-label="Select a directory"
+            >
               <MenuItem value="">
                 <em>Root directory</em>
               </MenuItem>
@@ -202,7 +212,7 @@ const UploadPage = () => {
       </Typography>
       <List>
         {directories.map((dir, index) => (
-          <ListItem button key={index} divider onClick={() => handleDirectoryChange({ target: { value: dir } })}>
+          <ListItem button key={index} divider onClick={() => handleDirectoryChange(dir)}>
             <ListItemText primary={dir} />
             <IconButton onClick={(e) => { e.stopPropagation(); handleDeleteDirectory(dir); }} aria-label={`Delete directory ${dir}`} edge="end">
               <DeleteIcon />
