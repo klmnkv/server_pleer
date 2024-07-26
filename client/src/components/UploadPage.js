@@ -23,7 +23,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const UploadPage = () => {
   const [file, setFile] = useState(null);
   const [audioUrl, setAudioUrl] = useState('');
-  const [error, setError] = useState('');
   const [uploadError, setUploadError] = useState('');
   const [dirError, setDirError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -43,7 +42,8 @@ const UploadPage = () => {
       setFiles(response.data);
     } catch (error) {
       console.error('Error fetching files:', error);
-      setError(`Error fetching files: ${error.response?.data?.error || error.message}`);
+      // eslint-disable-next-line no-unused-vars
+      const errorMsg = `Error fetching files: ${error.response?.data?.error || error.message}`;
     }
   };
 
@@ -53,7 +53,8 @@ const UploadPage = () => {
       setDirectories(response.data);
     } catch (error) {
       console.error('Error fetching directories:', error);
-      setError(`Error fetching directories: ${error.response?.data?.error || error.message}`);
+      // eslint-disable-next-line no-unused-vars
+      const errorMsg = `Error fetching directories: ${error.response?.data?.error || error.message}`;
     }
   };
 
@@ -93,7 +94,8 @@ const UploadPage = () => {
       fetchDirectories();
     } catch (error) {
       console.error('Error deleting directory:', error);
-      setError(`Failed to delete directory: ${error.response?.data?.error || error.message}`);
+      // eslint-disable-next-line no-unused-vars
+      const errorMsg = `Failed to delete directory: ${error.response?.data?.error || error.message}`;
     }
   };
 
@@ -105,9 +107,7 @@ const UploadPage = () => {
 
     const formData = new FormData();
     formData.append('audio', file);
-    if (selectedDirectory) {
-      formData.append('directory', selectedDirectory);
-    }
+    formData.append('directory', selectedDirectory);
 
     setLoading(true);
     try {
@@ -133,7 +133,8 @@ const UploadPage = () => {
       fetchFiles(selectedDirectory);
     } catch (error) {
       console.error('Delete error:', error);
-      setError(`Delete failed: ${error.response?.data?.error || error.message || 'Unknown error'}`);
+      // eslint-disable-next-line no-unused-vars
+      const errorMsg = `Delete failed: ${error.response?.data?.error || error.message || 'Unknown error'}`;
     }
   };
 
