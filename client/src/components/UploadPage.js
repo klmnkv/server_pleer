@@ -31,16 +31,15 @@ const UploadPage = () => {
   const [directories, setDirectories] = useState([]);
   const [selectedDirectory, setSelectedDirectory] = useState('');
   const [newDirectory, setNewDirectory] = useState('');
-  const [currentDirectoryFiles, setCurrentDirectoryFiles] = useState([]);
 
   useEffect(() => {
-    fetchFiles();
     fetchDirectories();
+    fetchFiles('');
   }, []);
 
-  const fetchFiles = async () => {
+  const fetchFiles = async (directory) => {
     try {
-      const response = await axios.get('/files');
+      const response = await axios.get(directory ? `/directories/${directory}/files` : '/files');
       setFiles(response.data);
     } catch (error) {
       console.error('Error fetching files:', error);
@@ -58,22 +57,13 @@ const UploadPage = () => {
     }
   };
 
-  const fetchDirectoryFiles = async (directory) => {
-    try {
-      const response = await axios.get(`/directories/${directory}/files`);
-      setCurrentDirectoryFiles(response.data);
-    } catch (error) {
-      console.error('Error fetching directory files:', error);
-      setError(`Error fetching directory files: ${error.response?.data?.error || error.message}`);
-    }
-  };
-
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
   const handleDirectoryChange = (e) => {
     setSelectedDirectory(e.target.value);
+    fetchFiles(e.target.value);
   };
 
   const handleNewDirectoryChange = (e) => {
@@ -128,7 +118,7 @@ const UploadPage = () => {
       });
       setAudioUrl(response.data.audioUrl);
       setUploadError('');
-      fetchFiles();
+      fetchFiles(selectedDirectory);
     } catch (error) {
       console.error('Upload error:', error);
       setUploadError(`Upload failed: ${error.response?.data?.error || error.message || 'Unknown error'}`);
@@ -140,15 +130,11 @@ const UploadPage = () => {
   const handleDelete = async (filename) => {
     try {
       await axios.delete(`/delete/${filename}`);
-      fetchFiles();
+      fetchFiles(selectedDirectory);
     } catch (error) {
       console.error('Delete error:', error);
       setError(`Delete failed: ${error.response?.data?.error || error.message || 'Unknown error'}`);
     }
-  };
-
-  const handleDirectoryClick = (directory) => {
-    fetchDirectoryFiles(directory);
   };
 
   return (
@@ -215,9 +201,9 @@ const UploadPage = () => {
       </Typography>
       <List>
         {directories.map((dir, index) => (
-          <ListItem button key={index} divider onClick={() => handleDirectoryClick(dir)}>
+          <ListItem button key={index} divider onClick={() => handleDirectoryChange({ target: { value: dir } })}>
             <ListItemText primary={dir} />
-            <IconButton onClick={(e) => {e.stopPropagation(); handleDeleteDirectory(dir);}} aria-label={`Delete directory ${dir}`} edge="end">
+            <IconButton onClick={(e) => { e.stopPropagation(); handleDeleteDirectory(dir); }} aria-label={`Delete directory ${dir}`} edge="end">
               <DeleteIcon />
             </IconButton>
           </ListItem>
@@ -227,35 +213,19 @@ const UploadPage = () => {
         Uploaded Files
       </Typography>
       <List>
-        {currentDirectoryFiles.length > 0 ? (
-          currentDirectoryFiles.map((file, index) => {
-            const filename = file.split('/').pop();
-            return (
-              <ListItem key={index} divider>
-                <ListItemText
-                  primary={<Link to={`/play/${encodeURIComponent(filename)}`} aria-label={`Play the audio file ${file}`}>{file}</Link>}
-                />
-                <IconButton onClick={() => handleDelete(filename)} aria-label={`Delete the audio file ${file}`} edge="end">
-                  <DeleteIcon />
-                </IconButton>
-              </ListItem>
-            );
-          })
-        ) : (
-          files.map((file, index) => {
-            const filename = file.split('/').pop();
-            return (
-              <ListItem key={index} divider>
-                <ListItemText
-                  primary={<Link to={`/play/${encodeURIComponent(filename)}`} aria-label={`Play the audio file ${file}`}>{file}</Link>}
-                />
-                <IconButton onClick={() => handleDelete(filename)} aria-label={`Delete the audio file ${file}`} edge="end">
-                  <DeleteIcon />
-                </IconButton>
-              </ListItem>
-            );
-          })
-        )}
+        {files.map((file, index) => {
+          const filename = file.split('/').pop();
+          return (
+            <ListItem key={index} divider>
+              <ListItemText
+                primary={<Link to={`/play/${encodeURIComponent(filename)}`} aria-label={`Play the audio file ${file}`}>{file}</Link>}
+              />
+              <IconButton onClick={() => handleDelete(filename)} aria-label={`Delete the audio file ${file}`} edge="end">
+                <DeleteIcon />
+              </IconButton>
+            </ListItem>
+          );
+        })}
       </List>
     </Container>
   );
