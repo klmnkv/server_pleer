@@ -1,7 +1,6 @@
 import React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import AudioPlayer from './AudioPlayer';
-import { Container, Typography } from '@mui/material';
 
 const PlayerPage = () => {
   const location = useLocation();
@@ -22,12 +21,9 @@ const PlayerPage = () => {
   }
 
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom>
-        Audio Player
-      </Typography>
+    <div className="container">
       <AudioPlayer audioUrl={audioUrl} />
-    </Container>
+    </div>
   );
 };
 
