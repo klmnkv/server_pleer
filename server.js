@@ -1,4 +1,3 @@
-
 require('dotenv').config();
 const express = require('express');
 const multer = require('multer');
@@ -51,10 +50,12 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
   fileFilter: (req, file, cb) => {
-    if (file.mimetype.startsWith('audio/')) {
+    const allowedMimeTypes = ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/mp4', 'audio/webm', 'audio/aac'];
+    if (allowedMimeTypes.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new Error('Only audio files are allowed!'));
+      console.log('Rejected file:', file.originalname, 'Mimetype:', file.mimetype);
+      cb(null, false);
     }
   }
 });
@@ -62,6 +63,10 @@ const upload = multer({
 // Logging middleware
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  if (req.method === 'POST' && req.url === '/upload') {
+    console.log('Request headers:', req.headers);
+    console.log('Request body:', req.body);
+  }
   next();
 });
 
@@ -124,8 +129,8 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 
 app.post('/upload', upload.single('audio'), (req, res) => {
   if (!req.file) {
-    console.log('No file uploaded');
-    return res.status(400).send({ error: 'No file uploaded' });
+    console.log('No file uploaded or file was rejected');
+    return res.status(400).send({ error: 'No file uploaded or invalid file type' });
   }
 
   const { directory } = req.body;
@@ -208,11 +213,11 @@ app.get('*', (req, res) => {
 });
 
 app.use((err, req, res, next) => {
+  console.error('Server error:', err);
   if (err instanceof multer.MulterError) {
-    return res.status(400).send({ error: err.message });
+    return res.status(400).send({ error: `Multer error: ${err.message}` });
   }
-  console.error('Server error:', err.stack);
-  res.status(500).send({ error: 'Something went wrong!' });
+  res.status(500).send({ error: 'Something went wrong!', message: err.message });
 });
 
 const server = app.listen(port, '0.0.0.0', () => {
