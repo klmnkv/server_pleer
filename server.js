@@ -23,6 +23,7 @@ console.error = console.log;
 
 // Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 console.log('Current directory:', __dirname);
@@ -136,45 +137,45 @@ app.get('/directories/:directoryName/files', async (req, res) => {
   }
 });
 
-app.post('/upload', upload.single('audio'), (req, res) => {
+app.post('/upload', (req, res) => {
   console.log('Upload request received');
-  console.log('Request body:', req.body);
-  console.log('Request file:', req.file);
+  console.log('Request headers:', req.headers);
 
-  if (!req.file) {
-    console.log('No file uploaded');
-    return res.status(400).send({ error: 'No file uploaded' });
-  }
+  const upload = multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => {
+        const directory = req.body.directory || '';
+        const targetDir = directory ? path.join(uploadDir, directory) : uploadDir;
+        if (!fsSync.existsSync(targetDir)) {
+          fsSync.mkdirSync(targetDir, { recursive: true });
+        }
+        cb(null, targetDir);
+      },
+      filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+      }
+    })
+  }).single('audio');
 
-  const directory = req.body.directory || '';
-  console.log('Directory from request:', directory);
+  upload(req, res, (err) => {
+    if (err) {
+      console.error('Upload error:', err);
+      return res.status(500).send({ error: 'File upload failed' });
+    }
 
-  let targetDir = directory ? path.join(uploadDir, directory) : uploadDir;
-  console.log('Target directory:', targetDir);
+    console.log('Request body:', req.body);
+    console.log('Request file:', req.file);
 
-  if (!fsSync.existsSync(targetDir)) {
-    console.log('Creating directory:', targetDir);
-    fsSync.mkdirSync(targetDir, { recursive: true });
-  }
+    if (!req.file) {
+      console.log('No file uploaded');
+      return res.status(400).send({ error: 'No file uploaded' });
+    }
 
-  const filename = req.file.filename;
-  const sourcePath = req.file.path;
-  const targetPath = path.join(targetDir, filename);
-
-  console.log('Source file path:', sourcePath);
-  console.log('Target file path:', targetPath);
-
-  try {
-    fsSync.renameSync(sourcePath, targetPath);
-    console.log('File moved to:', targetPath);
-  } catch (error) {
-    console.error('Error moving file:', error);
-    return res.status(500).send({ error: 'Failed to move uploaded file' });
-  }
-
-  const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${filename}`;
-  console.log(`File uploaded: ${audioUrl}`);
-  res.send({ audioUrl });
+    const directory = req.body.directory || '';
+    const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${req.file.filename}`;
+    console.log(`File uploaded: ${audioUrl}`);
+    res.send({ audioUrl });
+  });
 });
 
 app.get('/files', async (req, res) => {
