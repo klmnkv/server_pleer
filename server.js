@@ -26,6 +26,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(busboy());
 
+// Logging middleware
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  console.log('Request headers:', req.headers);
+  next();
+});
+
 console.log('Current directory:', __dirname);
 console.log('Contents of client directory:', fs.readdirSync(path.join(__dirname, 'client')));
 console.log('Contents of client/build directory:', fs.readdirSync(path.join(__dirname, 'client/build')));
@@ -36,6 +43,11 @@ if (!fs.existsSync(uploadDir)) {
 }
 
 app.post('/upload', (req, res) => {
+  console.log('Upload request received');
+  console.log('Request headers:', req.headers);
+
+  let fileUploadedSuccessfully = false;
+
   req.pipe(req.busboy);
 
   req.busboy.on('field', (fieldname, val) => {
@@ -49,6 +61,8 @@ app.post('/upload', (req, res) => {
     console.log('Uploading file:', fileInfo.filename);
 
     const directory = req.directory || '';
+    console.log('Target directory:', directory);
+
     const targetDir = path.join(uploadDir, directory);
 
     if (!fs.existsSync(targetDir)) {
@@ -57,15 +71,25 @@ app.post('/upload', (req, res) => {
 
     const filename = Date.now() + path.extname(fileInfo.filename);
     const saveTo = path.join(targetDir, filename);
+    console.log('Saving file to:', saveTo);
+
     const writeStream = fs.createWriteStream(saveTo);
 
     file.pipe(writeStream);
 
     writeStream.on('finish', () => {
+      fileUploadedSuccessfully = true;
       const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${filename}`;
       console.log(`File uploaded: ${audioUrl}`);
       res.json({ audioUrl });
     });
+  });
+
+  req.busboy.on('finish', () => {
+    if (!fileUploadedSuccessfully) {
+      console.log('No file was uploaded');
+      res.status(400).json({ error: 'No file was uploaded' });
+    }
   });
 });
 
