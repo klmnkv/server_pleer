@@ -182,7 +182,6 @@ app.post('/upload', upload.single('audio'), (req, res) => {
   console.log(`File uploaded: ${audioUrl}`);
   res.send({ audioUrl });
 });
-
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
