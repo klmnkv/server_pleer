@@ -36,16 +36,25 @@ if (!fsSync.existsSync(uploadDir)) {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dir = req.body.directory ? path.join(uploadDir, req.body.directory) : uploadDir;
-    if (!fsSync.existsSync(dir)) {
-      fsSync.mkdirSync(dir, { recursive: true });
+    // Сначала сохраняем во временную директорию
+    const tempDir = path.join(__dirname, 'temp');
+    if (!fsSync.existsSync(tempDir)) {
+      fsSync.mkdirSync(tempDir, { recursive: true });
     }
-    cb(null, dir);
+    console.log('Multer destination (temp):', tempDir);
+    cb(null, tempDir);
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
+    const filename = Date.now() + path.extname(file.originalname);
+    console.log('Multer filename:', filename);
+    cb(null, filename);
   }
 });
+
+const tempDir = path.join(__dirname, 'temp');
+if (!fsSync.existsSync(tempDir)) {
+  fsSync.mkdirSync(tempDir);
+}
 
 const upload = multer({
   storage: storage,
@@ -128,22 +137,40 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 });
 
 app.post('/upload', upload.single('audio'), (req, res) => {
+  console.log('Upload request body:', req.body);
+  console.log('Upload request file:', req.file);
+
   if (!req.file) {
     console.log('No file uploaded');
     return res.status(400).send({ error: 'No file uploaded' });
   }
 
   const { directory } = req.body;
+  console.log('Directory from request:', directory);
+
   let audioUrl;
+  let targetDir;
 
   if (directory) {
-    const dirPath = path.join(uploadDir, directory);
-    if (!fsSync.existsSync(dirPath)) {
-      fsSync.mkdirSync(dirPath, { recursive: true });
+    targetDir = path.join(uploadDir, directory);
+    console.log('Target directory:', targetDir);
+    if (!fsSync.existsSync(targetDir)) {
+      console.log('Creating directory:', targetDir);
+      fsSync.mkdirSync(targetDir, { recursive: true });
     }
     audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory}/${req.file.filename}`;
   } else {
+    targetDir = uploadDir;
     audioUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+  }
+
+  console.log('File path:', req.file.path);
+  console.log('Target file path:', path.join(targetDir, req.file.filename));
+
+  // Перемещаем файл в нужную директорию, если это необходимо
+  if (req.file.path !== path.join(targetDir, req.file.filename)) {
+    fsSync.renameSync(req.file.path, path.join(targetDir, req.file.filename));
+    console.log('File moved to:', path.join(targetDir, req.file.filename));
   }
 
   console.log(`File uploaded: ${audioUrl}`);
