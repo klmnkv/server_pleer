@@ -1,12 +1,26 @@
+
+require('dotenv').config();
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs').promises;
 const fsSync = require('fs');
 const cors = require('cors');
+const util = require('util');
 
 const app = express();
 const port = process.env.PORT || 3000;
+const nodeEnv = process.env.NODE_ENV || 'development';
+
+// Logging setup
+const logFile = fsSync.createWriteStream(path.join(__dirname, 'server.log'), { flags: 'a' });
+const logStdout = process.stdout;
+
+console.log = function () {
+  logFile.write(util.format.apply(null, arguments) + '\n');
+  logStdout.write(util.format.apply(null, arguments) + '\n');
+};
+console.error = console.log;
 
 // Middleware
 app.use(express.json());
@@ -183,7 +197,7 @@ app.use('/uploads', (req, res, next) => {
 });
 
 app.use('/uploads', express.static(uploadDir));
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: '1d' }));
 
 app.get('/play/:filename', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
@@ -201,6 +215,13 @@ app.use((err, req, res, next) => {
   res.status(500).send({ error: 'Something went wrong!' });
 });
 
-app.listen(port, () => {
-  console.log(`Server running at port ${port}`);
+const server = app.listen(port, '0.0.0.0', () => {
+  console.log(`Server running at http://0.0.0.0:${port} in ${nodeEnv} mode`);
+});
+
+process.on('SIGTERM', () => {
+  console.log('SIGTERM signal received: closing HTTP server');
+  server.close(() => {
+    console.log('HTTP server closed');
+  });
 });

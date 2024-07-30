@@ -1,0 +1,11 @@
+Current directory: /root/server_pleer
+Contents of client directory: [
+  'build',
+  'node_modules',
+  'package-lock.json',
+  'package.json',
+  'public',
+  'src'
+]
+Contents of client/build directory: [ 'asset-manifest.json', 'index.html', 'manifest.json', 'static' ]
+Server running at http://0.0.0.0:3000 in development mode
