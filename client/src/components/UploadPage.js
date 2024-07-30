@@ -114,7 +114,10 @@ const handleUpload = async () => {
     setUploadError('Please select a file first');
     return;
   }
-
+  console.log('FormData contents:');
+    for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+}
   const formData = new FormData();
   formData.append('audio', file);
   formData.append('directory', selectedDirectory);
