@@ -201,7 +201,7 @@ app.use('/uploads', (req, res, next) => {
   }
 });
 
-app.use('/uploads', express.static(uploadDir));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: '1d' }));
 
 app.get('/play/:filename', (req, res) => {
