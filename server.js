@@ -146,42 +146,37 @@ app.post('/upload', upload.single('audio'), (req, res) => {
     return res.status(400).send({ error: 'No file uploaded' });
   }
 
-  const { directory } = req.body;
+  const directory = req.body.directory || '';
   console.log('Directory from request:', directory);
 
-  let audioUrl;
-  let targetDir;
+  let targetDir = directory ? path.join(uploadDir, directory) : uploadDir;
+  console.log('Target directory:', targetDir);
 
-  if (directory) {
-    targetDir = path.join(uploadDir, directory);
-    console.log('Target directory:', targetDir);
-    if (!fsSync.existsSync(targetDir)) {
-      console.log('Creating directory:', targetDir);
-      fsSync.mkdirSync(targetDir, { recursive: true });
-    }
-    audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory}/${req.file.filename}`;
-  } else {
-    targetDir = uploadDir;
-    audioUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+  if (!fsSync.existsSync(targetDir)) {
+    console.log('Creating directory:', targetDir);
+    fsSync.mkdirSync(targetDir, { recursive: true });
   }
 
-  console.log('Original file path:', req.file.path);
-  console.log('Target file path:', path.join(targetDir, req.file.filename));
+  const filename = req.file.filename;
+  const sourcePath = req.file.path;
+  const targetPath = path.join(targetDir, filename);
 
-  // Перемещаем файл в нужную директорию, если это необходимо
-  if (req.file.path !== path.join(targetDir, req.file.filename)) {
-    try {
-      fsSync.renameSync(req.file.path, path.join(targetDir, req.file.filename));
-      console.log('File moved to:', path.join(targetDir, req.file.filename));
-    } catch (error) {
-      console.error('Error moving file:', error);
-      return res.status(500).send({ error: 'Failed to move uploaded file' });
-    }
+  console.log('Source file path:', sourcePath);
+  console.log('Target file path:', targetPath);
+
+  try {
+    fsSync.renameSync(sourcePath, targetPath);
+    console.log('File moved to:', targetPath);
+  } catch (error) {
+    console.error('Error moving file:', error);
+    return res.status(500).send({ error: 'Failed to move uploaded file' });
   }
 
+  const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${filename}`;
   console.log(`File uploaded: ${audioUrl}`);
   res.send({ audioUrl });
 });
+
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);

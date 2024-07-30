@@ -117,9 +117,7 @@ const handleUpload = async () => {
 
   const formData = new FormData();
   formData.append('audio', file);
-  if (selectedDirectory) {
-    formData.append('directory', selectedDirectory);
-  }
+  formData.append('directory', selectedDirectory || '');
 
   console.log('Uploading file:', file.name);
   console.log('Selected directory:', selectedDirectory);
