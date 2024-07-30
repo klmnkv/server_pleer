@@ -145,6 +145,8 @@ const handleUpload = async () => {
     setLoading(false);
   }
 };
+
+
   const handleDelete = async (filename) => {
     try {
       await axios.delete(`/delete/${filename}`);

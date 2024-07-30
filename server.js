@@ -35,39 +35,23 @@ if (!fsSync.existsSync(uploadDir)) {
   fsSync.mkdirSync(uploadDir);
 }
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    // Сначала сохраняем во временную директорию
-    const tempDir = path.join(__dirname, 'temp');
-    if (!fsSync.existsSync(tempDir)) {
-      fsSync.mkdirSync(tempDir, { recursive: true });
-    }
-    console.log('Multer destination (temp):', tempDir);
-    cb(null, tempDir);
-  },
-  filename: (req, file, cb) => {
-    const filename = Date.now() + path.extname(file.originalname);
-    console.log('Multer filename:', filename);
-    cb(null, filename);
-  }
-});
-
-const tempDir = path.join(__dirname, 'temp');
-if (!fsSync.existsSync(tempDir)) {
-  fsSync.mkdirSync(tempDir);
-}
-
 const upload = multer({
-  storage: storage,
-  fileFilter: (req, file, cb) => {
-    const allowedMimeTypes = ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/mp4', 'audio/webm', 'audio/aac'];
-    if (allowedMimeTypes.includes(file.mimetype)) {
-      cb(null, true);
-    } else {
-      console.log('Rejected file:', file.originalname, 'Mimetype:', file.mimetype);
-      cb(null, false);
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      console.log('Multer destination function called');
+      console.log('req.body:', req.body);
+      const directory = req.body.directory || '';
+      const targetDir = path.join(uploadDir, directory);
+      console.log('Target directory:', targetDir);
+      if (!fsSync.existsSync(targetDir)) {
+        fsSync.mkdirSync(targetDir, { recursive: true });
+      }
+      cb(null, targetDir);
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + path.extname(file.originalname));
     }
-  }
+  })
 });
 
 // Logging middleware
@@ -137,45 +121,20 @@ app.get('/directories/:directoryName/files', async (req, res) => {
   }
 });
 
-app.post('/upload', (req, res) => {
+app.post('/upload', upload.single('audio'), (req, res) => {
   console.log('Upload request received');
-  console.log('Request headers:', req.headers);
+  console.log('Request body:', req.body);
+  console.log('Request file:', req.file);
 
-  const upload = multer({
-    storage: multer.diskStorage({
-      destination: (req, file, cb) => {
-        const directory = req.body.directory || '';
-        const targetDir = directory ? path.join(uploadDir, directory) : uploadDir;
-        if (!fsSync.existsSync(targetDir)) {
-          fsSync.mkdirSync(targetDir, { recursive: true });
-        }
-        cb(null, targetDir);
-      },
-      filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname));
-      }
-    })
-  }).single('audio');
+  if (!req.file) {
+    console.log('No file uploaded');
+    return res.status(400).send({ error: 'No file uploaded' });
+  }
 
-  upload(req, res, (err) => {
-    if (err) {
-      console.error('Upload error:', err);
-      return res.status(500).send({ error: 'File upload failed' });
-    }
-
-    console.log('Request body:', req.body);
-    console.log('Request file:', req.file);
-
-    if (!req.file) {
-      console.log('No file uploaded');
-      return res.status(400).send({ error: 'No file uploaded' });
-    }
-
-    const directory = req.body.directory || '';
-    const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${req.file.filename}`;
-    console.log(`File uploaded: ${audioUrl}`);
-    res.send({ audioUrl });
-  });
+  const directory = req.body.directory || '';
+  const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${req.file.filename}`;
+  console.log(`File uploaded: ${audioUrl}`);
+  res.send({ audioUrl });
 });
 
 app.get('/files', async (req, res) => {
@@ -229,7 +188,7 @@ app.use('/uploads', (req, res, next) => {
   }
 });
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(uploadDir));
 app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: '1d' }));
 
 app.get('/play/:filename', (req, res) => {
