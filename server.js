@@ -121,26 +121,45 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 });
 
 app.post('/upload', (req, res) => {
-  upload.single('audio')(req, res, function (err) {
-    if (err) {
-      console.error('Upload error:', err);
-      return res.status(500).send({ error: 'File upload failed' });
+  // Сначала обрабатываем остальные поля формы
+  const busboy = require('busboy');
+  const bb = busboy({ headers: req.headers });
+
+  let directory = '';
+
+  bb.on('field', (name, val) => {
+    if (name === 'directory') {
+      directory = val;
+      console.log('Directory from form:', directory);
     }
-
-    console.log('Upload request received');
-    console.log('Request body:', req.body);
-    console.log('Request file:', req.file);
-
-    if (!req.file) {
-      console.log('No file uploaded');
-      return res.status(400).send({ error: 'No file uploaded' });
-    }
-
-    const directory = req.body.directory || '';
-    const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${req.file.filename}`;
-    console.log(`File uploaded: ${audioUrl}`);
-    res.send({ audioUrl });
   });
+
+  bb.on('file', (name, file, info) => {
+    const targetDir = path.join(uploadDir, directory);
+    console.log('Target directory:', targetDir);
+
+    if (!fsSync.existsSync(targetDir)) {
+      fsSync.mkdirSync(targetDir, { recursive: true });
+    }
+
+    const filename = Date.now() + path.extname(info.filename);
+    const saveTo = path.join(targetDir, filename);
+
+    file.pipe(fsSync.createWriteStream(saveTo));
+
+    file.on('end', () => {
+      const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${filename}`;
+      console.log(`File uploaded: ${audioUrl}`);
+      res.send({ audioUrl });
+    });
+  });
+
+  bb.on('error', (err) => {
+    console.error('Upload error:', err);
+    res.status(500).send({ error: 'File upload failed' });
+  });
+
+  req.pipe(bb);
 });
 
 app.get('/files', async (req, res) => {
