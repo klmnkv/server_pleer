@@ -109,34 +109,37 @@ const UploadPage = () => {
     }
   };
 
-  const handleUpload = async () => {
-    if (!file) {
-      setUploadError('Please select a file first');
-      return;
-    }
+const handleUpload = async () => {
+  if (!file) {
+    setUploadError('Please select a file first');
+    return;
+  }
 
-    const formData = new FormData();
-    formData.append('audio', file);
-    formData.append('directory', selectedDirectory);
+  const formData = new FormData();
+  formData.append('audio', file);
+  formData.append('directory', selectedDirectory);
 
-    setLoading(true);
-    try {
-      const response = await axios.post('/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      setAudioUrl(response.data.audioUrl);
-      setUploadError('');
-      fetchFiles(selectedDirectory);
-    } catch (error) {
-      console.error('Upload error:', error);
-      setUploadError(`Upload failed: ${error.response?.data?.error || error.message || 'Unknown error'}`);
-    } finally {
-      setLoading(false);
-    }
-  };
+  console.log('Uploading file:', file.name);
+  console.log('Selected directory:', selectedDirectory);
 
+  setLoading(true);
+  try {
+    const response = await axios.post('/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log('Upload response:', response.data);
+    setAudioUrl(response.data.audioUrl);
+    setUploadError('');
+    fetchFiles(selectedDirectory);
+  } catch (error) {
+    console.error('Upload error:', error);
+    setUploadError(`Upload failed: ${error.response?.data?.error || error.message || 'Unknown error'}`);
+  } finally {
+    setLoading(false);
+  }
+};
   const handleDelete = async (filename) => {
     try {
       await axios.delete(`/delete/${filename}`);
