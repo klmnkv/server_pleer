@@ -47,30 +47,32 @@ app.post('/upload', (req, res) => {
   console.log('Request headers:', req.headers);
 
   let fileUploadedSuccessfully = false;
+  let uploadedDirectory = '';
 
-  req.pipe(req.busboy);
+  const form = new busboy({ headers: req.headers });
 
-  req.busboy.on('field', (fieldname, val) => {
+  form.on('field', (fieldname, val) => {
+    console.log(`Received field: ${fieldname} = ${val}`);
     if (fieldname === 'directory') {
       console.log('Directory from form:', val);
-      req.directory = val;
+      uploadedDirectory = val;
     }
   });
 
-  req.busboy.on('file', (fieldname, file, fileInfo) => {
-    console.log('Uploading file:', fileInfo.filename);
+  form.on('file', (fieldname, file, filename, encoding, mimetype) => {
+    console.log('Uploading file:', filename);
+    console.log('Uploaded directory:', uploadedDirectory);
 
-    const directory = req.directory || '';
-    console.log('Target directory:', directory);
-
-    const targetDir = path.join(uploadDir, directory);
+    const targetDir = path.join(uploadDir, uploadedDirectory);
+    console.log('Target directory:', targetDir);
 
     if (!fs.existsSync(targetDir)) {
+      console.log('Creating directory:', targetDir);
       fs.mkdirSync(targetDir, { recursive: true });
     }
 
-    const filename = Date.now() + path.extname(fileInfo.filename);
-    const saveTo = path.join(targetDir, filename);
+    const saveFilename = Date.now() + path.extname(filename);
+    const saveTo = path.join(targetDir, saveFilename);
     console.log('Saving file to:', saveTo);
 
     const writeStream = fs.createWriteStream(saveTo);
@@ -79,19 +81,22 @@ app.post('/upload', (req, res) => {
 
     writeStream.on('finish', () => {
       fileUploadedSuccessfully = true;
-      const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${filename}`;
+      const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${uploadedDirectory ? uploadedDirectory + '/' : ''}${saveFilename}`;
       console.log(`File uploaded: ${audioUrl}`);
       res.json({ audioUrl });
     });
   });
 
-  req.busboy.on('finish', () => {
+  form.on('finish', () => {
     if (!fileUploadedSuccessfully) {
       console.log('No file was uploaded');
       res.status(400).json({ error: 'No file was uploaded' });
     }
   });
+
+  req.pipe(form);
 });
+
 
 app.post('/create-directory', async (req, res) => {
   const { directoryName } = req.body;
