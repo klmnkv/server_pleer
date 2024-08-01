@@ -132,7 +132,6 @@ const UploadPage = () => {
     console.log('Uploading file:', file.name);
     console.log('Selected directory:', selectedDirectory);
 
-    // Выводим содержимое FormData
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
     }
@@ -182,7 +181,7 @@ const UploadPage = () => {
     try {
       for (const file of selectedFiles) {
         await axios.post('/move-file', {
-          filename: file.split('/').pop(),
+          filename: file,
           sourceDirectory: selectedDirectory,
           targetDirectory: targetDirectory,
         });
@@ -293,9 +292,9 @@ const UploadPage = () => {
                 />
               </ListItemIcon>
               <ListItemText
-                primary={<Link to={`/play/${encodeURIComponent(file.split('/').pop())}`} aria-label={`Play the audio file ${file}`}>{file.split('/').pop()}</Link>}
+                primary={<Link to={`/play/${encodeURIComponent(file)}`}>{file}</Link>}
               />
-              <IconButton onClick={() => handleDelete(file.split('/').pop())} aria-label={`Delete the audio file ${file}`} edge="end">
+              <IconButton onClick={() => handleDelete(file)} aria-label={`Delete the audio file ${file}`} edge="end">
                 <DeleteIcon />
               </IconButton>
             </ListItem>
@@ -320,7 +319,7 @@ const UploadPage = () => {
         <DialogTitle>Move Files</DialogTitle>
         <DialogContent>
           <Typography>
-            Selected files: {selectedFiles.map(f => f.split('/').pop()).join(', ')}
+            Selected files: {selectedFiles.join(', ')}
           </Typography>
           <FormControl fullWidth sx={{ marginTop: 2 }}>
             <InputLabel>Select Target Directory</InputLabel>
