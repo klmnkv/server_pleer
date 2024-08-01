@@ -1,17 +1,18 @@
 require('dotenv').config();
 const express = require('express');
+const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs').promises;
+const fsSync = require('fs');
 const cors = require('cors');
 const util = require('util');
-const busboy = require('connect-busboy');
 
 const app = express();
 const port = process.env.PORT || 3000;
 const nodeEnv = process.env.NODE_ENV || 'development';
 
 // Logging setup
-const logFile = fs.createWriteStream(path.join(__dirname, 'server.log'), { flags: 'a' });
+const logFile = fsSync.createWriteStream(path.join(__dirname, 'server.log'), { flags: 'a' });
 const logStdout = process.stdout;
 
 console.log = function () {
@@ -24,79 +25,46 @@ console.error = console.log;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use(busboy());
-
-// Logging middleware
-app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-  console.log('Request headers:', req.headers);
-  next();
-});
 
 console.log('Current directory:', __dirname);
-console.log('Contents of client directory:', fs.readdirSync(path.join(__dirname, 'client')));
-console.log('Contents of client/build directory:', fs.readdirSync(path.join(__dirname, 'client/build')));
+console.log('Contents of client directory:', fsSync.readdirSync(path.join(__dirname, 'client')));
+console.log('Contents of client/build directory:', fsSync.readdirSync(path.join(__dirname, 'client/build')));
 
 const uploadDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
+if (!fsSync.existsSync(uploadDir)) {
+  fsSync.mkdirSync(uploadDir);
 }
 
-app.post('/upload', (req, res) => {
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const directory = req.body.directory || '';
+    const targetDir = path.join(uploadDir, directory);
+    fsSync.mkdirSync(targetDir, { recursive: true });
+    cb(null, targetDir);
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
+
+app.post('/upload', upload.single('audio'), (req, res) => {
   console.log('Upload request received');
-  console.log('Request headers:', req.headers);
+  console.log('Request body:', req.body);
+  console.log('Request file:', req.file);
 
-  const busboy = new Busboy({ headers: req.headers });
-  let uploadedDirectory = '';
-  let fileUploadedSuccessfully = false;
+  if (!req.file) {
+    console.log('No file uploaded');
+    return res.status(400).send({ error: 'No file uploaded' });
+  }
 
-  busboy.on('field', (fieldname, val) => {
-    console.log(`Received field: ${fieldname} = ${val}`);
-    if (fieldname === 'directory') {
-      uploadedDirectory = val;
-      console.log('Directory from form:', uploadedDirectory);
-    }
-  });
+  const { directory } = req.body;
+  console.log('Directory from request:', directory);
 
-  busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-    console.log('Processing file:', filename);
-    console.log('Uploaded directory:', uploadedDirectory);
-
-    const targetDir = path.join(uploadDir, uploadedDirectory);
-    console.log('Target directory:', targetDir);
-
-    // Ensure the target directory exists
-    fs.mkdirSync(targetDir, { recursive: true });
-
-    const saveFilename = Date.now() + path.extname(filename);
-    const saveTo = path.join(targetDir, saveFilename);
-    console.log('Saving file to:', saveTo);
-
-    const writeStream = fs.createWriteStream(saveTo);
-
-    file.pipe(writeStream);
-
-    writeStream.on('finish', () => {
-      fileUploadedSuccessfully = true;
-      const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${uploadedDirectory ? uploadedDirectory + '/' : ''}${saveFilename}`;
-      console.log(`File uploaded successfully: ${audioUrl}`);
-      res.json({ audioUrl });
-    });
-
-    writeStream.on('error', (err) => {
-      console.error('Error writing file:', err);
-      res.status(500).json({ error: 'Failed to save file' });
-    });
-  });
-
-  busboy.on('finish', () => {
-    if (!fileUploadedSuccessfully) {
-      console.log('Upload finished but no file was processed');
-      res.status(400).json({ error: 'No file was uploaded' });
-    }
-  });
-
-  req.pipe(busboy);
+  const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${req.file.filename}`;
+  console.log(`File uploaded: ${audioUrl}`);
+  res.send({ audioUrl });
 });
 
 app.post('/create-directory', async (req, res) => {
@@ -108,7 +76,7 @@ app.post('/create-directory', async (req, res) => {
   const newDirPath = path.join(uploadDir, directoryName);
 
   try {
-    await fs.promises.mkdir(newDirPath, { recursive: true });
+    await fs.mkdir(newDirPath, { recursive: true });
     console.log(`Directory created: ${newDirPath}`);
     res.status(201).send({ message: 'Directory created successfully' });
   } catch (error) {
@@ -122,7 +90,7 @@ app.delete('/delete-directory/:directoryName', async (req, res) => {
   const dirPath = path.join(uploadDir, directoryName);
 
   try {
-    await fs.promises.rmdir(dirPath, { recursive: true });
+    await fs.rmdir(dirPath, { recursive: true });
     console.log(`Directory deleted: ${dirPath}`);
     res.send({ message: 'Directory deleted successfully' });
   } catch (error) {
@@ -133,7 +101,7 @@ app.delete('/delete-directory/:directoryName', async (req, res) => {
 
 app.get('/directories', async (req, res) => {
   try {
-    const entries = await fs.promises.readdir(uploadDir, { withFileTypes: true });
+    const entries = await fs.readdir(uploadDir, { withFileTypes: true });
     const directories = entries.filter(entry => entry.isDirectory()).map(entry => entry.name);
     res.send(directories);
   } catch (error) {
@@ -147,7 +115,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
   const dirPath = path.join(uploadDir, directoryName);
 
   try {
-    const entries = await fs.promises.readdir(dirPath, { withFileTypes: true });
+    const entries = await fs.readdir(dirPath, { withFileTypes: true });
     const files = entries.filter(entry => entry.isFile()).map(entry => path.join(directoryName, entry.name));
     res.send(files);
   } catch (error) {
@@ -169,7 +137,7 @@ app.get('/files', async (req, res) => {
 });
 
 async function getAllFiles(dir) {
-  const entries = await fs.promises.readdir(dir, { withFileTypes: true });
+  const entries = await fs.readdir(dir, { withFileTypes: true });
   const files = await Promise.all(entries.map(async (entry) => {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
@@ -185,7 +153,7 @@ app.delete('/delete/:filename', async (req, res) => {
   const filename = req.params.filename;
   const filePath = path.join(uploadDir, filename);
   try {
-    await fs.promises.unlink(filePath);
+    await fs.unlink(filePath);
     console.log(`File deleted: ${filename}`);
     res.send({ message: 'File deleted successfully' });
   } catch (error) {
@@ -198,27 +166,21 @@ app.delete('/delete/:filename', async (req, res) => {
 });
 
 app.post('/move-file', async (req, res) => {
-  const { filename, targetDirectory } = req.body;
+  const { filename, sourceDirectory, targetDirectory } = req.body;
 
-  if (!filename || targetDirectory === undefined) {
-    return res.status(400).json({ error: 'Filename and target directory are required' });
-  }
+  const sourcePath = path.join(uploadDir, sourceDirectory || '', filename);
+  const targetPath = path.join(uploadDir, targetDirectory || '', filename);
 
-  const sourceFilePath = path.join(uploadDir, filename);
-  const targetFilePath = path.join(uploadDir, targetDirectory, path.basename(filename));
+  console.log(`Moving file from ${sourcePath} to ${targetPath}`);
 
   try {
-    // Убедимся, что целевая директория существует
-    await fs.promises.mkdir(path.dirname(targetFilePath), { recursive: true });
-
-    // Перемещаем файл
-    await fs.promises.rename(sourceFilePath, targetFilePath);
-
-    console.log(`File moved: ${filename} to ${targetFilePath}`);
-    res.json({ message: 'File moved successfully', newPath: path.join(targetDirectory, path.basename(filename)) });
+    await fs.mkdir(path.dirname(targetPath), { recursive: true });
+    await fs.rename(sourcePath, targetPath);
+    console.log('File moved successfully');
+    res.send({ message: 'File moved successfully' });
   } catch (error) {
     console.error('Error moving file:', error);
-    res.status(500).json({ error: 'Failed to move file' });
+    res.status(500).send({ error: 'Failed to move file' });
   }
 });
 
