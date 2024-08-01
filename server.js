@@ -127,7 +127,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
-    const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/${file}`);
+    const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file.replace(/\\/g, '/')}`);
     console.log(`Files retrieved: ${fileUrls.length}`);
     res.send(fileUrls);
   } catch (error) {
@@ -143,7 +143,7 @@ async function getAllFiles(dir) {
     if (entry.isDirectory()) {
       return getAllFiles(fullPath);
     } else {
-      return fullPath.replace(uploadDir, 'uploads');
+      return path.relative(uploadDir, fullPath); // Это изменение
     }
   }));
   return files.flat();
@@ -223,7 +223,15 @@ app.use('/uploads', express.static(uploadDir));
 app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: '1d' }));
 
 app.get('/play/:filename', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  const decodedFilename = decodeURIComponent(req.params.filename);
+  const filePath = path.join(uploadDir, decodedFilename);
+
+  // Проверяем, существует ли файл
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+  } else {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  }
 });
 
 app.get('*', (req, res) => {

@@ -121,36 +121,36 @@ const UploadPage = () => {
   };
 
   const handleUpload = async () => {
-  if (!file) {
-    setUploadError('Please select a file first');
-    return;
-  }
+    if (!file) {
+      setUploadError('Please select a file first');
+      return;
+    }
 
-  const formData = new FormData();
-  formData.append('audio', file);
-  formData.append('directory', selectedDirectory || '');
+    const formData = new FormData();
+    formData.append('audio', file);
+    formData.append('directory', selectedDirectory || '');
 
-  console.log('Uploading file:', file.name);
-  console.log('Selected directory:', selectedDirectory);
+    console.log('Uploading file:', file.name);
+    console.log('Selected directory:', selectedDirectory);
 
-  setLoading(true);
-  try {
-    const response = await axios.post('/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    console.log('Upload response:', response.data);
-    setAudioUrl(response.data.audioUrl);
-    setUploadError('');
-    fetchFiles(selectedDirectory);
-  } catch (error) {
-    console.error('Upload error:', error);
-    setUploadError(`Upload failed: ${error.response?.data?.error || error.message || 'Unknown error'}`);
-  } finally {
-    setLoading(false);
-  }
-};
+    setLoading(true);
+    try {
+      const response = await axios.post('/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Upload response:', response.data);
+      setAudioUrl(response.data.audioUrl);
+      setUploadError('');
+      fetchFiles(selectedDirectory);
+    } catch (error) {
+      console.error('Upload error:', error);
+      setUploadError(`Upload failed: ${error.response?.data?.error || error.message || 'Unknown error'}`);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDelete = async (filename) => {
     try {
@@ -161,38 +161,38 @@ const UploadPage = () => {
     }
   };
 
-  const handleFileSelect = (file) => {
+  const handleFileSelect = (fileUrl) => {
     setSelectedFiles(prev =>
-      prev.includes(file)
-        ? prev.filter(f => f !== file)
-        : [...prev, file]
+      prev.includes(fileUrl)
+        ? prev.filter(f => f !== fileUrl)
+        : [...prev, fileUrl]
     );
   };
 
- const handleMoveFiles = async () => {
-  if (selectedFiles.length === 0 || !targetDirectory) {
-    console.error('No files selected or target directory not chosen');
-    return;
-  }
-
-  try {
-    for (const file of selectedFiles) {
-      // Извлекаем только имя файла из полного пути
-      const filename = file.split('/').pop();
-      await axios.post('/move-file', {
-        filename: filename,
-        sourceDirectory: selectedDirectory,
-        targetDirectory: targetDirectory,
-      });
+  const handleMoveFiles = async () => {
+    if (selectedFiles.length === 0 || !targetDirectory) {
+      console.error('No files selected or target directory not chosen');
+      return;
     }
-    console.log('Files moved successfully');
-    fetchFiles(selectedDirectory);
-    setMoveDialogOpen(false);
-    setSelectedFiles([]);
-  } catch (error) {
-    console.error('Error moving files:', error);
-  }
-};
+
+    try {
+      for (const fileUrl of selectedFiles) {
+        const filename = fileUrl.split('/').pop();
+        const sourceDirectory = fileUrl.split('/').slice(-2, -1)[0];
+        await axios.post('/move-file', {
+          filename,
+          sourceDirectory: sourceDirectory === 'uploads' ? '' : sourceDirectory,
+          targetDirectory,
+        });
+      }
+      console.log('Files moved successfully');
+      fetchFiles(selectedDirectory);
+      setMoveDialogOpen(false);
+      setSelectedFiles([]);
+    } catch (error) {
+      console.error('Error moving files:', error);
+    }
+  };
 
   return (
     <Container maxWidth="md">
@@ -279,33 +279,36 @@ const UploadPage = () => {
       {fileError && <Typography color="error">{fileError}</Typography>}
       <List>
         {files.length > 0 ? (
-          files.map((file, index) => (
-            <ListItem
-              key={index}
-              secondaryAction={
-                <IconButton onClick={() => handleDelete(file)} edge="end" aria-label={`Delete ${file}`}>
-                  <DeleteIcon />
-                </IconButton>
-              }
-              disablePadding
-            >
-              <ListItemButton role={undefined} onClick={() => handleFileSelect(file)} dense>
-                <ListItemIcon>
-                  <Checkbox
-                    edge="start"
-                    checked={selectedFiles.includes(file)}
-                    tabIndex={-1}
-                    disableRipple
-                    inputProps={{ 'aria-labelledby': `checkbox-list-label-${index}` }}
+          files.map((fileUrl, index) => {
+            const filename = fileUrl.split('/').pop();
+            return (
+              <ListItem
+                key={index}
+                secondaryAction={
+                  <IconButton onClick={() => handleDelete(filename)} edge="end" aria-label={`Delete ${filename}`}>
+                    <DeleteIcon />
+                  </IconButton>
+                }
+                disablePadding
+              >
+                <ListItemButton role={undefined} onClick={() => handleFileSelect(fileUrl)} dense>
+                  <ListItemIcon>
+                    <Checkbox
+                      edge="start"
+                      checked={selectedFiles.includes(fileUrl)}
+                      tabIndex={-1}
+                      disableRipple
+                      inputProps={{ 'aria-labelledby': `checkbox-list-label-${index}` }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    id={`checkbox-list-label-${index}`}
+                    primary={<Link to={`/play/${encodeURIComponent(filename)}`}>{filename}</Link>}
                   />
-                </ListItemIcon>
-                <ListItemText
-                  id={`checkbox-list-label-${index}`}
-                  primary={<Link to={`/play/${encodeURIComponent(file)}`}>{file}</Link>}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))
+                </ListItemButton>
+              </ListItem>
+            );
+          })
         ) : (
           <Typography>No files in this directory</Typography>
         )}
@@ -326,7 +329,7 @@ const UploadPage = () => {
         <DialogTitle>Move Files</DialogTitle>
         <DialogContent>
           <Typography>
-            Selected files: {selectedFiles.join(', ')}
+            Selected files: {selectedFiles.map(f => f.split('/').pop()).join(', ')}
           </Typography>
           <FormControl fullWidth sx={{ marginTop: 2 }}>
             <InputLabel>Select Target Directory</InputLabel>
