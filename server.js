@@ -127,7 +127,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
-    const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file.replace(/\\/g, '/')}`);
+    const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/${file}`);
     console.log(`Files retrieved: ${fileUrls.length}`);
     res.send(fileUrls);
   } catch (error) {
@@ -143,7 +143,7 @@ async function getAllFiles(dir) {
     if (entry.isDirectory()) {
       return getAllFiles(fullPath);
     } else {
-      return path.relative(uploadDir, fullPath); // Это изменение
+      return fullPath.replace(uploadDir, 'uploads');
     }
   }));
   return files.flat();
@@ -168,70 +168,37 @@ app.delete('/delete/:filename', async (req, res) => {
 app.post('/move-file', async (req, res) => {
   const { filename, sourceDirectory, targetDirectory } = req.body;
 
-  // Извлекаем только имя файла из полного пути
-  const actualFilename = path.basename(filename);
-
-  const sourcePath = path.join(uploadDir, sourceDirectory || '', actualFilename);
-  const targetPath = path.join(uploadDir, targetDirectory || '', actualFilename);
+  const sourcePath = path.join(uploadDir, sourceDirectory || '', filename);
+  const targetPath = path.join(uploadDir, targetDirectory || '', filename);
 
   console.log(`Moving file from ${sourcePath} to ${targetPath}`);
 
   try {
-    // Проверяем, существует ли исходный файл
-    await fs.access(sourcePath);
-
-    // Создаем целевую директорию, если она не существует
     await fs.mkdir(path.dirname(targetPath), { recursive: true });
-
-    // Перемещаем файл
     await fs.rename(sourcePath, targetPath);
-
     console.log('File moved successfully');
     res.send({ message: 'File moved successfully' });
   } catch (error) {
     console.error('Error moving file:', error);
-    if (error.code === 'ENOENT') {
-      res.status(404).send({ error: 'Source file not found' });
-    } else {
-      res.status(500).send({ error: 'Failed to move file' });
-    }
+    res.status(500).send({ error: 'Failed to move file' });
   }
 });
 
-app.post('/upload', upload.single('audio'), (req, res) => {
-  console.log('Upload request received');
-  console.log('Request body:', req.body);
-  console.log('Request file:', req.file);
-
-  if (!req.file) {
-    console.log('No file uploaded');
-    return res.status(400).send({ error: 'No file uploaded' });
+app.use('/uploads', (req, res, next) => {
+  if (req.headers.accept && req.headers.accept.includes('text/html')) {
+    const redirectUrl = `/play/${encodeURIComponent(path.basename(req.url))}`;
+    console.log(`Redirecting to: ${redirectUrl}`);
+    res.redirect(redirectUrl);
+  } else {
+    next();
   }
-
-  const { directory } = req.body;
-  console.log('Directory from request:', directory);
-
-  // Используем path.join для создания корректного пути
-  const relativePath = path.join('uploads', directory || '', req.file.filename);
-  const audioUrl = `${req.protocol}://${req.get('host')}/${relativePath}`;
-
-  console.log(`File uploaded: ${audioUrl}`);
-  res.send({ audioUrl });
 });
 
 app.use('/uploads', express.static(uploadDir));
 app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: '1d' }));
 
 app.get('/play/:filename', (req, res) => {
-  const decodedFilename = decodeURIComponent(req.params.filename);
-  const filePath = path.join(uploadDir, decodedFilename);
-
-  // Проверяем, существует ли файл
-  if (fs.existsSync(filePath)) {
-    res.sendFile(filePath);
-  } else {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  }
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 app.get('*', (req, res) => {
