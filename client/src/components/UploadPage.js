@@ -21,6 +21,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Checkbox,
+  ListItemIcon,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MoveIcon from '@mui/icons-material/DriveFileMove';
@@ -37,8 +39,8 @@ const UploadPage = () => {
   const [selectedDirectory, setSelectedDirectory] = useState('');
   const [newDirectory, setNewDirectory] = useState('');
   const [moveDialogOpen, setMoveDialogOpen] = useState(false);
-  const [fileToMove, setFileToMove] = useState(null);
   const [targetDirectory, setTargetDirectory] = useState('');
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   useEffect(() => {
     fetchDirectories();
@@ -163,23 +165,34 @@ const UploadPage = () => {
     }
   };
 
-  const handleMoveFile = async () => {
-    if (!fileToMove || !targetDirectory) {
-      console.error('File or target directory not selected');
+  const handleFileSelect = (file) => {
+    setSelectedFiles(prev =>
+      prev.includes(file)
+        ? prev.filter(f => f !== file)
+        : [...prev, file]
+    );
+  };
+
+  const handleMoveFiles = async () => {
+    if (selectedFiles.length === 0 || !targetDirectory) {
+      console.error('No files selected or target directory not chosen');
       return;
     }
 
     try {
-      await axios.post('/move-file', {
-        filename: fileToMove,
-        sourceDirectory: selectedDirectory,
-        targetDirectory: targetDirectory,
-      });
-      console.log('File moved successfully');
+      for (const file of selectedFiles) {
+        await axios.post('/move-file', {
+          filename: file.split('/').pop(),
+          sourceDirectory: selectedDirectory,
+          targetDirectory: targetDirectory,
+        });
+      }
+      console.log('Files moved successfully');
       fetchFiles(selectedDirectory);
       setMoveDialogOpen(false);
+      setSelectedFiles([]);
     } catch (error) {
-      console.error('Error moving file:', error);
+      console.error('Error moving files:', error);
     }
   };
 
@@ -270,12 +283,18 @@ const UploadPage = () => {
         {files.length > 0 ? (
           files.map((file, index) => (
             <ListItem key={index} divider>
+              <ListItemIcon>
+                <Checkbox
+                  edge="start"
+                  checked={selectedFiles.includes(file)}
+                  tabIndex={-1}
+                  disableRipple
+                  onChange={() => handleFileSelect(file)}
+                />
+              </ListItemIcon>
               <ListItemText
-                primary={<Link to={`/play/${encodeURIComponent(file.split('/').pop())}`} aria-label={`Play the audio file ${file}`}>{file}</Link>}
+                primary={<Link to={`/play/${encodeURIComponent(file.split('/').pop())}`} aria-label={`Play the audio file ${file}`}>{file.split('/').pop()}</Link>}
               />
-              <IconButton onClick={() => { setFileToMove(file); setMoveDialogOpen(true); }} aria-label={`Move the audio file ${file}`}>
-                <MoveIcon />
-              </IconButton>
               <IconButton onClick={() => handleDelete(file.split('/').pop())} aria-label={`Delete the audio file ${file}`} edge="end">
                 <DeleteIcon />
               </IconButton>
@@ -285,9 +304,24 @@ const UploadPage = () => {
           <Typography>No files in this directory</Typography>
         )}
       </List>
+
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => setMoveDialogOpen(true)}
+        disabled={selectedFiles.length === 0}
+        startIcon={<MoveIcon />}
+        sx={{ marginTop: 2 }}
+      >
+        Move Selected Files
+      </Button>
+
       <Dialog open={moveDialogOpen} onClose={() => setMoveDialogOpen(false)}>
-        <DialogTitle>Move File</DialogTitle>
+        <DialogTitle>Move Files</DialogTitle>
         <DialogContent>
+          <Typography>
+            Selected files: {selectedFiles.map(f => f.split('/').pop()).join(', ')}
+          </Typography>
           <FormControl fullWidth sx={{ marginTop: 2 }}>
             <InputLabel>Select Target Directory</InputLabel>
             <Select
@@ -306,7 +340,7 @@ const UploadPage = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setMoveDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleMoveFile}>Move</Button>
+          <Button onClick={handleMoveFiles}>Move</Button>
         </DialogActions>
       </Dialog>
     </Container>
