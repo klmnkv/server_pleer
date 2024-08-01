@@ -198,14 +198,25 @@ app.post('/move-file', async (req, res) => {
   }
 });
 
-app.use('/uploads', (req, res, next) => {
-  if (req.headers.accept && req.headers.accept.includes('text/html')) {
-    const redirectUrl = `/play/${encodeURIComponent(path.basename(req.url))}`;
-    console.log(`Redirecting to: ${redirectUrl}`);
-    res.redirect(redirectUrl);
-  } else {
-    next();
+app.post('/upload', upload.single('audio'), (req, res) => {
+  console.log('Upload request received');
+  console.log('Request body:', req.body);
+  console.log('Request file:', req.file);
+
+  if (!req.file) {
+    console.log('No file uploaded');
+    return res.status(400).send({ error: 'No file uploaded' });
   }
+
+  const { directory } = req.body;
+  console.log('Directory from request:', directory);
+
+  // Используем path.join для создания корректного пути
+  const relativePath = path.join('uploads', directory || '', req.file.filename);
+  const audioUrl = `${req.protocol}://${req.get('host')}/${relativePath}`;
+
+  console.log(`File uploaded: ${audioUrl}`);
+  res.send({ audioUrl });
 });
 
 app.use('/uploads', express.static(uploadDir));

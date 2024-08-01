@@ -335,3 +335,14 @@ Server error: Error: Only audio files are allowed!
 2024-07-30T06:32:23.630Z - GET /
 2024-07-30T06:32:24.134Z - GET /favicon.ico
 2024-07-30T06:32:43.813Z - GET /favicon.ico
+Current directory: C:\Users\pomka\PycharmProjects\server_audio
+Contents of client directory: [
+  'build',
+  'node_modules',
+  'package-lock.json',
+  'package.json',
+  'public',
+  'src'
+]
+Contents of client/build directory: [ 'asset-manifest.json', 'index.html', 'manifest.json', 'static' ]
+Server running at http://0.0.0.0:3000 in production mode
