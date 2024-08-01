@@ -31,6 +31,7 @@ const UploadPage = () => {
   const [directories, setDirectories] = useState([]);
   const [selectedDirectory, setSelectedDirectory] = useState('');
   const [newDirectory, setNewDirectory] = useState('');
+  const [moveTargetDirectory, setMoveTargetDirectory] = useState('');
 
   useEffect(() => {
     fetchDirectories();
@@ -109,44 +110,41 @@ const UploadPage = () => {
     }
   };
 
-const handleUpload = async () => {
-  if (!file) {
-    setUploadError('Please select a file first');
-    return;
-  }
+  const handleUpload = async () => {
+    if (!file) {
+      setUploadError('Please select a file first');
+      return;
+    }
 
-  const formData = new FormData();
-  formData.append('audio', file);
-  formData.append('directory', selectedDirectory || '');
+    const formData = new FormData();
+    formData.append('audio', file);
+    formData.append('directory', selectedDirectory || '');
 
-  console.log('Uploading file:', file.name);
-  console.log('Selected directory:', selectedDirectory);
+    console.log('Uploading file:', file.name);
+    console.log('Selected directory:', selectedDirectory);
 
-  // Выводим содержимое FormData
-  for (let [key, value] of formData.entries()) {
-    console.log(key, value);
-  }
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
 
-  setLoading(true);
-  try {
-    const response = await axios.post('/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    console.log('Upload response:', response.data);
-    setAudioUrl(response.data.audioUrl);
-    setUploadError('');
-    fetchFiles(selectedDirectory);
-  } catch (error) {
-    console.error('Upload error:', error);
-    setUploadError(`Upload failed: ${error.response?.data?.error || error.message || 'Unknown error'}`);
-  } finally {
-    setLoading(false);
-  }
-};
-
-
+    setLoading(true);
+    try {
+      const response = await axios.post('/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Upload response:', response.data);
+      setAudioUrl(response.data.audioUrl);
+      setUploadError('');
+      fetchFiles(selectedDirectory);
+    } catch (error) {
+      console.error('Upload error:', error);
+      setUploadError(`Upload failed: ${error.response?.data?.error || error.message || 'Unknown error'}`);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDelete = async (filename) => {
     try {
@@ -154,6 +152,26 @@ const handleUpload = async () => {
       fetchFiles(selectedDirectory);
     } catch (error) {
       console.error('Delete error:', error);
+    }
+  };
+
+  const handleMoveFile = async (filename) => {
+    if (!moveTargetDirectory) {
+      setFileError('Please select a target directory');
+      return;
+    }
+
+    try {
+      const response = await axios.post('/move-file', {
+        filename,
+        targetDirectory: moveTargetDirectory
+      });
+      console.log('File moved:', response.data);
+      fetchFiles(selectedDirectory);
+      setFileError('');
+    } catch (error) {
+      console.error('Error moving file:', error);
+      setFileError(`Failed to move file: ${error.response?.data?.error || error.message}`);
     }
   };
 
@@ -247,6 +265,30 @@ const handleUpload = async () => {
               <ListItemText
                 primary={<Link to={`/play/${encodeURIComponent(file.split('/').pop())}`} aria-label={`Play the audio file ${file}`}>{file}</Link>}
               />
+              <FormControl sx={{ minWidth: 120, marginRight: 2 }}>
+                <Select
+                  value={moveTargetDirectory}
+                  onChange={(e) => setMoveTargetDirectory(e.target.value)}
+                  displayEmpty
+                  inputProps={{ 'aria-label': 'Move to directory' }}
+                >
+                  <MenuItem value="" disabled>
+                    Move to...
+                  </MenuItem>
+                  <MenuItem value="">Root</MenuItem>
+                  {directories.map((dir, idx) => (
+                    <MenuItem key={idx} value={dir}>{dir}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleMoveFile(file)}
+                disabled={!moveTargetDirectory}
+              >
+                Move
+              </Button>
               <IconButton onClick={() => handleDelete(file.split('/').pop())} aria-label={`Delete the audio file ${file}`} edge="end">
                 <DeleteIcon />
               </IconButton>

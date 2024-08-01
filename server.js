@@ -197,6 +197,31 @@ app.delete('/delete/:filename', async (req, res) => {
   }
 });
 
+app.post('/move-file', async (req, res) => {
+  const { filename, targetDirectory } = req.body;
+
+  if (!filename || targetDirectory === undefined) {
+    return res.status(400).json({ error: 'Filename and target directory are required' });
+  }
+
+  const sourceFilePath = path.join(uploadDir, filename);
+  const targetFilePath = path.join(uploadDir, targetDirectory, path.basename(filename));
+
+  try {
+    // Убедимся, что целевая директория существует
+    await fs.promises.mkdir(path.dirname(targetFilePath), { recursive: true });
+
+    // Перемещаем файл
+    await fs.promises.rename(sourceFilePath, targetFilePath);
+
+    console.log(`File moved: ${filename} to ${targetFilePath}`);
+    res.json({ message: 'File moved successfully', newPath: path.join(targetDirectory, path.basename(filename)) });
+  } catch (error) {
+    console.error('Error moving file:', error);
+    res.status(500).json({ error: 'Failed to move file' });
+  }
+});
+
 app.use('/uploads', (req, res, next) => {
   if (req.headers.accept && req.headers.accept.includes('text/html')) {
     const redirectUrl = `/play/${encodeURIComponent(path.basename(req.url))}`;
