@@ -173,28 +173,30 @@ const UploadPage = () => {
     );
   };
 
-  const handleMoveFiles = async () => {
-    if (selectedFiles.length === 0 || !targetDirectory) {
-      console.error('No files selected or target directory not chosen');
-      return;
-    }
+ const handleMoveFiles = async () => {
+  if (selectedFiles.length === 0 || !targetDirectory) {
+    console.error('No files selected or target directory not chosen');
+    return;
+  }
 
-    try {
-      for (const file of selectedFiles) {
-        await axios.post('/move-file', {
-          filename: file,
-          sourceDirectory: selectedDirectory,
-          targetDirectory: targetDirectory,
-        });
-      }
-      console.log('Files moved successfully');
-      fetchFiles(selectedDirectory);
-      setMoveDialogOpen(false);
-      setSelectedFiles([]);
-    } catch (error) {
-      console.error('Error moving files:', error);
+  try {
+    for (const file of selectedFiles) {
+      // Извлекаем только имя файла из полного пути
+      const filename = file.split('/').pop();
+      await axios.post('/move-file', {
+        filename: filename,
+        sourceDirectory: selectedDirectory,
+        targetDirectory: targetDirectory,
+      });
     }
-  };
+    console.log('Files moved successfully');
+    fetchFiles(selectedDirectory);
+    setMoveDialogOpen(false);
+    setSelectedFiles([]);
+  } catch (error) {
+    console.error('Error moving files:', error);
+  }
+};
 
   return (
     <Container maxWidth="md">

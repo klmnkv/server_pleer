@@ -168,19 +168,33 @@ app.delete('/delete/:filename', async (req, res) => {
 app.post('/move-file', async (req, res) => {
   const { filename, sourceDirectory, targetDirectory } = req.body;
 
-  const sourcePath = path.join(uploadDir, sourceDirectory || '', filename);
-  const targetPath = path.join(uploadDir, targetDirectory || '', filename);
+  // Извлекаем только имя файла из полного пути
+  const actualFilename = path.basename(filename);
+
+  const sourcePath = path.join(uploadDir, sourceDirectory || '', actualFilename);
+  const targetPath = path.join(uploadDir, targetDirectory || '', actualFilename);
 
   console.log(`Moving file from ${sourcePath} to ${targetPath}`);
 
   try {
+    // Проверяем, существует ли исходный файл
+    await fs.access(sourcePath);
+
+    // Создаем целевую директорию, если она не существует
     await fs.mkdir(path.dirname(targetPath), { recursive: true });
+
+    // Перемещаем файл
     await fs.rename(sourcePath, targetPath);
+
     console.log('File moved successfully');
     res.send({ message: 'File moved successfully' });
   } catch (error) {
     console.error('Error moving file:', error);
-    res.status(500).send({ error: 'Failed to move file' });
+    if (error.code === 'ENOENT') {
+      res.status(404).send({ error: 'Source file not found' });
+    } else {
+      res.status(500).send({ error: 'Failed to move file' });
+    }
   }
 });
 
