@@ -22,6 +22,7 @@ import {
   DialogContent,
   DialogActions,
   Checkbox,
+  ListItemButton,
   ListItemIcon,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -281,22 +282,30 @@ const UploadPage = () => {
       <List>
         {files.length > 0 ? (
           files.map((file, index) => (
-            <ListItem key={index} divider>
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={selectedFiles.includes(file)}
-                  tabIndex={-1}
-                  disableRipple
-                  onChange={() => handleFileSelect(file)}
+            <ListItem
+              key={index}
+              secondaryAction={
+                <IconButton onClick={() => handleDelete(file)} edge="end" aria-label={`Delete ${file}`}>
+                  <DeleteIcon />
+                </IconButton>
+              }
+              disablePadding
+            >
+              <ListItemButton role={undefined} onClick={() => handleFileSelect(file)} dense>
+                <ListItemIcon>
+                  <Checkbox
+                    edge="start"
+                    checked={selectedFiles.includes(file)}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ 'aria-labelledby': `checkbox-list-label-${index}` }}
+                  />
+                </ListItemIcon>
+                <ListItemText
+                  id={`checkbox-list-label-${index}`}
+                  primary={<Link to={`/play/${encodeURIComponent(file)}`}>{file}</Link>}
                 />
-              </ListItemIcon>
-              <ListItemText
-                primary={<Link to={`/play/${encodeURIComponent(file)}`}>{file}</Link>}
-              />
-              <IconButton onClick={() => handleDelete(file)} aria-label={`Delete the audio file ${file}`} edge="end">
-                <DeleteIcon />
-              </IconButton>
+              </ListItemButton>
             </ListItem>
           ))
         ) : (
