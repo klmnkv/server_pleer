@@ -135,10 +135,13 @@ app.get('/directories/:directoryName/files', async (req, res) => {
     res.send(files);
   } catch (error) {
     console.error('Error reading files in directory:', error);
-    res.status(500).send({ error: 'Unable to retrieve files' });
+    if (error.code === 'ENOENT') {
+      res.status(404).send({ error: 'Directory not found' });
+    } else {
+      res.status(500).send({ error: 'Unable to retrieve files' });
+    }
   }
 });
-
 
 app.get('/files', async (req, res) => {
   try {
@@ -155,18 +158,23 @@ app.get('/files', async (req, res) => {
 
 async function getAllFiles(dir) {
   console.log(`Scanning directory: ${dir}`);
-  const entries = await fs.promises.readdir(dir, { withFileTypes: true });
-  const files = await Promise.all(entries.map(async (entry) => {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      return getAllFiles(fullPath);
-    } else {
-      const relativePath = fullPath.replace(uploadDir, 'uploads');
-      console.log(`Found file: ${relativePath}`);
-      return relativePath;
-    }
-  }));
-  return files.flat();
+  try {
+    const entries = await fs.promises.readdir(dir, { withFileTypes: true });
+    const files = await Promise.all(entries.map(async (entry) => {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        return getAllFiles(fullPath);
+      } else {
+        const relativePath = fullPath.replace(uploadDir, 'uploads');
+        console.log(`Found file: ${relativePath}`);
+        return relativePath;
+      }
+    }));
+    return files.flat();
+  } catch (error) {
+    console.error(`Error scanning directory ${dir}:`, error);
+    return [];
+  }
 }
 
 
