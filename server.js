@@ -42,13 +42,15 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const directory = req.body.directory || '';
     const targetDir = path.join(uploadDir, directory);
+    console.log('Target directory:', targetDir);
     if (!fs.existsSync(targetDir)) {
       fs.mkdirSync(targetDir, { recursive: true });
     }
     cb(null, targetDir);
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
+    const originalExtension = path.extname(file.originalname);
+    cb(null, Date.now() + originalExtension);
   }
 });
 
@@ -56,6 +58,9 @@ const upload = multer({ storage: storage });
 
 app.post('/upload', upload.single('audio'), (req, res) => {
   console.log('File upload started');
+  console.log('Upload request body:', req.body);
+  console.log('Selected directory from request:', req.body.directory);
+
   if (!req.file) {
     console.log('No file received');
     return res.status(400).json({ error: 'No file uploaded' });
@@ -64,15 +69,6 @@ app.post('/upload', upload.single('audio'), (req, res) => {
   console.log('File received:', req.file);
   console.log('File path:', req.file.path);
   console.log('File size:', req.file.size);
-
-  // Проверка целостности файла
-  fs.stat(req.file.path, (err, stats) => {
-    if (err) {
-      console.error('Error checking uploaded file:', err);
-    } else {
-      console.log('Uploaded file size (fs.stat):', stats.size);
-    }
-  });
 
   const directory = req.body.directory || '';
   const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${req.file.filename}`;
@@ -188,7 +184,6 @@ app.get('/uploads/:filename', (req, res) => {
       return res.status(404).send('File not found or not readable');
     }
     console.log('File exists and is readable');
-    res.setHeader('Content-Type', 'audio/mpeg');
     res.sendFile(filePath, (err) => {
       if (err) {
         console.error('Error sending file:', err);

@@ -67,7 +67,9 @@ const UploadPage = () => {
   };
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    console.log('Selected file:', selectedFile);
+    setFile(selectedFile);
   };
 
   const handleDirectoryChange = (value) => {
@@ -121,6 +123,11 @@ const UploadPage = () => {
 
     console.log('Uploading file:', file.name);
     console.log('Selected directory:', selectedDirectory);
+
+    // Log FormData contents
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
 
     setLoading(true);
     try {
