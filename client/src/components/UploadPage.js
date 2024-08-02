@@ -210,7 +210,17 @@ const UploadPage = () => {
       {audioUrl && (
         <Box sx={{ marginBottom: 2 }}>
           <Typography>Audio URL: <Link to={`/play/${encodeURIComponent(audioUrl.split('/').pop())}`}>{audioUrl}</Link></Typography>
-          <audio controls src={audioUrl} aria-label="Audio player for the uploaded file" />
+          <audio
+            controls
+            src={audioUrl}
+            onError={(e) => {
+              console.error('Error loading audio:', e);
+              console.error('Error details:', e.target.error);
+            }}
+            onLoadedData={() => console.log('Audio loaded successfully')}
+          >
+            Your browser does not support the audio element.
+          </audio>
         </Box>
       )}
       <Typography variant="h5" gutterBottom>

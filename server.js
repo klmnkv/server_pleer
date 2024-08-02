@@ -32,10 +32,6 @@ app.use((req, res, next) => {
   next();
 });
 
-console.log('Current directory:', __dirname);
-console.log('Contents of client directory:', fs.readdirSync(path.join(__dirname, 'client')));
-console.log('Contents of client/build directory:', fs.readdirSync(path.join(__dirname, 'client/build')));
-
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
@@ -59,13 +55,15 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.post('/upload', upload.single('audio'), (req, res) => {
-  console.log('Upload request received');
-  console.log('Request headers:', req.headers);
-
+  console.log('File upload started');
   if (!req.file) {
-    console.log('No file was uploaded');
-    return res.status(400).json({ error: 'No file was uploaded' });
+    console.log('No file received');
+    return res.status(400).json({ error: 'No file uploaded' });
   }
+
+  console.log('File received:', req.file);
+  console.log('File path:', req.file.path);
+  console.log('File size:', req.file.size);
 
   const directory = req.body.directory || '';
   const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${req.file.filename}`;
@@ -171,14 +169,25 @@ app.delete('/delete/:filename', async (req, res) => {
   }
 });
 
-app.use('/uploads', (req, res, next) => {
-  if (req.headers.accept && req.headers.accept.includes('text/html')) {
-    const redirectUrl = `/play/${encodeURIComponent(path.basename(req.url))}`;
-    console.log(`Redirecting to: ${redirectUrl}`);
-    res.redirect(redirectUrl);
-  } else {
-    next();
-  }
+app.get('/uploads/:filename', (req, res) => {
+  const filePath = path.join(uploadDir, req.params.filename);
+  console.log('Audio file requested:', filePath);
+
+  fs.access(filePath, fs.constants.F_OK | fs.constants.R_OK, (err) => {
+    if (err) {
+      console.error('Error accessing file:', err);
+      return res.status(404).send('File not found or not readable');
+    }
+    console.log('File exists and is readable');
+    res.setHeader('Content-Type', 'audio/mpeg');
+    res.sendFile(filePath, (err) => {
+      if (err) {
+        console.error('Error sending file:', err);
+      } else {
+        console.log('File sent successfully');
+      }
+    });
+  });
 });
 
 app.use('/uploads', express.static(uploadDir));
