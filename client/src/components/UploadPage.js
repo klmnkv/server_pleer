@@ -201,7 +201,7 @@ const UploadPage = () => {
             onChange={handleNewDirectoryChange}
             placeholder="New directory name"
             aria-label="Enter new directory name"
-            sx={{ marginBottom: 2 }}
+          sx={{ marginBottom: 2 }}
           />
           <Button
             variant="contained"
@@ -250,6 +250,7 @@ const UploadPage = () => {
         Uploaded Files (Current directory: {selectedDirectory || 'Root'})
       </Typography>
       {fileError && <Typography color="error">{fileError}</Typography>}
+      <div>Debug: Files array length: {files.length}</div>
       <List>
         {files.length > 0 ? (
           files.map((file, index) => (

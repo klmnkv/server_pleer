@@ -42,7 +42,7 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const directory = req.body.directory || '';
     const targetDir = path.join(uploadDir, directory);
-    console.log('Target directory:', targetDir);
+    console.log('Upload target directory:', targetDir);
     if (!fs.existsSync(targetDir)) {
       fs.mkdirSync(targetDir, { recursive: true });
     }
@@ -112,6 +112,7 @@ app.get('/directories', async (req, res) => {
   try {
     const entries = await fs.promises.readdir(uploadDir, { withFileTypes: true });
     const directories = entries.filter(entry => entry.isDirectory()).map(entry => entry.name);
+    console.log('Fetched directories:', directories);
     res.send(directories);
   } catch (error) {
     console.error('Error reading directories:', error);
@@ -123,9 +124,12 @@ app.get('/directories/:directoryName/files', async (req, res) => {
   const { directoryName } = req.params;
   const dirPath = path.join(uploadDir, directoryName);
 
+  console.log(`Fetching files for directory: ${dirPath}`);
+
   try {
     const entries = await fs.promises.readdir(dirPath, { withFileTypes: true });
     const files = entries.filter(entry => entry.isFile()).map(entry => path.join(directoryName, entry.name));
+    console.log(`Files found in ${directoryName}:`, files);
     res.send(files);
   } catch (error) {
     console.error('Error reading files in directory:', error);
@@ -138,6 +142,7 @@ app.get('/files', async (req, res) => {
     const files = await getAllFiles(uploadDir);
     const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/${file}`);
     console.log(`Files retrieved: ${fileUrls.length}`);
+    console.log('Files:', fileUrls);
     res.send(fileUrls);
   } catch (error) {
     console.error('Error reading upload directory:', error);
