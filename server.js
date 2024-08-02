@@ -128,7 +128,9 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 
   try {
     const entries = await fs.promises.readdir(dirPath, { withFileTypes: true });
-    const files = entries.filter(entry => entry.isFile()).map(entry => path.join(directoryName, entry.name));
+    const files = entries
+      .filter(entry => entry.isFile())
+      .map(entry => `${directoryName}/${entry.name}`);
     console.log(`Files found in ${directoryName}:`, files);
     res.send(files);
   } catch (error) {
@@ -136,6 +138,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
     res.status(500).send({ error: 'Unable to retrieve files' });
   }
 });
+
 
 app.get('/files', async (req, res) => {
   try {
@@ -151,17 +154,21 @@ app.get('/files', async (req, res) => {
 });
 
 async function getAllFiles(dir) {
+  console.log(`Scanning directory: ${dir}`);
   const entries = await fs.promises.readdir(dir, { withFileTypes: true });
   const files = await Promise.all(entries.map(async (entry) => {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       return getAllFiles(fullPath);
     } else {
-      return fullPath.replace(uploadDir, 'uploads');
+      const relativePath = fullPath.replace(uploadDir, 'uploads');
+      console.log(`Found file: ${relativePath}`);
+      return relativePath;
     }
   }));
   return files.flat();
 }
+
 
 app.delete('/delete/:filename', async (req, res) => {
   const filename = req.params.filename;

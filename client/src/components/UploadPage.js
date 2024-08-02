@@ -43,18 +43,18 @@ const UploadPage = () => {
   }, [selectedDirectory]);
 
   const fetchFiles = async (directory) => {
-    console.log('Fetching files for directory:', directory);
-    try {
-      const response = await axios.get(directory ? `/directories/${directory}/files` : '/files');
-      console.log('Fetched files:', response.data);
-      setFiles(response.data);
-      setFileError('');
-    } catch (error) {
-      console.error('Error fetching files:', error);
-      setFileError(`Error fetching files: ${error.response?.data?.error || error.message}`);
-      setFiles([]);
-    }
-  };
+  console.log('Fetching files for directory:', directory);
+  try {
+    const response = await axios.get(directory ? `/directories/${directory}/files` : '/files');
+    console.log('Fetched files:', response.data);
+    setFiles(response.data);
+    setFileError('');
+  } catch (error) {
+    console.error('Error fetching files:', error);
+    setFileError(`Error fetching files: ${error.response?.data?.error || error.message}`);
+    setFiles([]);
+  }
+};
 
   const fetchDirectories = async () => {
     try {
