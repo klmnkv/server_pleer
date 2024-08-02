@@ -65,6 +65,15 @@ app.post('/upload', upload.single('audio'), (req, res) => {
   console.log('File path:', req.file.path);
   console.log('File size:', req.file.size);
 
+  // Проверка целостности файла
+  fs.stat(req.file.path, (err, stats) => {
+    if (err) {
+      console.error('Error checking uploaded file:', err);
+    } else {
+      console.log('Uploaded file size (fs.stat):', stats.size);
+    }
+  });
+
   const directory = req.body.directory || '';
   const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${req.file.filename}`;
   console.log(`File uploaded: ${audioUrl}`);
