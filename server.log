@@ -1,0 +1,348 @@
+Current directory: /root/server_pleer
+Contents of client directory: [
+  'build',
+  'node_modules',
+  'package-lock.json',
+  'package.json',
+  'public',
+  'src'
+]
+Contents of client/build directory: [ 'asset-manifest.json', 'index.html', 'manifest.json', 'static' ]
+Server running at http://0.0.0.0:3000 in development mode
+Current directory: /root/server_pleer
+Contents of client directory: [
+  'build',
+  'node_modules',
+  'package-lock.json',
+  'package.json',
+  'public',
+  'src'
+]
+Contents of client/build directory: [ 'asset-manifest.json', 'index.html', 'manifest.json', 'static' ]
+Server running at http://0.0.0.0:3000 in production mode
+2024-07-30T06:06:45.435Z - GET /
+2024-07-30T06:06:46.166Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:06:51.229Z - GET /
+2024-07-30T06:06:52.082Z - GET /
+2024-07-30T06:06:52.201Z - POST /php-cgi/php-cgi.exe?%ADd+cgi.force_redirect%3D0+%ADd+disable_functions%3D""+%ADd+allow_url_include%3D1+%ADd+auto_prepend_file%3Dphp://input
+2024-07-30T06:06:52.310Z - GET /server
+2024-07-30T06:06:52.419Z - GET /.vscode/sftp.json
+2024-07-30T06:06:52.529Z - GET /about
+2024-07-30T06:06:52.639Z - GET /debug/default/view?panel=config
+2024-07-30T06:06:52.782Z - GET /v2/_catalog
+2024-07-30T06:06:52.938Z - GET /ecp/Current/exporttool/microsoft.exchange.ediscovery.exporttool.application
+2024-07-30T06:06:53.043Z - GET /server-status
+2024-07-30T06:06:53.162Z - GET /login.action
+2024-07-30T06:06:53.279Z - GET /_all_dbs
+2024-07-30T06:06:53.387Z - GET /.DS_Store
+2024-07-30T06:06:53.492Z - GET /.env
+2024-07-30T06:06:53.598Z - GET /.git/config
+2024-07-30T06:06:53.703Z - GET /s/935313e25383e2437313e29373/_/;/META-INF/maven/com.atlassian.jira/jira-webapp-dist/pom.properties
+2024-07-30T06:06:53.816Z - GET /config.json
+2024-07-30T06:06:53.931Z - GET /telescope/requests
+2024-07-30T06:06:54.045Z - GET /?rest_route=/wp/v2/users/
+2024-07-30T06:06:56.301Z - HEAD /
+2024-07-30T06:07:17.804Z - GET /
+2024-07-30T06:07:40.387Z - GET /
+2024-07-30T06:07:40.549Z - GET /
+2024-07-30T06:07:42.061Z - GET /favicon.ico
+2024-07-30T06:07:44.383Z - GET /
+2024-07-30T06:07:44.544Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:07:44.821Z - GET /static/css/main.268c0bbd.css
+2024-07-30T06:07:52.731Z - GET /
+2024-07-30T06:07:53.332Z - GET /favicon.ico
+2024-07-30T06:07:54.193Z - GET /
+2024-07-30T06:07:54.500Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:07:58.564Z - GET /
+2024-07-30T06:07:58.741Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:07:59.017Z - GET /static/css/main.268c0bbd.css
+2024-07-30T06:08:04.329Z - GET /
+2024-07-30T06:08:04.856Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:08:09.824Z - GET /
+2024-07-30T06:08:10.124Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:08:10.553Z - GET /static/css/main.268c0bbd.css
+2024-07-30T06:08:15.932Z - GET /
+2024-07-30T06:08:16.619Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:08:17.219Z - GET /static/css/main.268c0bbd.css
+2024-07-30T06:08:18.857Z - GET /
+2024-07-30T06:08:42.288Z - GET /
+2024-07-30T06:08:42.387Z - GET /
+2024-07-30T06:08:42.816Z - GET /
+2024-07-30T06:08:43.831Z - GET /
+2024-07-30T06:09:16.080Z - GET /
+2024-07-30T06:09:16.313Z - GET /
+2024-07-30T06:09:16.344Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:09:16.862Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:09:17.253Z - GET /static/css/main.268c0bbd.css
+2024-07-30T06:09:17.834Z - GET /static/css/main.268c0bbd.css
+2024-07-30T06:11:15.282Z - GET /favicon.ico
+2024-07-30T06:11:41.384Z - GET /
+2024-07-30T06:11:41.558Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:11:41.835Z - GET /static/css/main.268c0bbd.css
+2024-07-30T06:12:01.354Z - GET /
+2024-07-30T06:12:01.497Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:12:01.900Z - GET /static/css/main.268c0bbd.css
+2024-07-30T06:12:03.135Z - GET /favicon.ico
+2024-07-30T06:12:04.175Z - GET /
+2024-07-30T06:12:04.315Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:12:04.717Z - GET /static/css/main.268c0bbd.css
+2024-07-30T06:12:06.068Z - GET /favicon.ico
+2024-07-30T06:12:35.887Z - GET /
+2024-07-30T06:12:36.161Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:12:36.162Z - GET /static/css/main.268c0bbd.css
+2024-07-30T06:16:07.801Z - GET /
+2024-07-30T06:16:08.085Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:16:08.087Z - GET /static/css/main.268c0bbd.css
+2024-07-30T06:20:04.860Z - GET /
+2024-07-30T06:20:04.955Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:20:05.056Z - GET /static/css/main.268c0bbd.css
+2024-07-30T06:20:38.379Z - GET /directories
+2024-07-30T06:20:38.382Z - GET /files
+Files retrieved: 3
+2024-07-30T06:20:38.432Z - GET /files
+Files retrieved: 3
+2024-07-30T06:21:12.358Z - POST /create-directory
+Directory created: /root/server_pleer/uploads/12
+2024-07-30T06:21:12.414Z - GET /directories
+2024-07-30T06:21:15.364Z - GET /directories/12/files
+2024-07-30T06:24:40.725Z - GET /
+2024-07-30T06:24:40.726Z - GET /
+2024-07-30T06:24:43.031Z - GET /
+2024-07-30T06:24:43.579Z - GET /
+2024-07-30T06:24:43.728Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:24:43.867Z - GET /
+2024-07-30T06:24:43.975Z - POST /php-cgi/php-cgi.exe?%ADd+cgi.force_redirect%3D0+%ADd+disable_functions%3D""+%ADd+allow_url_include%3D1+%ADd+auto_prepend_file%3Dphp://input
+2024-07-30T06:24:44.081Z - GET /server
+2024-07-30T06:24:44.197Z - GET /.vscode/sftp.json
+2024-07-30T06:24:44.303Z - GET /about
+2024-07-30T06:24:44.418Z - GET /debug/default/view?panel=config
+2024-07-30T06:24:44.521Z - GET /v2/_catalog
+2024-07-30T06:24:44.623Z - GET /ecp/Current/exporttool/microsoft.exchange.ediscovery.exporttool.application
+2024-07-30T06:24:44.725Z - GET /server-status
+2024-07-30T06:24:44.837Z - GET /login.action
+2024-07-30T06:24:44.942Z - GET /_all_dbs
+2024-07-30T06:24:45.049Z - GET /.DS_Store
+2024-07-30T06:24:45.156Z - GET /.env
+2024-07-30T06:24:45.271Z - GET /.git/config
+2024-07-30T06:24:45.387Z - GET /s/935313e25383e2437313e29373/_/;/META-INF/maven/com.atlassian.jira/jira-webapp-dist/pom.properties
+2024-07-30T06:24:45.501Z - GET /config.json
+2024-07-30T06:24:45.610Z - GET /telescope/requests
+2024-07-30T06:24:45.731Z - GET /?rest_route=/wp/v2/users/
+2024-07-30T06:24:46.797Z - GET /+n),new%20URL(n,t)%7Dnull==v&&(v=0,c.replaceState(l(%7B%7D,c.state,%7Bidx:v%7D),
+2024-07-30T06:25:39.847Z - GET /
+2024-07-30T06:26:24.940Z - GET /upload
+2024-07-30T06:26:26.900Z - GET /directories
+2024-07-30T06:26:26.952Z - GET /files
+Files retrieved: 3
+2024-07-30T06:26:27.004Z - GET /files
+Files retrieved: 3
+2024-07-30T06:26:33.078Z - GET /directories
+2024-07-30T06:26:33.079Z - GET /files
+Files retrieved: 3
+2024-07-30T06:26:33.132Z - GET /files
+Files retrieved: 3
+2024-07-30T06:26:34.587Z - GET /
+2024-07-30T06:27:09.199Z - GET /
+2024-07-30T06:27:11.044Z - GET /login
+2024-07-30T06:27:11.434Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:27:11.435Z - GET /static/css/main.268c0bbd.css
+2024-07-30T06:27:17.660Z - GET /favicon.ico
+2024-07-30T06:27:26.040Z - GET /
+2024-07-30T06:28:15.843Z - GET /
+2024-07-30T06:28:16.106Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:28:16.302Z - GET /
+2024-07-30T06:28:16.929Z - GET /static/js/main.b05a8ec3.js
+2024-07-30T06:28:17.650Z - GET /static/css/main.268c0bbd.css
+2024-07-30T06:28:17.653Z - GET /static/css/main.268c0bbd.css
+2024-07-30T06:28:19.719Z - GET /favicon.ico
+2024-07-30T06:28:19.722Z - GET /favicon.ico
+2024-07-30T06:28:52.431Z - GET /directories
+2024-07-30T06:28:52.482Z - GET /files
+Files retrieved: 3
+2024-07-30T06:28:52.533Z - GET /files
+Files retrieved: 3
+2024-07-30T06:28:55.313Z - GET /directories/12/files
+2024-07-30T06:28:59.276Z - GET /
+2024-07-30T06:29:01.125Z - POST /upload
+Server error: Error: Only audio files are allowed!
+    at fileFilter (/root/server_pleer/server.js:57:10)
+    at wrappedFileFilter (/root/server_pleer/node_modules/multer/index.js:44:7)
+    at Multipart.<anonymous> (/root/server_pleer/node_modules/multer/lib/make-middleware.js:107:7)
+    at Multipart.emit (node:events:519:28)
+    at HeaderParser.cb (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:358:14)
+    at HeaderParser.push (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:162:20)
+    at SBMH.ssCb [as _cb] (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:394:37)
+    at feed (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:248:10)
+    at SBMH.push (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:104:16)
+    at Multipart._write (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:567:19)
+2024-07-30T06:29:02.592Z - POST /upload
+Server error: Error: Only audio files are allowed!
+    at fileFilter (/root/server_pleer/server.js:57:10)
+    at wrappedFileFilter (/root/server_pleer/node_modules/multer/index.js:44:7)
+    at Multipart.<anonymous> (/root/server_pleer/node_modules/multer/lib/make-middleware.js:107:7)
+    at Multipart.emit (node:events:519:28)
+    at HeaderParser.cb (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:358:14)
+    at HeaderParser.push (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:162:20)
+    at SBMH.ssCb [as _cb] (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:394:37)
+    at feed (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:248:10)
+    at SBMH.push (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:104:16)
+    at Multipart._write (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:567:19)
+2024-07-30T06:29:03.264Z - POST /upload
+Server error: Error: Only audio files are allowed!
+    at fileFilter (/root/server_pleer/server.js:57:10)
+    at wrappedFileFilter (/root/server_pleer/node_modules/multer/index.js:44:7)
+    at Multipart.<anonymous> (/root/server_pleer/node_modules/multer/lib/make-middleware.js:107:7)
+    at Multipart.emit (node:events:519:28)
+    at HeaderParser.cb (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:358:14)
+    at HeaderParser.push (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:162:20)
+    at SBMH.ssCb [as _cb] (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:394:37)
+    at feed (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:248:10)
+    at SBMH.push (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:104:16)
+    at Multipart._write (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:567:19)
+2024-07-30T06:29:03.843Z - POST /upload
+Server error: Error: Only audio files are allowed!
+    at fileFilter (/root/server_pleer/server.js:57:10)
+    at wrappedFileFilter (/root/server_pleer/node_modules/multer/index.js:44:7)
+    at Multipart.<anonymous> (/root/server_pleer/node_modules/multer/lib/make-middleware.js:107:7)
+    at Multipart.emit (node:events:519:28)
+    at HeaderParser.cb (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:358:14)
+    at HeaderParser.push (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:162:20)
+    at SBMH.ssCb [as _cb] (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:394:37)
+    at feed (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:248:10)
+    at SBMH.push (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:104:16)
+    at Multipart._write (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:567:19)
+2024-07-30T06:29:04.824Z - POST /upload
+Server error: Error: Only audio files are allowed!
+    at fileFilter (/root/server_pleer/server.js:57:10)
+    at wrappedFileFilter (/root/server_pleer/node_modules/multer/index.js:44:7)
+    at Multipart.<anonymous> (/root/server_pleer/node_modules/multer/lib/make-middleware.js:107:7)
+    at Multipart.emit (node:events:519:28)
+    at HeaderParser.cb (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:358:14)
+    at HeaderParser.push (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:162:20)
+    at SBMH.ssCb [as _cb] (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:394:37)
+    at feed (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:248:10)
+    at SBMH.push (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:104:16)
+    at Multipart._write (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:567:19)
+2024-07-30T06:29:05.911Z - GET /
+2024-07-30T06:29:07.496Z - HEAD /
+2024-07-30T06:29:07.780Z - GET /
+2024-07-30T06:29:08.064Z - GET /robots.txt
+2024-07-30T06:29:08.349Z - HEAD /static/js/main.b05a8ec3.js
+2024-07-30T06:29:08.649Z - HEAD /static/css/main.268c0bbd.css
+2024-07-30T06:29:08.932Z - GET /static/css/main.268c0bbd.css
+2024-07-30T06:29:15.607Z - GET /
+2024-07-30T06:29:19.501Z - GET /
+2024-07-30T06:29:23.278Z - GET /robots.txt
+2024-07-30T06:29:27.228Z - POST /upload
+Server error: Error: Only audio files are allowed!
+    at fileFilter (/root/server_pleer/server.js:57:10)
+    at wrappedFileFilter (/root/server_pleer/node_modules/multer/index.js:44:7)
+    at Multipart.<anonymous> (/root/server_pleer/node_modules/multer/lib/make-middleware.js:107:7)
+    at Multipart.emit (node:events:519:28)
+    at HeaderParser.cb (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:358:14)
+    at HeaderParser.push (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:162:20)
+    at SBMH.ssCb [as _cb] (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:394:37)
+    at feed (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:248:10)
+    at SBMH.push (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:104:16)
+    at Multipart._write (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:567:19)
+2024-07-30T06:29:28.157Z - POST /upload
+Server error: Error: Only audio files are allowed!
+    at fileFilter (/root/server_pleer/server.js:57:10)
+    at wrappedFileFilter (/root/server_pleer/node_modules/multer/index.js:44:7)
+    at Multipart.<anonymous> (/root/server_pleer/node_modules/multer/lib/make-middleware.js:107:7)
+    at Multipart.emit (node:events:519:28)
+    at HeaderParser.cb (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:358:14)
+    at HeaderParser.push (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:162:20)
+    at SBMH.ssCb [as _cb] (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:394:37)
+    at feed (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:248:10)
+    at SBMH.push (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:104:16)
+    at Multipart._write (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:567:19)
+2024-07-30T06:29:28.661Z - POST /upload
+Server error: Error: Only audio files are allowed!
+    at fileFilter (/root/server_pleer/server.js:57:10)
+    at wrappedFileFilter (/root/server_pleer/node_modules/multer/index.js:44:7)
+    at Multipart.<anonymous> (/root/server_pleer/node_modules/multer/lib/make-middleware.js:107:7)
+    at Multipart.emit (node:events:519:28)
+    at HeaderParser.cb (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:358:14)
+    at HeaderParser.push (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:162:20)
+    at SBMH.ssCb [as _cb] (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:394:37)
+    at feed (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:248:10)
+    at SBMH.push (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:104:16)
+    at Multipart._write (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:567:19)
+2024-07-30T06:29:29.925Z - POST /upload
+Server error: Error: Only audio files are allowed!
+    at fileFilter (/root/server_pleer/server.js:57:10)
+    at wrappedFileFilter (/root/server_pleer/node_modules/multer/index.js:44:7)
+    at Multipart.<anonymous> (/root/server_pleer/node_modules/multer/lib/make-middleware.js:107:7)
+    at Multipart.emit (node:events:519:28)
+    at HeaderParser.cb (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:358:14)
+    at HeaderParser.push (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:162:20)
+    at SBMH.ssCb [as _cb] (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:394:37)
+    at feed (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:248:10)
+    at SBMH.push (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:104:16)
+    at Multipart._write (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:567:19)
+2024-07-30T06:29:31.003Z - GET /files
+Files retrieved: 3
+2024-07-30T06:29:31.369Z - POST /upload
+Server error: Error: Only audio files are allowed!
+    at fileFilter (/root/server_pleer/server.js:57:10)
+    at wrappedFileFilter (/root/server_pleer/node_modules/multer/index.js:44:7)
+    at Multipart.<anonymous> (/root/server_pleer/node_modules/multer/lib/make-middleware.js:107:7)
+    at Multipart.emit (node:events:519:28)
+    at HeaderParser.cb (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:358:14)
+    at HeaderParser.push (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:162:20)
+    at SBMH.ssCb [as _cb] (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:394:37)
+    at feed (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:248:10)
+    at SBMH.push (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:104:16)
+    at Multipart._write (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:567:19)
+2024-07-30T06:29:33.231Z - POST /upload
+Server error: Error: Only audio files are allowed!
+    at fileFilter (/root/server_pleer/server.js:57:10)
+    at wrappedFileFilter (/root/server_pleer/node_modules/multer/index.js:44:7)
+    at Multipart.<anonymous> (/root/server_pleer/node_modules/multer/lib/make-middleware.js:107:7)
+    at Multipart.emit (node:events:519:28)
+    at HeaderParser.cb (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:358:14)
+    at HeaderParser.push (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:162:20)
+    at SBMH.ssCb [as _cb] (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:394:37)
+    at feed (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:248:10)
+    at SBMH.push (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:104:16)
+    at Multipart._write (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:567:19)
+2024-07-30T06:29:34.115Z - POST /upload
+Server error: Error: Only audio files are allowed!
+    at fileFilter (/root/server_pleer/server.js:57:10)
+    at wrappedFileFilter (/root/server_pleer/node_modules/multer/index.js:44:7)
+    at Multipart.<anonymous> (/root/server_pleer/node_modules/multer/lib/make-middleware.js:107:7)
+    at Multipart.emit (node:events:519:28)
+    at HeaderParser.cb (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:358:14)
+    at HeaderParser.push (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:162:20)
+    at SBMH.ssCb [as _cb] (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:394:37)
+    at feed (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:248:10)
+    at SBMH.push (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:104:16)
+    at Multipart._write (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:567:19)
+2024-07-30T06:29:34.656Z - POST /upload
+Server error: Error: Only audio files are allowed!
+    at fileFilter (/root/server_pleer/server.js:57:10)
+    at wrappedFileFilter (/root/server_pleer/node_modules/multer/index.js:44:7)
+    at Multipart.<anonymous> (/root/server_pleer/node_modules/multer/lib/make-middleware.js:107:7)
+    at Multipart.emit (node:events:519:28)
+    at HeaderParser.cb (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:358:14)
+    at HeaderParser.push (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:162:20)
+    at SBMH.ssCb [as _cb] (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:394:37)
+    at feed (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:248:10)
+    at SBMH.push (/root/server_pleer/node_modules/streamsearch/lib/sbmh.js:104:16)
+    at Multipart._write (/root/server_pleer/node_modules/busboy/lib/types/multipart.js:567:19)
+2024-07-30T06:29:45.989Z - GET /robots.txt
+2024-07-30T06:32:23.630Z - GET /
+2024-07-30T06:32:24.134Z - GET /favicon.ico
+2024-07-30T06:32:43.813Z - GET /favicon.ico
+Current directory: C:\Users\pomka\PycharmProjects\server_audio
+Contents of client directory: [
+  'build',
+  'node_modules',
+  'package-lock.json',
+  'package.json',
+  'public',
+  'src'
+]
+Contents of client/build directory: [ 'asset-manifest.json', 'index.html', 'manifest.json', 'static' ]
+Server running at http://0.0.0.0:3000 in production mode
