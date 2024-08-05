@@ -38,28 +38,23 @@ const UploadPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log('Selected directory changed:', selectedDirectory);
     fetchFiles(selectedDirectory);
   }, [selectedDirectory]);
 
   const fetchFiles = async (directory) => {
-  console.log('Fetching files for directory:', directory);
-  try {
-    const response = await axios.get(directory ? `/directories/${directory}/files` : '/files');
-    console.log('Fetched files:', response.data);
-    setFiles(response.data);
-    setFileError('');
-  } catch (error) {
-    console.error('Error fetching files:', error);
-    setFileError(`Error fetching files: ${error.response?.data?.error || error.message}`);
-    setFiles([]);
-  }
-};
+    try {
+      const response = await axios.get(directory ? `/directories/${directory}/files` : '/files');
+      setFiles(response.data);
+      setFileError('');
+    } catch (error) {
+      setFileError(`Error fetching files: ${error.response?.data?.error || error.message}`);
+      setFiles([]);
+    }
+  };
 
   const fetchDirectories = async () => {
     try {
       const response = await axios.get('/directories');
-      console.log('Fetched directories:', response.data);
       setDirectories(response.data);
     } catch (error) {
       console.error('Error fetching directories:', error);
@@ -68,12 +63,10 @@ const UploadPage = () => {
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    console.log('Selected file:', selectedFile);
     setFile(selectedFile);
   };
 
   const handleDirectoryChange = (value) => {
-    console.log('Directory changed to:', value);
     setSelectedDirectory(value);
   };
 
@@ -93,7 +86,6 @@ const UploadPage = () => {
       setDirError('');
       fetchDirectories();
     } catch (error) {
-      console.error('Error creating directory:', error);
       setDirError(`Failed to create directory: ${error.response?.data?.error || error.message}`);
     }
   };
@@ -121,14 +113,6 @@ const UploadPage = () => {
     formData.append('audio', file);
     formData.append('directory', selectedDirectory || '');
 
-    console.log('Uploading file:', file.name);
-    console.log('Selected directory:', selectedDirectory);
-
-    // Log FormData contents
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-
     setLoading(true);
     try {
       const response = await axios.post('/upload', formData, {
@@ -136,12 +120,10 @@ const UploadPage = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('Upload response:', response.data);
       setAudioUrl(response.data.audioUrl);
       setUploadError('');
       fetchFiles(selectedDirectory);
     } catch (error) {
-      console.error('Upload error:', error);
       setUploadError(`Upload failed: ${error.response?.data?.error || error.message || 'Unknown error'}`);
     } finally {
       setLoading(false);
@@ -250,7 +232,6 @@ const UploadPage = () => {
         Uploaded Files (Current directory: {selectedDirectory || 'Root'})
       </Typography>
       {fileError && <Typography color="error">{fileError}</Typography>}
-      <div>Debug: Files array length: {files.length}</div>
       <List>
         {files.length > 0 ? (
           files.map((file, index) => (
@@ -267,6 +248,11 @@ const UploadPage = () => {
           <Typography>No files in this directory</Typography>
         )}
       </List>
+      <Box sx={{ marginTop: 4 }}>
+        <Button variant="contained" color="secondary" component={Link} to="/random-facts">
+          Show Random Facts
+        </Button>
+      </Box>
     </Container>
   );
 };
