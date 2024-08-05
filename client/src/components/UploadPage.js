@@ -17,16 +17,8 @@ import {
   CircularProgress,
   Box,
   Paper,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Checkbox,
-  ListItemButton,
-  ListItemIcon,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import MoveIcon from '@mui/icons-material/DriveFileMove';
 
 const UploadPage = () => {
   const [file, setFile] = useState(null);
@@ -39,9 +31,6 @@ const UploadPage = () => {
   const [directories, setDirectories] = useState([]);
   const [selectedDirectory, setSelectedDirectory] = useState('');
   const [newDirectory, setNewDirectory] = useState('');
-  const [moveDialogOpen, setMoveDialogOpen] = useState(false);
-  const [targetDirectory, setTargetDirectory] = useState('');
-  const [selectedFiles, setSelectedFiles] = useState([]);
 
   useEffect(() => {
     fetchDirectories();
@@ -133,10 +122,6 @@ const UploadPage = () => {
     console.log('Uploading file:', file.name);
     console.log('Selected directory:', selectedDirectory);
 
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-
     setLoading(true);
     try {
       const response = await axios.post('/upload', formData, {
@@ -165,39 +150,6 @@ const UploadPage = () => {
     }
   };
 
-  const handleFileSelect = (file) => {
-    setSelectedFiles(prev =>
-      prev.includes(file)
-        ? prev.filter(f => f !== file)
-        : [...prev, file]
-    );
-  };
-
- const handleMoveFiles = async () => {
-  if (selectedFiles.length === 0 || !targetDirectory) {
-    console.error('No files selected or target directory not chosen');
-    return;
-  }
-
-  try {
-    for (const file of selectedFiles) {
-      // Извлекаем только имя файла из полного пути
-      const filename = file.split('/').pop();
-      await axios.post('/move-file', {
-        filename: filename,
-        sourceDirectory: selectedDirectory,
-        targetDirectory: targetDirectory,
-      });
-    }
-    console.log('Files moved successfully');
-    fetchFiles(selectedDirectory);
-    setMoveDialogOpen(false);
-    setSelectedFiles([]);
-  } catch (error) {
-    console.error('Error moving files:', error);
-  }
-};
-
   return (
     <Container maxWidth="md">
       <Typography variant="h4" gutterBottom>
@@ -205,7 +157,7 @@ const UploadPage = () => {
       </Typography>
       <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
         <Box component="form" noValidate autoComplete="off">
-          <input type="file" onChange={handleFileChange} aria-label="Select an audio file to upload" />
+          <input type="file" onChange={handleFileChange} accept="audio/*" aria-label="Select an audio file to upload" />
           <FormControl fullWidth sx={{ marginTop: 2 }}>
             <InputLabel>Select Directory</InputLabel>
             <Select
@@ -284,75 +236,19 @@ const UploadPage = () => {
       <List>
         {files.length > 0 ? (
           files.map((file, index) => (
-            <ListItem
-              key={index}
-              secondaryAction={
-                <IconButton onClick={() => handleDelete(file)} edge="end" aria-label={`Delete ${file}`}>
-                  <DeleteIcon />
-                </IconButton>
-              }
-              disablePadding
-            >
-              <ListItemButton role={undefined} onClick={() => handleFileSelect(file)} dense>
-                <ListItemIcon>
-                  <Checkbox
-                    edge="start"
-                    checked={selectedFiles.includes(file)}
-                    tabIndex={-1}
-                    disableRipple
-                    inputProps={{ 'aria-labelledby': `checkbox-list-label-${index}` }}
-                  />
-                </ListItemIcon>
-                <ListItemText
-                  id={`checkbox-list-label-${index}`}
-                  primary={<Link to={`/play/${encodeURIComponent(file)}`}>{file}</Link>}
-                />
-              </ListItemButton>
+            <ListItem key={index} divider>
+              <ListItemText
+                primary={<Link to={`/play/${encodeURIComponent(file.split('/').pop())}`} aria-label={`Play the audio file ${file}`}>{file}</Link>}
+              />
+              <IconButton onClick={() => handleDelete(file.split('/').pop())} aria-label={`Delete the audio file ${file}`} edge="end">
+                <DeleteIcon />
+              </IconButton>
             </ListItem>
           ))
         ) : (
           <Typography>No files in this directory</Typography>
         )}
       </List>
-
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => setMoveDialogOpen(true)}
-        disabled={selectedFiles.length === 0}
-        startIcon={<MoveIcon />}
-        sx={{ marginTop: 2 }}
-      >
-        Move Selected Files
-      </Button>
-
-      <Dialog open={moveDialogOpen} onClose={() => setMoveDialogOpen(false)}>
-        <DialogTitle>Move Files</DialogTitle>
-        <DialogContent>
-          <Typography>
-            Selected files: {selectedFiles.join(', ')}
-          </Typography>
-          <FormControl fullWidth sx={{ marginTop: 2 }}>
-            <InputLabel>Select Target Directory</InputLabel>
-            <Select
-              value={targetDirectory}
-              onChange={(e) => setTargetDirectory(e.target.value)}
-              aria-label="Select target directory"
-            >
-              <MenuItem value="">
-                <em>Root directory</em>
-              </MenuItem>
-              {directories.map((dir, index) => (
-                <MenuItem key={index} value={dir}>{dir}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setMoveDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleMoveFiles}>Move</Button>
-        </DialogActions>
-      </Dialog>
     </Container>
   );
 };
