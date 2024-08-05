@@ -1,8 +1,4 @@
-require('dotenv').config();
-const express = require('express');
-const path = require('path');
-const fs = require('fs');
-const cors = require('cors');
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  const cors = require('cors');
 const util = require('util');
 const multer = require('multer');
 
@@ -128,6 +124,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 
   try {
     const entries = await fs.promises.readdir(dirPath, { withFileTypes: true });
+    console.log(`Entries in directory ${directoryName}:`, entries);
     const files = entries
       .filter(entry => entry.isFile())
       .map(entry => `${directoryName}/${entry.name}`);
@@ -136,13 +133,13 @@ app.get('/directories/:directoryName/files', async (req, res) => {
   } catch (error) {
     console.error('Error reading files in directory:', error);
     if (error.code === 'ENOENT') {
+      console.log(`Directory not found: ${dirPath}`);
       res.status(404).send({ error: 'Directory not found' });
     } else {
       res.status(500).send({ error: 'Unable to retrieve files' });
     }
   }
 });
-
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
@@ -159,13 +156,18 @@ app.get('/files', async (req, res) => {
 async function getAllFiles(dir) {
   console.log(`Scanning directory: ${dir}`);
   try {
+    const stats = await fs.promises.stat(dir);
+    if (!stats.isDirectory()) {
+      console.log(`${dir} is not a directory`);
+      return [];
+    }
     const entries = await fs.promises.readdir(dir, { withFileTypes: true });
     const files = await Promise.all(entries.map(async (entry) => {
       const fullPath = path.join(dir, entry.name);
       if (entry.isDirectory()) {
         return getAllFiles(fullPath);
       } else {
-        const relativePath = fullPath.replace(uploadDir, 'uploads');
+        const relativePath = path.relative(uploadDir, fullPath);
         console.log(`Found file: ${relativePath}`);
         return relativePath;
       }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+  GNU nano 6.2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          UploadPage.js                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   import React, { useState, useEffect } from 'react';                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   UploadPage.js
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import {
@@ -43,18 +43,18 @@ const UploadPage = () => {
   }, [selectedDirectory]);
 
   const fetchFiles = async (directory) => {
-  console.log('Fetching files for directory:', directory);
-  try {
-    const response = await axios.get(directory ? `/directories/${directory}/files` : '/files');
-    console.log('Fetched files:', response.data);
-    setFiles(response.data);
-    setFileError('');
-  } catch (error) {
-    console.error('Error fetching files:', error);
-    setFileError(`Error fetching files: ${error.response?.data?.error || error.message}`);
-    setFiles([]);
-  }
-};
+    console.log('Fetching files for directory:', directory);
+    try {
+      const response = await axios.get(directory ? `/directories/${directory}/files` : '/files');
+      console.log('Fetched files:', response.data);
+      setFiles(response.data);
+      setFileError('');
+    } catch (error) {
+      console.error('Error fetching files:', error);
+      setFileError(`Error fetching files: ${error.response?.data?.error || error.message}`);
+      setFiles([]);
+    }
+  };
 
   const fetchDirectories = async () => {
     try {
@@ -67,9 +67,7 @@ const UploadPage = () => {
   };
 
   const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    console.log('Selected file:', selectedFile);
-    setFile(selectedFile);
+    setFile(e.target.files[0]);
   };
 
   const handleDirectoryChange = (value) => {
@@ -123,11 +121,6 @@ const UploadPage = () => {
 
     console.log('Uploading file:', file.name);
     console.log('Selected directory:', selectedDirectory);
-
-    // Log FormData contents
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
 
     setLoading(true);
     try {
@@ -201,7 +194,7 @@ const UploadPage = () => {
             onChange={handleNewDirectoryChange}
             placeholder="New directory name"
             aria-label="Enter new directory name"
-          sx={{ marginBottom: 2 }}
+            sx={{ marginBottom: 2 }}
           />
           <Button
             variant="contained"
@@ -217,17 +210,7 @@ const UploadPage = () => {
       {audioUrl && (
         <Box sx={{ marginBottom: 2 }}>
           <Typography>Audio URL: <Link to={`/play/${encodeURIComponent(audioUrl.split('/').pop())}`}>{audioUrl}</Link></Typography>
-          <audio
-            controls
-            src={audioUrl}
-            onError={(e) => {
-              console.error('Error loading audio:', e);
-              console.error('Error details:', e.target.error);
-            }}
-            onLoadedData={() => console.log('Audio loaded successfully')}
-          >
-            Your browser does not support the audio element.
-          </audio>
+          <audio controls src={audioUrl} aria-label="Audio player for the uploaded file" />
         </Box>
       )}
       <Typography variant="h5" gutterBottom>
@@ -250,7 +233,6 @@ const UploadPage = () => {
         Uploaded Files (Current directory: {selectedDirectory || 'Root'})
       </Typography>
       {fileError && <Typography color="error">{fileError}</Typography>}
-      <div>Debug: Files array length: {files.length}</div>
       <List>
         {files.length > 0 ? (
           files.map((file, index) => (
@@ -272,3 +254,5 @@ const UploadPage = () => {
 };
 
 export default UploadPage;
+
+
