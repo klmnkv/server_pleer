@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs').promises;
 const cors = require('cors');
 const util = require('util');
 const multer = require('multer');
@@ -9,13 +9,6 @@ const multer = require('multer');
 const app = express();
 const port = process.env.PORT || 3000;
 const nodeEnv = process.env.NODE_ENV || 'development';
-
-// Check for client/build directory
-const clientBuildPath = path.join(__dirname, 'client', 'build');
-if (!fs.existsSync(clientBuildPath)) {
-  console.error('Error: client/build directory not found. Please run npm run build in the client directory.');
-  process.exit(1);
-}
 
 // Logging setup
 const logFile = fs.createWriteStream(path.join(__dirname, 'server.log'), { flags: 'a' });
@@ -40,20 +33,18 @@ app.use((req, res, next) => {
 });
 
 const uploadDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
-}
 
 // Multer setup
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination: async function (req, file, cb) {
     const directory = req.body.directory || '';
     const targetDir = path.join(uploadDir, directory);
-    console.log('Upload target directory:', targetDir);
-    if (!fs.existsSync(targetDir)) {
-      fs.mkdirSync(targetDir, { recursive: true });
+    try {
+      await fs.mkdir(targetDir, { recursive: true });
+      cb(null, targetDir);
+    } catch (error) {
+      cb(error);
     }
-    cb(null, targetDir);
   },
   filename: function (req, file, cb) {
     const originalExtension = path.extname(file.originalname);
@@ -63,7 +54,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.post('/upload', upload.single('audio'), (req, res) => {
+app.post('/upload', upload.single('audio'), async (req, res) => {
   console.log('File upload started');
   console.log('Upload request body:', req.body);
   console.log('Selected directory from request:', req.body.directory);
@@ -92,7 +83,7 @@ app.post('/create-directory', async (req, res) => {
   const newDirPath = path.join(uploadDir, directoryName);
 
   try {
-    await fs.promises.mkdir(newDirPath, { recursive: true });
+    await fs.mkdir(newDirPath, { recursive: true });
     console.log(`Directory created: ${newDirPath}`);
     res.status(201).send({ message: 'Directory created successfully' });
   } catch (error) {
@@ -106,7 +97,7 @@ app.delete('/delete-directory/:directoryName', async (req, res) => {
   const dirPath = path.join(uploadDir, directoryName);
 
   try {
-    await fs.promises.rmdir(dirPath, { recursive: true });
+    await fs.rmdir(dirPath, { recursive: true });
     console.log(`Directory deleted: ${dirPath}`);
     res.send({ message: 'Directory deleted successfully' });
   } catch (error) {
@@ -117,7 +108,7 @@ app.delete('/delete-directory/:directoryName', async (req, res) => {
 
 app.get('/directories', async (req, res) => {
   try {
-    const entries = await fs.promises.readdir(uploadDir, { withFileTypes: true });
+    const entries = await fs.readdir(uploadDir, { withFileTypes: true });
     const directories = entries.filter(entry => entry.isDirectory()).map(entry => entry.name);
     console.log('Fetched directories:', directories);
     res.send(directories);
@@ -134,7 +125,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
   console.log(`Fetching files for directory: ${dirPath}`);
 
   try {
-    const entries = await fs.promises.readdir(dirPath, { withFileTypes: true });
+    const entries = await fs.readdir(dirPath, { withFileTypes: true });
     console.log(`Entries in directory ${directoryName}:`, entries);
     const files = entries
       .filter(entry => entry.isFile())
@@ -168,12 +159,12 @@ app.get('/files', async (req, res) => {
 async function getAllFiles(dir) {
   console.log(`Scanning directory: ${dir}`);
   try {
-    const stats = await fs.promises.stat(dir);
+    const stats = await fs.stat(dir);
     if (!stats.isDirectory()) {
       console.log(`${dir} is not a directory`);
       return [];
     }
-    const entries = await fs.promises.readdir(dir, { withFileTypes: true });
+    const entries = await fs.readdir(dir, { withFileTypes: true });
     const files = await Promise.all(entries.map(async (entry) => {
       const fullPath = path.join(dir, entry.name);
       if (entry.isDirectory()) {
@@ -195,7 +186,7 @@ app.delete('/delete/:filename', async (req, res) => {
   const filename = req.params.filename;
   const filePath = path.join(uploadDir, filename);
   try {
-    await fs.promises.unlink(filePath);
+    await fs.unlink(filePath);
     console.log(`File deleted: ${filename}`);
     res.send({ message: 'File deleted successfully' });
   } catch (error) {
@@ -211,20 +202,22 @@ app.get('/uploads/:filename', (req, res) => {
   const filePath = path.join(uploadDir, req.params.filename);
   console.log('Audio file requested:', filePath);
 
-  fs.access(filePath, fs.constants.F_OK | fs.constants.R_OK, (err) => {
-    if (err) {
+  fs.access(filePath, fs.constants.F_OK | fs.constants.R_OK)
+    .then(() => {
+      console.log('File exists and is readable');
+      res.sendFile(filePath, (err) => {
+        if (err) {
+          console.error('Error sending file:', err);
+          res.status(err.status).end();
+        } else {
+          console.log('File sent successfully');
+        }
+      });
+    })
+    .catch((err) => {
       console.error('Error accessing file:', err);
-      return res.status(404).send('File not found or not readable');
-    }
-    console.log('File exists and is readable');
-    res.sendFile(filePath, (err) => {
-      if (err) {
-        console.error('Error sending file:', err);
-      } else {
-        console.log('File sent successfully');
-      }
+      res.status(404).send('File not found or not readable');
     });
-  });
 });
 
 app.use('/uploads', express.static(uploadDir));
@@ -235,19 +228,7 @@ app.get('/play/:filename', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  const indexPath = path.join(__dirname, 'client/build', 'index.html');
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
-  } else {
-    res.status(404).send('index.html not found');
-  }
-});
-
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 const server = app.listen(port, '0.0.0.0', () => {
@@ -260,3 +241,5 @@ process.on('SIGTERM', () => {
     console.log('HTTP server closed');
   });
 });
+
+//проверка
