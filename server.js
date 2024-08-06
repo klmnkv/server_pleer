@@ -39,6 +39,7 @@ const uploadDir = path.join(__dirname, 'uploads');
 fs.mkdirSync(uploadDir, { recursive: true });
 
 // Multer setup
+// Multer setup
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const directory = req.body.directory || '';
@@ -69,10 +70,12 @@ app.post('/upload', upload.single('audio'), (req, res) => {
   console.log('File size:', req.file.size);
 
   const directory = req.body.directory || '';
-  const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${req.file.filename}`;
+  const relativePath = path.relative(uploadDir, req.file.path);
+  const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${relativePath}`;
   console.log(`File uploaded: ${audioUrl}`);
   res.json({ audioUrl });
 });
+
 
 app.post('/create-directory', async (req, res) => {
   const { directoryName } = req.body;
