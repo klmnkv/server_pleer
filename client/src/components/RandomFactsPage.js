@@ -4,36 +4,34 @@ import { Box, Container, Typography } from '@mui/material';
 import AudioPlayer from './AudioPlayer';
 
 const RandomFactsPage = () => {
-  const [facts, setFacts] = useState([]);
+  const [fact, setFact] = useState(null);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchFacts = async () => {
+    const fetchFact = async () => {
       try {
-        const response = await axios.get('/random-facts');
-        setFacts(response.data);
+        const response = await axios.get('/random-fact');
+        setFact(response.data);
         setError('');
       } catch (error) {
-        setError(`Error fetching facts: ${error.response?.data?.error || error.message}`);
+        setError(`Error fetching fact: ${error.response?.data?.error || error.message}`);
       }
     };
 
-    fetchFacts();
+    fetchFact();
   }, []);
 
   return (
     <Container maxWidth="md">
       <Typography variant="h4" gutterBottom>
-        Random Facts
+        Random Fact
       </Typography>
       {error && <Typography color="error">{error}</Typography>}
-      <Box>
-        {facts.map((fact, index) => (
-          <Box key={index} sx={{ marginBottom: 2 }}>
-            <AudioPlayer audioUrl={fact} />
-          </Box>
-        ))}
-      </Box>
+      {fact && (
+        <Box sx={{ marginBottom: 2 }}>
+          <AudioPlayer audioUrl={fact} />
+        </Box>
+      )}
     </Container>
   );
 };

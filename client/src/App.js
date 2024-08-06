@@ -4,6 +4,7 @@ import LoginPage from './components/LoginPage';
 import UploadPage from './components/UploadPage';
 import PlayerPage from './components/PlayerPage';
 import RandomFactsPage from './components/RandomFactsPage';
+import FactsUploadPage from './components/FactsUploadPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -24,6 +25,14 @@ function App() {
           />
           <Route path="/play/:filename" element={<PlayerPage />} />
           <Route path="/random-facts" element={<RandomFactsPage />} />
+          <Route
+            path="/upload-facts"
+            element={
+              <ProtectedRoute auth={auth}>
+                <FactsUploadPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/" element={<Navigate to="/login" />} />
         </Routes>
       </div>

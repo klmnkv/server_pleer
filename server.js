@@ -67,7 +67,7 @@ app.post('/create-directory', async (req, res) => {
     await fs.promises.mkdir(newDirPath, { recursive: true });
     res.status(201).send({ message: 'Directory created successfully' });
   } catch (error) {
-    res.status(500).send({ error: 'Failed to create directory' });
+    res.status  .send({ error: 'Failed to create directory' });
   }
 });
 
@@ -171,12 +171,17 @@ app.get('/play/:filename', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
-app.get('/random-facts', async (req, res) => {
+app.get('/random-fact', async (req, res) => {
   try {
-    const files = await getAllFiles(uploadDir);
+    const dirPath = path.join(uploadDir, 'facts_orel');
+    const files = await getAllFiles(dirPath);
     const mp3Files = files.filter(file => file.endsWith('.mp3'));
-    const randomFiles = mp3Files.sort(() => 0.5 - Math.random()).slice(0, 5).map(file => `${req.protocol}://${req.get('host')}/uploads/${file}`);
-    res.send(randomFiles);
+    if (mp3Files.length === 0) {
+      return res.status(404).send('No facts available');
+    }
+    const randomFile = mp3Files[Math.floor(Math.random() * mp3Files.length)];
+    const fileUrl = `${req.protocol}://${req.get('host')}/uploads/facts_orel/${randomFile}`;
+    res.send(fileUrl);
   } catch (error) {
     res.status(500).send({ error: 'Unable to retrieve files' });
   }
