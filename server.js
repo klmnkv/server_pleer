@@ -75,6 +75,7 @@ app.post('/upload', upload.single('audio'), (req, res) => {
   console.log(`File uploaded: ${audioUrl}`);
   res.json({ audioUrl });
 });
+
 app.post('/create-directory', async (req, res) => {
   const { directoryName } = req.body;
   if (!directoryName) {
@@ -119,29 +120,28 @@ app.get('/directories', async (req, res) => {
   }
 });
 
-app.get('/directories/:directoryName/files', async (req, res) => {
-  const { directoryName } = req.params;
-  const dirPath = path.join(uploadDir, directoryName);
+app.get('/uploads/:directoryName?/:filename', (req, res) => {
+  const { directoryName, filename } = req.params;
+  const filePath = directoryName
+    ? path.join(uploadDir, directoryName, filename)
+    : path.join(uploadDir, filename);
 
-  console.log(`Fetching files for directory: ${dirPath}`);
+  console.log('Audio file requested:', filePath);
 
-  try {
-    const entries = await fsPromises.readdir(dirPath, { withFileTypes: true });
-    console.log(`Entries in directory ${directoryName}:`, entries);
-    const files = entries
-      .filter(entry => entry.isFile())
-      .map(entry => `${directoryName}/${entry.name}`);
-    console.log(`Files found in ${directoryName}:`, files);
-    res.send(files);
-  } catch (error) {
-    console.error('Error reading files in directory:', error);
-    if (error.code === 'ENOENT') {
-      console.log(`Directory not found: ${dirPath}`);
-      res.status(404).send({ error: 'Directory not found' });
-    } else {
-      res.status(500).send({ error: 'Unable to retrieve files' });
+  fs.access(filePath, fs.constants.F_OK | fs.constants.R_OK, (err) => {
+    if (err) {
+      console.error('Error accessing file:', err);
+      return res.status(404).send('File not found or not readable');
     }
-  }
+    console.log('File exists and is readable');
+    res.sendFile(filePath, (err) => {
+      if (err) {
+        console.error('Error sending file:', err);
+      } else {
+        console.log('File sent successfully');
+      }
+    });
+  });
 });
 
 app.get('/files', async (req, res) => {
