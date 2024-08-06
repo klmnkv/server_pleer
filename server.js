@@ -126,13 +126,10 @@ app.get('/directories/:directoryName/files', async (req, res) => {
   console.log(`Fetching files for directory: ${dirPath}`);
 
   try {
-    const entries = await fsPromises.readdir(dirPath, { withFileTypes: true });
-    console.log(`Entries in directory ${directoryName}:`, entries);
-    const files = entries
-      .filter(entry => entry.isFile())
-      .map(entry => entry.name);
-    console.log(`Files found in ${directoryName}:`, files);
-    res.send(files);
+    const files = await getAllFiles(dirPath);
+    const fileNames = files.map(file => path.basename(file));
+    console.log(`Files found in ${directoryName}:`, fileNames);
+    res.send(fileNames);
   } catch (error) {
     console.error('Error reading files in directory:', error);
     if (error.code === 'ENOENT') {
@@ -143,7 +140,6 @@ app.get('/directories/:directoryName/files', async (req, res) => {
     }
   }
 });
-
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
