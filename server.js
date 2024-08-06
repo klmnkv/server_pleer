@@ -154,10 +154,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
-    const fileUrls = files.map(file => {
-      const filename = path.basename(file);
-      return `${req.protocol}://${req.get('host')}/uploads/${filename}`;
-    });
+    const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file}`);
     console.log(`Files retrieved: ${fileUrls.length}`);
     console.log('Files:', fileUrls);
     res.send(fileUrls);
@@ -176,7 +173,7 @@ async function getAllFiles(dir) {
       if (entry.isDirectory()) {
         return getAllFiles(fullPath);
       } else {
-        return fullPath;
+        return path.relative(uploadDir, fullPath);
       }
     }));
     return files.flat();
@@ -185,7 +182,6 @@ async function getAllFiles(dir) {
     return [];
   }
 }
-
 app.delete('/delete/:filename', async (req, res) => {
   const filename = req.params.filename;
   try {
