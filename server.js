@@ -76,7 +76,6 @@ app.post('/upload', upload.single('audio'), (req, res) => {
   res.json({ audioUrl });
 });
 
-
 app.post('/create-directory', async (req, res) => {
   const { directoryName } = req.body;
   if (!directoryName) {
@@ -145,7 +144,6 @@ app.get('/directories/:directoryName/files', async (req, res) => {
     }
   }
 });
-
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
@@ -158,6 +156,27 @@ app.get('/files', async (req, res) => {
     res.status(500).send({ error: 'Unable to retrieve files' });
   }
 });
+
+
+async function moveExistingFiles() {
+  try {
+    const files = await fsPromises.readdir(uploadDir);
+    for (const file of files) {
+      const filePath = path.join(uploadDir, file);
+      const stats = await fsPromises.stat(filePath);
+      if (stats.isFile()) {
+        const directoryName = '1'; // или любая другая логика определения директории
+        const targetDir = path.join(uploadDir, directoryName);
+        await fsPromises.mkdir(targetDir, { recursive: true });
+        const newPath = path.join(targetDir, file);
+        await fsPromises.rename(filePath, newPath);
+        console.log(`Moved file ${file} to ${newPath}`);
+      }
+    }
+  } catch (error) {
+    console.error('Error moving existing files:', error);
+  }
+}
 
 async function getAllFiles(dir) {
   console.log(`Scanning directory: ${dir}`);
@@ -179,6 +198,7 @@ async function getAllFiles(dir) {
     return [];
   }
 }
+
 
 app.delete('/delete/:filename', async (req, res) => {
   const filename = req.params.filename;
