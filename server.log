@@ -346,3 +346,2846 @@ Contents of client directory: [
 ]
 Contents of client/build directory: [ 'asset-manifest.json', 'index.html', 'manifest.json', 'static' ]
 Server running at http://0.0.0.0:3000 in production mode
+Server running at http://0.0.0.0:3000 in production mode
+2024-08-06T05:33:35.798Z - GET /random-facts
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'cache-control': 'max-age=0',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191260ea7f9"',
+  'if-modified-since': 'Tue, 06 Aug 2024 04:59:40 GMT'
+}
+2024-08-06T05:33:35.885Z - GET /static/js/main.2e1d26b6.js
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'script',
+  referer: 'https://bred-audio.ru/random-facts',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7'
+}
+2024-08-06T05:33:36.171Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/random-facts',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191261055f3"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:01:30 GMT'
+}
+2024-08-06T05:33:39.053Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/login',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191262d40c8"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:33:05 GMT'
+}
+2024-08-06T05:33:40.025Z - GET /directories
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"e-4pF5xekn8EMQ8t7frrYjD69CZ/U"'
+}
+Fetched directories: []
+2024-08-06T05:33:40.030Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"149-2kkNpyAjnH+bQpwKODF7wR8cKQc"'
+}
+Scanning directory: /root/server_pleer/uploads
+Files retrieved: 0
+Files: []
+2024-08-06T05:33:40.078Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191262d40c8"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:33:05 GMT'
+}
+2024-08-06T05:33:40.082Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"'
+}
+Scanning directory: /root/server_pleer/uploads
+Files retrieved: 0
+Files: []
+2024-08-06T05:33:43.993Z - GET /random-facts
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/random-facts',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191262d40c8"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:33:05 GMT'
+}
+2024-08-06T05:33:43.996Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/random-facts',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191262d40c8"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:33:05 GMT'
+}
+2024-08-06T05:33:44.868Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191262d40c8"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:33:05 GMT'
+}
+2024-08-06T05:33:46.185Z - GET /upload
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'cache-control': 'max-age=0',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191261055f3"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:01:30 GMT'
+}
+2024-08-06T05:33:46.282Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/login',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191262d40c8"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:33:05 GMT'
+}
+2024-08-06T05:33:47.224Z - GET /directories
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"'
+}
+Fetched directories: []
+2024-08-06T05:33:47.227Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"'
+}
+Scanning directory: /root/server_pleer/uploads
+Files retrieved: 0
+Files: []
+2024-08-06T05:33:47.231Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191262d40c8"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:33:05 GMT'
+}
+2024-08-06T05:33:47.280Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"'
+}
+Scanning directory: /root/server_pleer/uploads
+Files retrieved: 0
+Files: []
+2024-08-06T05:33:53.420Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/login',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191262d40c8"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:33:05 GMT'
+}
+Server running at http://0.0.0.0:3000 in production mode
+Server running at http://0.0.0.0:3000 in production mode
+Server running at http://0.0.0.0:3000 in production mode
+Server running at http://0.0.0.0:3000 in production mode
+Server running at http://0.0.0.0:3000 in production mode
+2024-08-06T05:46:10.804Z - GET /restore.php
+Request headers: { connection: 'upgrade', host: '79.174.85.159', accept: '*/*' }
+Server running at http://0.0.0.0:3000 in production mode
+2024-08-06T05:55:50.373Z - GET /directories
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"'
+}
+Fetched directories: []
+2024-08-06T05:55:50.381Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"'
+}
+Scanning directory: /root/server_pleer/uploads
+Files retrieved: 0
+Files: []
+2024-08-06T05:55:50.429Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191262d40c8"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:33:05 GMT'
+}
+2024-08-06T05:55:50.437Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"'
+}
+Scanning directory: /root/server_pleer/uploads
+Files retrieved: 0
+Files: []
+2024-08-06T05:55:51.408Z - GET /upload
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'cache-control': 'max-age=0',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191262d40c8"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:33:05 GMT'
+}
+2024-08-06T05:55:51.501Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/login',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191263782b0"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:44:17 GMT'
+}
+2024-08-06T05:55:52.328Z - GET /directories
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"'
+}
+Fetched directories: []
+2024-08-06T05:55:52.331Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"'
+}
+Scanning directory: /root/server_pleer/uploads
+Files retrieved: 0
+Files: []
+2024-08-06T05:55:52.334Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191263782b0"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:44:17 GMT'
+}
+2024-08-06T05:55:52.382Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"'
+}
+Scanning directory: /root/server_pleer/uploads
+Files retrieved: 0
+Files: []
+2024-08-06T05:55:59.106Z - POST /upload
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'content-length': '1401544',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryIbjALC8VMXflB46W',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  origin: 'https://bred-audio.ru',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7'
+}
+Upload target directory: /root/server_pleer/uploads
+File upload started
+Upload request body: [Object: null prototype] { directory: '' }
+Selected directory from request: 
+File received: {
+  fieldname: 'audio',
+  originalname: 'Project 2.MP3 (5).mp3',
+  encoding: '7bit',
+  mimetype: 'audio/mpeg',
+  destination: '/root/server_pleer/uploads',
+  filename: '1722923759111.mp3',
+  path: '/root/server_pleer/uploads/1722923759111.mp3',
+  size: 1401252
+}
+File path: /root/server_pleer/uploads/1722923759111.mp3
+File size: 1401252
+File uploaded: http://bred-audio.ru/uploads/1722923759111.mp3
+2024-08-06T05:55:59.178Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"'
+}
+Scanning directory: /root/server_pleer/uploads
+Found file: 1722923759111.mp3
+Files retrieved: 1
+Files: [ 'http://bred-audio.ru/1722923759111.mp3' ]
+2024-08-06T05:55:59.188Z - GET /uploads/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'accept-encoding': 'identity;q=1, *;q=0',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'audio',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  range: 'bytes=0-'
+}
+Audio file requested: /root/server_pleer/uploads/1722923759111.mp3
+File exists and is readable
+File sent successfully
+2024-08-06T05:56:00.803Z - GET /uploads/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'accept-encoding': 'identity;q=1, *;q=0',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'audio',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  range: 'bytes=0-'
+}
+Audio file requested: /root/server_pleer/uploads/1722923759111.mp3
+File exists and is readable
+2024-08-06T05:56:00.806Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191263782b0"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:44:17 GMT'
+}
+File sent successfully
+2024-08-06T05:56:02.049Z - GET /uploads/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'accept-encoding': 'identity;q=1, *;q=0',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'audio',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  range: 'bytes=65536-'
+}
+Audio file requested: /root/server_pleer/uploads/1722923759111.mp3
+File exists and is readable
+File sent successfully
+2024-08-06T05:56:04.379Z - GET /directories
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"'
+}
+Fetched directories: []
+2024-08-06T05:56:04.432Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2a-EszoMdSGr2T4justL1/Szmarwa8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Found file: 1722923759111.mp3
+Files retrieved: 1
+Files: [ 'http://bred-audio.ru/1722923759111.mp3' ]
+2024-08-06T05:56:04.480Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191263782b0"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:44:17 GMT'
+}
+2024-08-06T05:56:04.486Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2a-EszoMdSGr2T4justL1/Szmarwa8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Found file: 1722923759111.mp3
+Files retrieved: 1
+Files: [ 'http://bred-audio.ru/1722923759111.mp3' ]
+2024-08-06T05:56:08.022Z - GET /1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7'
+}
+2024-08-06T05:56:08.216Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/1722923759111.mp3',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191263782b0"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:44:17 GMT'
+}
+2024-08-06T05:56:12.222Z - GET /1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'cache-control': 'max-age=0',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191263782b0"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:44:17 GMT'
+}
+2024-08-06T05:56:12.308Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/1722923759111.mp3',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191263782b0"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:44:17 GMT'
+}
+2024-08-06T05:56:13.480Z - GET /1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'cache-control': 'max-age=0',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191263782b0"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:44:17 GMT'
+}
+2024-08-06T05:56:13.562Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/1722923759111.mp3',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191263782b0"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:44:17 GMT'
+}
+2024-08-06T05:56:18.776Z - POST /create-directory
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'content-length': '21',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  origin: 'https://bred-audio.ru',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7'
+}
+Directory created: /root/server_pleer/uploads/1
+2024-08-06T05:56:18.831Z - GET /directories
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"'
+}
+Fetched directories: [ '1' ]
+2024-08-06T05:56:23.541Z - GET /directories/1/files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7'
+}
+Fetching files for directory: /root/server_pleer/uploads/1
+Entries in directory 1: []
+Files found in 1: []
+2024-08-06T05:56:24.991Z - POST /upload
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'content-length': '1401545',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryeGLsPFSjha4Tkvc7',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  origin: 'https://bred-audio.ru',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7'
+}
+Upload target directory: /root/server_pleer/uploads
+File upload started
+Upload request body: [Object: null prototype] { directory: '1' }
+Selected directory from request: 1
+File received: {
+  fieldname: 'audio',
+  originalname: 'Project 2.MP3 (5).mp3',
+  encoding: '7bit',
+  mimetype: 'audio/mpeg',
+  destination: '/root/server_pleer/uploads',
+  filename: '1722923784992.mp3',
+  path: '/root/server_pleer/uploads/1722923784992.mp3',
+  size: 1401252
+}
+File path: /root/server_pleer/uploads/1722923784992.mp3
+File size: 1401252
+File uploaded: http://bred-audio.ru/uploads/1/1722923784992.mp3
+2024-08-06T05:56:25.062Z - GET /directories/1/files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"'
+}
+Fetching files for directory: /root/server_pleer/uploads/1
+Entries in directory 1: []
+Files found in 1: []
+2024-08-06T05:56:25.070Z - GET /uploads/1/1722923784992.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'accept-encoding': 'identity;q=1, *;q=0',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'audio',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  range: 'bytes=0-'
+}
+Server running at http://0.0.0.0:3000 in production mode
+Server running at http://0.0.0.0:3000 in production mode
+2024-08-06T05:58:46.789Z - GET /directories
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Chromium";v="124", "YaBrowser";v="24.6", "Not-A.Brand";v="99", "Yowser";v="2.5"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 YaBrowser/24.6.0.0 Safari/537.36',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9',
+  'if-none-match': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"'
+}
+Fetched directories: [ '1' ]
+2024-08-06T05:58:46.846Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Chromium";v="124", "YaBrowser";v="24.6", "Not-A.Brand";v="99", "Yowser";v="2.5"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 YaBrowser/24.6.0.0 Safari/537.36',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9',
+  'if-none-match': 'W/"7c-jM180GEdq8YaeeP6+2XRlq3asN0"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T05:58:46.900Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Chromium";v="124", "YaBrowser";v="24.6", "Not-A.Brand";v="99", "Yowser";v="2.5"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 YaBrowser/24.6.0.0 Safari/537.36',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T05:58:50.656Z - GET /uploads/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Chromium";v="124", "YaBrowser";v="24.6", "Not-A.Brand";v="99", "Yowser";v="2.5"',
+  'accept-encoding': 'identity;q=1, *;q=0',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 YaBrowser/24.6.0.0 Safari/537.36',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'audio',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-language': 'ru,en;q=0.9',
+  range: 'bytes=0-'
+}
+Audio file requested: /root/server_pleer/uploads/1722923759111.mp3
+File exists and is readable
+File sent successfully
+2024-08-06T05:58:52.306Z - GET /directories
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Chromium";v="124", "YaBrowser";v="24.6", "Not-A.Brand";v="99", "Yowser";v="2.5"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 YaBrowser/24.6.0.0 Safari/537.36',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9',
+  'if-none-match': 'W/"5-pE9k/JH5y+FaiElromKqxElwKsc"'
+}
+Fetched directories: [ '1' ]
+2024-08-06T05:58:52.357Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Chromium";v="124", "YaBrowser";v="24.6", "Not-A.Brand";v="99", "Yowser";v="2.5"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 YaBrowser/24.6.0.0 Safari/537.36',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T05:58:52.407Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Chromium";v="124", "YaBrowser";v="24.6", "Not-A.Brand";v="99", "Yowser";v="2.5"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 YaBrowser/24.6.0.0 Safari/537.36',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T05:58:57.503Z - GET /1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 YaBrowser/24.6.0.0 Safari/537.36',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-ch-ua': '"Chromium";v="124", "YaBrowser";v="24.6", "Not-A.Brand";v="99", "Yowser";v="2.5"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'cross-site',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9'
+}
+2024-08-06T05:58:57.721Z - GET /static/js/main.2e1d26b6.js
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Chromium";v="124", "YaBrowser";v="24.6", "Not-A.Brand";v="99", "Yowser";v="2.5"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 YaBrowser/24.6.0.0 Safari/537.36',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'script',
+  referer: 'https://bred-audio.ru/1722923759111.mp3',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9',
+  'if-none-match': 'W/"5e081-191128900ad"',
+  'if-modified-since': 'Fri, 02 Aug 2024 10:00:54 GMT'
+}
+2024-08-06T05:58:59.611Z - GET /1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'cache-control': 'max-age=0',
+  'sec-ch-ua': '"Chromium";v="124", "YaBrowser";v="24.6", "Not-A.Brand";v="99", "Yowser";v="2.5"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 YaBrowser/24.6.0.0 Safari/537.36',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9',
+  'if-none-match': 'W/"200-191263782b0"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:44:17 GMT'
+}
+2024-08-06T05:59:00.711Z - GET /1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'cache-control': 'max-age=0',
+  'sec-ch-ua': '"Chromium";v="124", "YaBrowser";v="24.6", "Not-A.Brand";v="99", "Yowser";v="2.5"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 YaBrowser/24.6.0.0 Safari/537.36',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9',
+  'if-none-match': 'W/"200-191263782b0"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:44:17 GMT'
+}
+2024-08-06T05:59:03.311Z - GET /random-fact
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Chromium";v="124", "YaBrowser";v="24.6", "Not-A.Brand";v="99", "Yowser";v="2.5"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 YaBrowser/24.6.0.0 Safari/537.36',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/random-facts',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9'
+}
+2024-08-06T05:59:03.367Z - GET /%3C!doctype%20html%3E%3Chtml%20lang=%22en%22%3E%3Chead%3E%3Cmeta%20charset=%22utf-8%22/%3E%3Cmeta%20name=%22viewport%22%20content=%22width=device-width,initial-scale=1%22/%3E%3Cmeta%20name=%22theme-color%22%20content=%22
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Chromium";v="124", "YaBrowser";v="24.6", "Not-A.Brand";v="99", "Yowser";v="2.5"',
+  'accept-encoding': 'identity;q=1, *;q=0',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 YaBrowser/24.6.0.0 Safari/537.36',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'audio',
+  referer: 'https://bred-audio.ru/random-facts',
+  'accept-language': 'ru,en;q=0.9',
+  range: 'bytes=0-'
+}
+Server running at http://0.0.0.0:3000 in production mode
+2024-08-06T06:05:11.726Z - GET /
+Request headers: { connection: 'upgrade', host: '79.174.85.159' }
+Server running at http://0.0.0.0:3000 in production mode
+Server running at http://0.0.0.0:3000 in production mode
+Server running at http://0.0.0.0:3000 in production mode
+Server running at http://0.0.0.0:3000 in production mode
+Server running at http://0.0.0.0:3000 in production mode
+Server running at http://0.0.0.0:3000 in production mode
+2024-08-06T06:11:36.650Z - GET /
+Request headers: { host: 'localhost:3000', 'user-agent': 'curl/7.81.0', accept: '*/*' }
+2024-08-06T06:11:41.366Z - GET /
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'user-agent': 'curl/7.81.0',
+  accept: '*/*'
+}
+2024-08-06T06:12:44.721Z - GET /upload
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'cache-control': 'max-age=0',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7'
+}
+2024-08-06T06:12:44.871Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/login',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191263782b0"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:44:17 GMT'
+}
+2024-08-06T06:12:45.713Z - GET /directories
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"5-pE9k/JH5y+FaiElromKqxElwKsc"'
+}
+Fetched directories: [ '1' ]
+2024-08-06T06:12:45.720Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2a-EszoMdSGr2T4justL1/Szmarwa8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T06:12:45.768Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:12:45.779Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T06:12:55.094Z - GET /1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'cross-site',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191263782b0"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:44:17 GMT'
+}
+2024-08-06T06:12:55.374Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/1722923759111.mp3',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:13:59.963Z - GET /uploads/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'accept-encoding': 'identity;q=1, *;q=0',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'audio',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  range: 'bytes=0-'
+}
+Audio file requested: /root/server_pleer/uploads/1722923759111.mp3
+File exists and is readable
+2024-08-06T06:13:59.967Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+File sent successfully
+2024-08-06T06:14:01.996Z - GET /directories
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"5-pE9k/JH5y+FaiElromKqxElwKsc"'
+}
+Fetched directories: [ '1' ]
+2024-08-06T06:14:02.050Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T06:14:02.096Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:14:02.104Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T06:14:05.958Z - GET /1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'cross-site',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:14:06.204Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/1722923759111.mp3',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:14:09.758Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:14:12.052Z - GET /play/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7'
+}
+2024-08-06T06:14:12.225Z - GET /uploads/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'accept-encoding': 'identity;q=1, *;q=0',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'audio',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  range: 'bytes=0-97901',
+  'if-none-match': 'W/"1561a4-1912642360d"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:55:59 GMT'
+}
+Audio file requested: /root/server_pleer/uploads/1722923759111.mp3
+File exists and is readable
+File sent successfully
+2024-08-06T06:14:12.279Z - GET /uploads/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'accept-encoding': 'identity;q=1, *;q=0',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'audio',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  range: 'bytes=97902-1401251',
+  'if-range': 'W/"1561a4-1912642360d"'
+}
+Audio file requested: /root/server_pleer/uploads/1722923759111.mp3
+File exists and is readable
+Error sending file: Error: Request aborted
+    at onaborted (/root/server_pleer/node_modules/express/lib/response.js:1061:15)
+    at Immediate._onImmediate (/root/server_pleer/node_modules/express/lib/response.js:1103:9)
+    at process.processImmediate (node:internal/timers:483:21) {
+  code: 'ECONNABORTED'
+}
+2024-08-06T06:14:12.287Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:14:18.544Z - GET /play/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:14:18.798Z - GET /uploads/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'accept-encoding': 'identity;q=1, *;q=0',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'audio',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  range: 'bytes=0-97901',
+  'if-none-match': 'W/"1561a4-1912642360d"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:55:59 GMT'
+}
+Audio file requested: /root/server_pleer/uploads/1722923759111.mp3
+File exists and is readable
+File sent successfully
+2024-08-06T06:14:18.850Z - GET /uploads/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'accept-encoding': 'identity;q=1, *;q=0',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'audio',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  range: 'bytes=97902-1401251',
+  'if-range': 'W/"1561a4-1912642360d"'
+}
+Audio file requested: /root/server_pleer/uploads/1722923759111.mp3
+File exists and is readable
+Error sending file: Error: Request aborted
+    at onaborted (/root/server_pleer/node_modules/express/lib/response.js:1061:15)
+    at Immediate._onImmediate (/root/server_pleer/node_modules/express/lib/response.js:1103:9)
+    at process.processImmediate (node:internal/timers:483:21) {
+  code: 'ECONNABORTED'
+}
+2024-08-06T06:14:18.861Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:14:35.795Z - GET /play/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'user-agent': 'TelegramBot (like TwitterBot)',
+  'accept-encoding': 'deflate, gzip, br',
+  cookie: 'euConsent=true; BCPermissionLevel=PERSONAL; BC_GDPR=11111; fhCookieConsent=true; gdpr-source=GB; gdpr_consent=YES; beget=begetok; SOCS=CAISNQgEEitib3FfaWRlbnRpdHlmcm9udGVuZHVpc2VydmVyXzIwMjMwNzIzLjA5X3AwGgJlbiACGgYIgMSBpgY',
+  'accept-language': 'en-US,en;q=0.5',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+}
+2024-08-06T06:14:42.623Z - GET /upload
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-fetch-dest': 'document',
+  'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-language': 'ru',
+  priority: 'u=0, i',
+  'accept-encoding': 'gzip, deflate, br'
+}
+2024-08-06T06:14:43.741Z - GET /
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  'upgrade-insecure-requests': '1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language': 'ru',
+  priority: 'u=0, i',
+  'accept-encoding': 'gzip, deflate'
+}
+2024-08-06T06:14:43.859Z - GET /apple-touch-icon-120x120-precomposed.png
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  accept: '*/*',
+  'accept-language': 'ru',
+  'accept-encoding': 'gzip, deflate',
+  'user-agent': 'MobileSafari/8619.1.20.10.1 CFNetwork/1564.100.11 Darwin/24.0.0'
+}
+2024-08-06T06:14:43.912Z - GET /apple-touch-icon-120x120.png
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  accept: '*/*',
+  'accept-language': 'ru',
+  'accept-encoding': 'gzip, deflate',
+  'user-agent': 'MobileSafari/8619.1.20.10.1 CFNetwork/1564.100.11 Darwin/24.0.0'
+}
+2024-08-06T06:14:43.967Z - GET /apple-touch-icon-precomposed.png
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  accept: '*/*',
+  'accept-language': 'ru',
+  'accept-encoding': 'gzip, deflate',
+  'user-agent': 'MobileSafari/8619.1.20.10.1 CFNetwork/1564.100.11 Darwin/24.0.0'
+}
+2024-08-06T06:14:44.023Z - GET /apple-touch-icon.png
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  accept: '*/*',
+  'accept-language': 'ru',
+  'accept-encoding': 'gzip, deflate',
+  'user-agent': 'MobileSafari/8619.1.20.10.1 CFNetwork/1564.100.11 Darwin/24.0.0'
+}
+2024-08-06T06:14:44.076Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  accept: '*/*',
+  'accept-language': 'ru',
+  'accept-encoding': 'gzip, deflate',
+  'user-agent': 'MobileSafari/8619.1.20.10.1 CFNetwork/1564.100.11 Darwin/24.0.0'
+}
+2024-08-06T06:14:44.136Z - GET /apple-touch-icon-120x120-precomposed.png
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'if-none-match': 'W/"200-191264c7e27"',
+  accept: '*/*',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT',
+  'user-agent': 'MobileSafari/8619.1.20.10.1 CFNetwork/1564.100.11 Darwin/24.0.0',
+  'accept-language': 'ru',
+  'accept-encoding': 'gzip, deflate'
+}
+2024-08-06T06:14:44.193Z - GET /apple-touch-icon-120x120.png
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'if-none-match': 'W/"200-191264c7e27"',
+  accept: '*/*',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT',
+  'user-agent': 'MobileSafari/8619.1.20.10.1 CFNetwork/1564.100.11 Darwin/24.0.0',
+  'accept-language': 'ru',
+  'accept-encoding': 'gzip, deflate'
+}
+2024-08-06T06:14:44.246Z - GET /apple-touch-icon-precomposed.png
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'if-none-match': 'W/"200-191264c7e27"',
+  accept: '*/*',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT',
+  'user-agent': 'MobileSafari/8619.1.20.10.1 CFNetwork/1564.100.11 Darwin/24.0.0',
+  'accept-language': 'ru',
+  'accept-encoding': 'gzip, deflate'
+}
+2024-08-06T06:14:44.300Z - GET /apple-touch-icon.png
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'if-none-match': 'W/"200-191264c7e27"',
+  accept: '*/*',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT',
+  'user-agent': 'MobileSafari/8619.1.20.10.1 CFNetwork/1564.100.11 Darwin/24.0.0',
+  'accept-language': 'ru',
+  'accept-encoding': 'gzip, deflate'
+}
+2024-08-06T06:14:44.355Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'if-none-match': 'W/"200-191264c7e27"',
+  accept: '*/*',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT',
+  'user-agent': 'MobileSafari/8619.1.20.10.1 CFNetwork/1564.100.11 Darwin/24.0.0',
+  'accept-language': 'ru',
+  'accept-encoding': 'gzip, deflate'
+}
+2024-08-06T06:14:46.269Z - GET /directories
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  accept: 'application/json, text/plain, */*',
+  'sec-fetch-site': 'same-origin',
+  'if-none-match': 'W/"e-4pF5xekn8EMQ8t7frrYjD69CZ/U"',
+  'sec-fetch-mode': 'cors',
+  'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  referer: 'https://bred-audio.ru/upload',
+  'sec-fetch-dest': 'empty',
+  'accept-language': 'ru',
+  priority: 'u=3, i',
+  'accept-encoding': 'gzip, deflate, br'
+}
+Fetched directories: [ '1' ]
+2024-08-06T06:14:46.424Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  accept: 'application/json, text/plain, */*',
+  'sec-fetch-site': 'same-origin',
+  'if-none-match': 'W/"19b-LuXNSB4fQR+VkLGFARizRiHCA0k"',
+  'sec-fetch-mode': 'cors',
+  'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  referer: 'https://bred-audio.ru/upload',
+  'sec-fetch-dest': 'empty',
+  'accept-language': 'ru',
+  priority: 'u=3, i',
+  'accept-encoding': 'gzip, deflate, br'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T06:14:49.080Z - GET /uploads/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-dest': 'audio',
+  'x-playback-session-id': '7B9A4601-0CB4-4B41-8E48-E1B4E02480A8',
+  range: 'bytes=0-1',
+  'sec-fetch-mode': 'no-cors',
+  'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-encoding': 'identity',
+  'accept-language': 'ru',
+  priority: 'u=3, i'
+}
+Audio file requested: /root/server_pleer/uploads/1722923759111.mp3
+File exists and is readable
+File sent successfully
+2024-08-06T06:14:49.144Z - GET /uploads/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-dest': 'audio',
+  'x-playback-session-id': '7B9A4601-0CB4-4B41-8E48-E1B4E02480A8',
+  range: 'bytes=0-1401251',
+  'sec-fetch-mode': 'no-cors',
+  'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-encoding': 'identity',
+  'accept-language': 'ru',
+  priority: 'u=3, i'
+}
+Audio file requested: /root/server_pleer/uploads/1722923759111.mp3
+File exists and is readable
+File sent successfully
+2024-08-06T06:14:50.187Z - GET /directories
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  accept: 'application/json, text/plain, */*',
+  'sec-fetch-site': 'same-origin',
+  'if-none-match': 'W/"5-pE9k/JH5y+FaiElromKqxElwKsc"',
+  'sec-fetch-mode': 'cors',
+  'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  referer: 'https://bred-audio.ru/upload',
+  'sec-fetch-dest': 'empty',
+  'accept-language': 'ru',
+  priority: 'u=3, i',
+  'accept-encoding': 'gzip, deflate, br'
+}
+Fetched directories: [ '1' ]
+2024-08-06T06:14:50.344Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  accept: 'application/json, text/plain, */*',
+  'sec-fetch-site': 'same-origin',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"',
+  'sec-fetch-mode': 'cors',
+  'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  referer: 'https://bred-audio.ru/upload',
+  'sec-fetch-dest': 'empty',
+  'accept-language': 'ru',
+  priority: 'u=3, i',
+  'accept-encoding': 'gzip, deflate, br'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+2024-08-06T06:14:50.349Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  accept: 'application/json, text/plain, */*',
+  'sec-fetch-site': 'same-origin',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"',
+  'sec-fetch-mode': 'cors',
+  'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  referer: 'https://bred-audio.ru/upload',
+  'sec-fetch-dest': 'empty',
+  'accept-language': 'ru',
+  priority: 'u=3, i',
+  'accept-encoding': 'gzip, deflate, br'
+}
+Scanning directory: /root/server_pleer/uploads
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T06:14:56.725Z - GET /play/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-fetch-dest': 'document',
+  'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-language': 'ru',
+  priority: 'u=0, i',
+  'accept-encoding': 'gzip, deflate, br'
+}
+2024-08-06T06:14:56.869Z - GET /uploads/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-dest': 'audio',
+  'x-playback-session-id': '865CB461-676D-4039-B1E8-6757A0652EEB',
+  range: 'bytes=0-1',
+  'sec-fetch-mode': 'no-cors',
+  'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-encoding': 'identity',
+  'accept-language': 'ru',
+  priority: 'u=3, i'
+}
+Audio file requested: /root/server_pleer/uploads/1722923759111.mp3
+File exists and is readable
+File sent successfully
+2024-08-06T06:14:56.931Z - GET /uploads/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-dest': 'audio',
+  'x-playback-session-id': '865CB461-676D-4039-B1E8-6757A0652EEB',
+  range: 'bytes=0-1401251',
+  'sec-fetch-mode': 'no-cors',
+  'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-encoding': 'identity',
+  'accept-language': 'ru',
+  priority: 'u=3, i'
+}
+Audio file requested: /root/server_pleer/uploads/1722923759111.mp3
+File exists and is readable
+File sent successfully
+2024-08-06T06:14:58.272Z - GET /uploads/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-dest': 'audio',
+  'x-playback-session-id': '865CB461-676D-4039-B1E8-6757A0652EEB',
+  range: 'bytes=212590-1401251',
+  'sec-fetch-mode': 'no-cors',
+  'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-encoding': 'identity',
+  'accept-language': 'ru',
+  priority: 'u=3, i'
+}
+Audio file requested: /root/server_pleer/uploads/1722923759111.mp3
+File exists and is readable
+File sent successfully
+2024-08-06T06:15:20.795Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/login',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:15:22.626Z - GET /directories
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"5-pE9k/JH5y+FaiElromKqxElwKsc"'
+}
+Fetched directories: [ '1' ]
+2024-08-06T06:15:22.629Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T06:15:22.679Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:15:22.683Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T06:15:25.064Z - GET /random-facts
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/random-facts',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191262d40c8"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:33:05 GMT'
+}
+2024-08-06T06:15:25.066Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/random-facts',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:15:27.521Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:15:29.273Z - GET /upload
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'cache-control': 'max-age=0',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:15:29.383Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/login',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:15:30.407Z - GET /directories
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"5-pE9k/JH5y+FaiElromKqxElwKsc"'
+}
+Fetched directories: [ '1' ]
+2024-08-06T06:15:30.410Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+2024-08-06T06:15:30.413Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T06:15:30.465Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T06:15:36.912Z - GET /uploads/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'accept-encoding': 'identity;q=1, *;q=0',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'audio',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  range: 'bytes=0-97901',
+  'if-none-match': 'W/"1561a4-1912642360d"',
+  'if-modified-since': 'Tue, 06 Aug 2024 05:55:59 GMT'
+}
+Audio file requested: /root/server_pleer/uploads/1722923759111.mp3
+File exists and is readable
+2024-08-06T06:15:36.915Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+File sent successfully
+2024-08-06T06:15:36.966Z - GET /uploads/1722923759111.mp3
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'accept-encoding': 'identity;q=1, *;q=0',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: '*/*',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'audio',
+  referer: 'https://bred-audio.ru/play/1722923759111.mp3',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  range: 'bytes=97902-1401251',
+  'if-range': 'W/"1561a4-1912642360d"'
+}
+Audio file requested: /root/server_pleer/uploads/1722923759111.mp3
+File exists and is readable
+Error sending file: Error: Request aborted
+    at onaborted (/root/server_pleer/node_modules/express/lib/response.js:1061:15)
+    at Immediate._onImmediate (/root/server_pleer/node_modules/express/lib/response.js:1103:9)
+    at process.processImmediate (node:internal/timers:483:21) {
+  code: 'ECONNABORTED'
+}
+2024-08-06T06:15:48.310Z - GET /directories
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"5-pE9k/JH5y+FaiElromKqxElwKsc"'
+}
+Fetched directories: [ '1' ]
+2024-08-06T06:15:48.314Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T06:15:48.363Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:15:48.367Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T06:15:51.289Z - GET /upload
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'cache-control': 'max-age=0',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:15:51.413Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/login',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:15:52.763Z - GET /directories
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"5-pE9k/JH5y+FaiElromKqxElwKsc"'
+}
+Fetched directories: [ '1' ]
+2024-08-06T06:15:52.766Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+2024-08-06T06:15:52.769Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T06:15:52.820Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T06:15:55.243Z - GET /upload
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'cache-control': 'max-age=0',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:15:55.332Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/login',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+2024-08-06T06:15:56.138Z - GET /directories
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"5-pE9k/JH5y+FaiElromKqxElwKsc"'
+}
+Fetched directories: [ '1' ]
+2024-08-06T06:15:56.140Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+2024-08-06T06:15:56.145Z - GET /favicon.ico
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"200-191264c7e27"',
+  'if-modified-since': 'Tue, 06 Aug 2024 06:07:12 GMT'
+}
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T06:15:56.198Z - GET /files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"53-LQ1v8SUZ4wu5RX7+8KGpABAJFV8"'
+}
+Scanning directory: /root/server_pleer/uploads
+Scanning directory: /root/server_pleer/uploads/1
+Found file: 1722923759111.mp3
+Found file: 1722923784992.mp3
+Files retrieved: 2
+Files: [
+  'http://bred-audio.ru/1722923759111.mp3',
+  'http://bred-audio.ru/1722923784992.mp3'
+]
+2024-08-06T06:15:58.469Z - GET /directories/1/files
+Request headers: {
+  connection: 'upgrade',
+  host: 'bred-audio.ru',
+  'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua-mobile': '?0',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'https://bred-audio.ru/upload',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'ru,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+  'if-none-match': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"'
+}
+Fetching files for directory: /root/server_pleer/uploads/1
+Entries in directory 1: []
+Files found in 1: []

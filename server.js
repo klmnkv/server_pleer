@@ -3,14 +3,19 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
-
-
 const util = require('util');
 const multer = require('multer');
 
 const app = express();
 const port = process.env.PORT || 3000;
 const nodeEnv = process.env.NODE_ENV || 'development';
+
+// Check for client/build directory
+const clientBuildPath = path.join(__dirname, 'client', 'build');
+if (!fs.existsSync(clientBuildPath)) {
+  console.error('Error: client/build directory not found. Please run npm run build in the client directory.');
+  process.exit(1);
+}
 
 // Logging setup
 const logFile = fs.createWriteStream(path.join(__dirname, 'server.log'), { flags: 'a' });
@@ -146,6 +151,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
     }
   }
 });
+
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
@@ -184,7 +190,6 @@ async function getAllFiles(dir) {
     return [];
   }
 }
-
 
 app.delete('/delete/:filename', async (req, res) => {
   const filename = req.params.filename;
@@ -230,7 +235,19 @@ app.get('/play/:filename', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  const indexPath = path.join(__dirname, 'client/build', 'index.html');
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.status(404).send('index.html not found');
+  }
+});
+
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
 const server = app.listen(port, '0.0.0.0', () => {
