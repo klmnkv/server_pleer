@@ -35,17 +35,16 @@ app.use((req, res, next) => {
 
 const uploadDir = path.join(__dirname, 'uploads');
 
+// Ensure upload directory exists
+fs.mkdirSync(uploadDir, { recursive: true });
+
 // Multer setup
 const storage = multer.diskStorage({
-  destination: async function (req, file, cb) {
+  destination: function (req, file, cb) {
     const directory = req.body.directory || '';
     const targetDir = path.join(uploadDir, directory);
-    try {
-      await fs.mkdir(targetDir, { recursive: true });
-      cb(null, targetDir);
-    } catch (error) {
-      cb(error);
-    }
+    fs.mkdirSync(targetDir, { recursive: true });
+    cb(null, targetDir);
   },
   filename: function (req, file, cb) {
     const originalExtension = path.extname(file.originalname);
@@ -55,7 +54,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.post('/upload', upload.single('audio'), async (req, res) => {
+app.post('/upload', upload.single('audio'), (req, res) => {
   console.log('File upload started');
   console.log('Upload request body:', req.body);
   console.log('Selected directory from request:', req.body.directory);
@@ -84,7 +83,7 @@ app.post('/create-directory', async (req, res) => {
   const newDirPath = path.join(uploadDir, directoryName);
 
   try {
-    await fs.mkdir(newDirPath, { recursive: true });
+    await fsPromises.mkdir(newDirPath, { recursive: true });
     console.log(`Directory created: ${newDirPath}`);
     res.status(201).send({ message: 'Directory created successfully' });
   } catch (error) {
@@ -98,7 +97,7 @@ app.delete('/delete-directory/:directoryName', async (req, res) => {
   const dirPath = path.join(uploadDir, directoryName);
 
   try {
-    await fs.rmdir(dirPath, { recursive: true });
+    await fsPromises.rm(dirPath, { recursive: true, force: true });
     console.log(`Directory deleted: ${dirPath}`);
     res.send({ message: 'Directory deleted successfully' });
   } catch (error) {
@@ -109,7 +108,7 @@ app.delete('/delete-directory/:directoryName', async (req, res) => {
 
 app.get('/directories', async (req, res) => {
   try {
-    const entries = await fs.readdir(uploadDir, { withFileTypes: true });
+    const entries = await fsPromises.readdir(uploadDir, { withFileTypes: true });
     const directories = entries.filter(entry => entry.isDirectory()).map(entry => entry.name);
     console.log('Fetched directories:', directories);
     res.send(directories);
@@ -126,7 +125,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
   console.log(`Fetching files for directory: ${dirPath}`);
 
   try {
-    const entries = await fs.readdir(dirPath, { withFileTypes: true });
+    const entries = await fsPromises.readdir(dirPath, { withFileTypes: true });
     console.log(`Entries in directory ${directoryName}:`, entries);
     const files = entries
       .filter(entry => entry.isFile())
@@ -147,7 +146,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
-    const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/${file}`);
+    const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file}`);
     console.log(`Files retrieved: ${fileUrls.length}`);
     console.log('Files:', fileUrls);
     res.send(fileUrls);
@@ -160,11 +159,6 @@ app.get('/files', async (req, res) => {
 async function getAllFiles(dir) {
   console.log(`Scanning directory: ${dir}`);
   try {
-    const stats = await fsPromises.stat(dir);
-    if (!stats.isDirectory()) {
-      console.log(`${dir} is not a directory`);
-      return [];
-    }
     const entries = await fsPromises.readdir(dir, { withFileTypes: true });
     const files = await Promise.all(entries.map(async (entry) => {
       const fullPath = path.join(dir, entry.name);
@@ -187,7 +181,7 @@ app.delete('/delete/:filename', async (req, res) => {
   const filename = req.params.filename;
   const filePath = path.join(uploadDir, filename);
   try {
-    await fs.unlink(filePath);
+    await fsPromises.unlink(filePath);
     console.log(`File deleted: ${filename}`);
     res.send({ message: 'File deleted successfully' });
   } catch (error) {
@@ -199,27 +193,25 @@ app.delete('/delete/:filename', async (req, res) => {
   }
 });
 
-app.get('/uploads/:filename', async (req, res) => {
+app.get('/uploads/:filename', (req, res) => {
   const filePath = path.join(uploadDir, req.params.filename);
   console.log('Audio file requested:', filePath);
 
-  try {
-    await fsPromises.access(filePath, fs.constants.F_OK | fs.constants.R_OK);
+  fs.access(filePath, fs.constants.F_OK | fs.constants.R_OK, (err) => {
+    if (err) {
+      console.error('Error accessing file:', err);
+      return res.status(404).send('File not found or not readable');
+    }
     console.log('File exists and is readable');
     res.sendFile(filePath, (err) => {
       if (err) {
         console.error('Error sending file:', err);
-        res.status(err.status).end();
       } else {
         console.log('File sent successfully');
       }
     });
-  } catch (err) {
-    console.error('Error accessing file:', err);
-    res.status(404).send('File not found or not readable');
-  }
+  });
 });
-
 
 app.use('/uploads', express.static(uploadDir));
 app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: '1d' }));
@@ -242,5 +234,3 @@ process.on('SIGTERM', () => {
     console.log('HTTP server closed');
   });
 });
-
-//проверка
