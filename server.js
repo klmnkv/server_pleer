@@ -67,7 +67,7 @@ app.post('/create-directory', async (req, res) => {
     await fs.promises.mkdir(newDirPath, { recursive: true });
     res.status(201).send({ message: 'Directory created successfully' });
   } catch (error) {
-    res.status  .send({ error: 'Failed to create directory' });
+    res.status(500).send({ error: 'Failed to create directory' });
   }
 });
 
@@ -174,8 +174,8 @@ app.get('/play/:filename', (req, res) => {
 app.get('/random-fact', async (req, res) => {
   try {
     const dirPath = path.join(uploadDir, 'facts_orel');
-    const files = await getAllFiles(dirPath);
-    const mp3Files = files.filter(file => file.endsWith('.mp3'));
+    const entries = await fs.promises.readdir(dirPath, { withFileTypes: true });
+    const mp3Files = entries.filter(entry => entry.isFile() && entry.name.endsWith('.mp3')).map(entry => entry.name);
     if (mp3Files.length === 0) {
       return res.status(404).send('No facts available');
     }
