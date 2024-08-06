@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import {
@@ -32,17 +32,7 @@ const UploadPage = () => {
   const [selectedDirectory, setSelectedDirectory] = useState('');
   const [newDirectory, setNewDirectory] = useState('');
 
-  useEffect(() => {
-    fetchDirectories();
-    fetchFiles('');
-  }, []);
-
-  useEffect(() => {
-    console.log('Selected directory changed:', selectedDirectory);
-    fetchFiles(selectedDirectory);
-  }, [selectedDirectory]);
-
-  const fetchFiles = async (directory) => {
+  const fetchFiles = useCallback(async (directory) => {
     console.log('Fetching files for directory:', directory);
     try {
       const response = await axios.get(directory ? `/directories/${directory}/files` : '/files');
@@ -54,9 +44,9 @@ const UploadPage = () => {
       setFileError(`Error fetching files: ${error.response?.data?.error || error.message}`);
       setFiles([]);
     }
-  };
+  }, []);
 
-  const fetchDirectories = async () => {
+  const fetchDirectories = useCallback(async () => {
     try {
       const response = await axios.get('/directories');
       console.log('Fetched directories:', response.data);
@@ -64,22 +54,35 @@ const UploadPage = () => {
     } catch (error) {
       console.error('Error fetching directories:', error);
     }
-  };
+  }, []);
 
-  const handleFileChange = (e) => {
+  useEffect(() => {
+    const initFetch = async () => {
+      await fetchDirectories();
+      await fetchFiles('');
+    };
+    initFetch();
+  }, [fetchDirectories, fetchFiles]);
+
+  useEffect(() => {
+    console.log('Selected directory changed:', selectedDirectory);
+    fetchFiles(selectedDirectory);
+  }, [selectedDirectory, fetchFiles]);
+
+  const handleFileChange = useCallback((e) => {
     setFile(e.target.files[0]);
-  };
+  }, []);
 
-  const handleDirectoryChange = (value) => {
+  const handleDirectoryChange = useCallback((value) => {
     console.log('Directory changed to:', value);
     setSelectedDirectory(value);
-  };
+  }, []);
 
-  const handleNewDirectoryChange = (e) => {
+  const handleNewDirectoryChange = useCallback((e) => {
     setNewDirectory(e.target.value);
-  };
+  }, []);
 
-  const handleCreateDirectory = async () => {
+  const handleCreateDirectory = useCallback(async () => {
     if (!newDirectory) {
       setDirError('Please enter a directory name');
       return;
@@ -89,27 +92,27 @@ const UploadPage = () => {
       await axios.post('/create-directory', { directoryName: newDirectory });
       setNewDirectory('');
       setDirError('');
-      fetchDirectories();
+      await fetchDirectories();
     } catch (error) {
       console.error('Error creating directory:', error);
       setDirError(`Failed to create directory: ${error.response?.data?.error || error.message}`);
     }
-  };
+  }, [newDirectory, fetchDirectories]);
 
-  const handleDeleteDirectory = async (directoryName) => {
+  const handleDeleteDirectory = useCallback(async (directoryName) => {
     try {
       await axios.delete(`/delete-directory/${directoryName}`);
-      fetchDirectories();
+      await fetchDirectories();
       if (selectedDirectory === directoryName) {
         setSelectedDirectory('');
-        fetchFiles('');
+        await fetchFiles('');
       }
     } catch (error) {
       console.error('Error deleting directory:', error);
     }
-  };
+  }, [fetchDirectories, fetchFiles, selectedDirectory]);
 
-  const handleUpload = async () => {
+  const handleUpload = useCallback(async () => {
     if (!file) {
       setUploadError('Please select a file first');
       return;
@@ -132,23 +135,23 @@ const UploadPage = () => {
       console.log('Upload response:', response.data);
       setAudioUrl(response.data.audioUrl);
       setUploadError('');
-      fetchFiles(selectedDirectory);
+      await fetchFiles(selectedDirectory);
     } catch (error) {
       console.error('Upload error:', error);
       setUploadError(`Upload failed: ${error.response?.data?.error || error.message || 'Unknown error'}`);
     } finally {
       setLoading(false);
     }
-  };
+  }, [file, selectedDirectory, fetchFiles]);
 
-  const handleDelete = async (filename) => {
+  const handleDelete = useCallback(async (filename) => {
     try {
       await axios.delete(`/delete/${filename}`);
-      fetchFiles(selectedDirectory);
+      await fetchFiles(selectedDirectory);
     } catch (error) {
       console.error('Delete error:', error);
     }
-  };
+  }, [fetchFiles, selectedDirectory]);
 
   return (
     <Container maxWidth="md">
@@ -157,13 +160,19 @@ const UploadPage = () => {
       </Typography>
       <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
         <Box component="form" noValidate autoComplete="off">
-          <input type="file" onChange={handleFileChange} accept="audio/*" aria-label="Select an audio file to upload" />
+          <input
+            type="file"
+            onChange={handleFileChange}
+            accept="audio/*"
+            id="audio-file-input"
+          />
           <FormControl fullWidth sx={{ marginTop: 2 }}>
-            <InputLabel>Select Directory</InputLabel>
+            <InputLabel id="directory-select-label">Select Directory</InputLabel>
             <Select
+              labelId="directory-select-label"
               value={selectedDirectory}
               onChange={(e) => handleDirectoryChange(e.target.value)}
-              aria-label="Select a directory"
+              label="Select Directory"
             >
               <MenuItem value="">
                 <em>Root directory</em>
@@ -177,7 +186,6 @@ const UploadPage = () => {
             variant="contained"
             color="primary"
             onClick={handleUpload}
-            aria-label="Upload the selected audio file"
             disabled={loading}
             sx={{ marginTop: 2 }}
           >
@@ -193,14 +201,13 @@ const UploadPage = () => {
             value={newDirectory}
             onChange={handleNewDirectoryChange}
             placeholder="New directory name"
-            aria-label="Enter new directory name"
+            label="New Directory Name"
             sx={{ marginBottom: 2 }}
           />
           <Button
             variant="contained"
             color="primary"
             onClick={handleCreateDirectory}
-            aria-label="Create new directory"
           >
             Create Directory
           </Button>
@@ -210,20 +217,20 @@ const UploadPage = () => {
       {audioUrl && (
         <Box sx={{ marginBottom: 2 }}>
           <Typography>Audio URL: <Link to={`/play/${encodeURIComponent(audioUrl.split('/').pop())}`}>{audioUrl}</Link></Typography>
-          <audio controls src={audioUrl} aria-label="Audio player for the uploaded file" />
+          <audio controls src={audioUrl} />
         </Box>
       )}
       <Typography variant="h5" gutterBottom>
         Directories
       </Typography>
       <List>
-        <ListItem button divider onClick={() => handleDirectoryChange('')}>
+        <ListItem button onClick={() => handleDirectoryChange('')}>
           <ListItemText primary="Root directory" />
         </ListItem>
         {directories.map((dir, index) => (
-          <ListItem button key={index} divider onClick={() => handleDirectoryChange(dir)}>
+          <ListItem button key={index} onClick={() => handleDirectoryChange(dir)}>
             <ListItemText primary={dir} />
-            <IconButton onClick={(e) => { e.stopPropagation(); handleDeleteDirectory(dir); }} aria-label={`Delete directory ${dir}`} edge="end">
+            <IconButton onClick={(e) => { e.stopPropagation(); handleDeleteDirectory(dir); }} edge="end">
               <DeleteIcon />
             </IconButton>
           </ListItem>
@@ -236,11 +243,11 @@ const UploadPage = () => {
       <List>
         {files.length > 0 ? (
           files.map((file, index) => (
-            <ListItem key={index} divider>
+            <ListItem key={index}>
               <ListItemText
-                primary={<Link to={`/play/${encodeURIComponent(file.split('/').pop())}`} aria-label={`Play the audio file ${file}`}>{file}</Link>}
+                primary={<Link to={`/play/${encodeURIComponent(file.split('/').pop())}`}>{file}</Link>}
               />
-              <IconButton onClick={() => handleDelete(file.split('/').pop())} aria-label={`Delete the audio file ${file}`} edge="end">
+              <IconButton onClick={() => handleDelete(file.split('/').pop())} edge="end">
                 <DeleteIcon />
               </IconButton>
             </ListItem>
@@ -254,5 +261,3 @@ const UploadPage = () => {
 };
 
 export default UploadPage;
-
-
