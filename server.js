@@ -38,7 +38,7 @@ const uploadDir = path.join(__dirname, 'uploads');
 // Ensure upload directory exists
 fs.mkdirSync(uploadDir, { recursive: true });
 
-// Multer setup
+
 // Multer setup
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -75,7 +75,6 @@ app.post('/upload', upload.single('audio'), (req, res) => {
   console.log(`File uploaded: ${audioUrl}`);
   res.json({ audioUrl });
 });
-
 app.post('/create-directory', async (req, res) => {
   const { directoryName } = req.body;
   if (!directoryName) {
@@ -144,6 +143,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
     }
   }
 });
+
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
@@ -177,6 +177,9 @@ async function moveExistingFiles() {
     console.error('Error moving existing files:', error);
   }
 }
+
+// Вызовите эту функцию при запуске сервера
+moveExistingFiles();
 
 async function getAllFiles(dir) {
   console.log(`Scanning directory: ${dir}`);
