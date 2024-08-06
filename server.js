@@ -64,17 +64,27 @@ app.post('/upload', upload.single('audio'), (req, res) => {
     return res.status(400).json({ error: 'No file uploaded' });
   }
 
+  const directory = req.body.directory || '';
+  const targetDir = path.join(uploadDir, directory);
+
+  // Создаем директорию, если она не существует
+  if (!fs.existsSync(targetDir)) {
+    fs.mkdirSync(targetDir, { recursive: true });
+  }
+
+  // Перемещаем файл в нужную директорию
+  const oldPath = req.file.path;
+  const newPath = path.join(targetDir, req.file.filename);
+  fs.renameSync(oldPath, newPath);
+
   console.log('File received:', req.file);
-  console.log('File path:', req.file.path);
+  console.log('File path:', newPath);
   console.log('File size:', req.file.size);
 
-  const relativePath = path.relative(uploadDir, req.file.path);
-  const filename = path.basename(req.file.path);
-  const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${filename}`;
+  const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${req.file.filename}`;
   console.log(`File uploaded: ${audioUrl}`);
   res.json({ audioUrl });
 });
-
 app.post('/create-directory', async (req, res) => {
   const { directoryName } = req.body;
   if (!directoryName) {
@@ -140,6 +150,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
     }
   }
 });
+
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
@@ -165,7 +176,7 @@ async function getAllFiles(dir) {
       if (entry.isDirectory()) {
         return getAllFiles(fullPath);
       } else {
-        return path.relative(uploadDir, fullPath);
+        return fullPath;
       }
     }));
     return files.flat();
