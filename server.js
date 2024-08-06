@@ -1,7 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const fs = require('fs').promises;
+const fs = require('fs');
+const fsPromises = fs.promises;
 const cors = require('cors');
 const util = require('util');
 const multer = require('multer');
@@ -159,12 +160,12 @@ app.get('/files', async (req, res) => {
 async function getAllFiles(dir) {
   console.log(`Scanning directory: ${dir}`);
   try {
-    const stats = await fs.stat(dir);
+    const stats = await fsPromises.stat(dir);
     if (!stats.isDirectory()) {
       console.log(`${dir} is not a directory`);
       return [];
     }
-    const entries = await fs.readdir(dir, { withFileTypes: true });
+    const entries = await fsPromises.readdir(dir, { withFileTypes: true });
     const files = await Promise.all(entries.map(async (entry) => {
       const fullPath = path.join(dir, entry.name);
       if (entry.isDirectory()) {
@@ -198,27 +199,27 @@ app.delete('/delete/:filename', async (req, res) => {
   }
 });
 
-app.get('/uploads/:filename', (req, res) => {
+app.get('/uploads/:filename', async (req, res) => {
   const filePath = path.join(uploadDir, req.params.filename);
   console.log('Audio file requested:', filePath);
 
-  fs.access(filePath, fs.constants.F_OK | fs.constants.R_OK)
-    .then(() => {
-      console.log('File exists and is readable');
-      res.sendFile(filePath, (err) => {
-        if (err) {
-          console.error('Error sending file:', err);
-          res.status(err.status).end();
-        } else {
-          console.log('File sent successfully');
-        }
-      });
-    })
-    .catch((err) => {
-      console.error('Error accessing file:', err);
-      res.status(404).send('File not found or not readable');
+  try {
+    await fsPromises.access(filePath, fs.constants.F_OK | fs.constants.R_OK);
+    console.log('File exists and is readable');
+    res.sendFile(filePath, (err) => {
+      if (err) {
+        console.error('Error sending file:', err);
+        res.status(err.status).end();
+      } else {
+        console.log('File sent successfully');
+      }
     });
+  } catch (err) {
+    console.error('Error accessing file:', err);
+    res.status(404).send('File not found or not readable');
+  }
 });
+
 
 app.use('/uploads', express.static(uploadDir));
 app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: '1d' }));
