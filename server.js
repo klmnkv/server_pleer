@@ -54,6 +54,25 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// Function to get a random audio file from a directory
+async function getRandomAudioFile(directory) {
+  const dirPath = path.join(uploadDir, directory);
+  try {
+    const files = await fsPromises.readdir(dirPath);
+    const audioFiles = files.filter(file => ['.mp3', '.wav', '.ogg'].includes(path.extname(file)));
+
+    if (audioFiles.length === 0) {
+      throw new Error('No audio files found in the specified directory');
+    }
+
+    return audioFiles[Math.floor(Math.random() * audioFiles.length)];
+  } catch (error) {
+    console.error(`Error reading directory ${dirPath}:`, error);
+    throw error;
+  }
+}
+
+// Route for uploading audio files
 app.post('/upload', upload.single('audio'), (req, res) => {
   console.log('File upload started');
   console.log('Upload request body:', req.body);
@@ -67,12 +86,12 @@ app.post('/upload', upload.single('audio'), (req, res) => {
   const directory = req.body.directory || '';
   const targetDir = path.join(uploadDir, directory);
 
-  // Создаем директорию, если она не существует
+  // Create directory if it doesn't exist
   if (!fs.existsSync(targetDir)) {
     fs.mkdirSync(targetDir, { recursive: true });
   }
 
-  // Перемещаем файл в нужную директорию
+  // Move file to the target directory
   const oldPath = req.file.path;
   const newPath = path.join(targetDir, req.file.filename);
   fs.renameSync(oldPath, newPath);
@@ -85,6 +104,8 @@ app.post('/upload', upload.single('audio'), (req, res) => {
   console.log(`File uploaded: ${audioUrl}`);
   res.json({ audioUrl });
 });
+
+// Route for creating a new directory
 app.post('/create-directory', async (req, res) => {
   const { directoryName } = req.body;
   if (!directoryName) {
@@ -103,6 +124,7 @@ app.post('/create-directory', async (req, res) => {
   }
 });
 
+// Route for deleting a directory
 app.delete('/delete-directory/:directoryName', async (req, res) => {
   const { directoryName } = req.params;
   const dirPath = path.join(uploadDir, directoryName);
@@ -117,6 +139,7 @@ app.delete('/delete-directory/:directoryName', async (req, res) => {
   }
 });
 
+// Route for getting all directories
 app.get('/directories', async (req, res) => {
   try {
     const entries = await fsPromises.readdir(uploadDir, { withFileTypes: true });
@@ -129,6 +152,7 @@ app.get('/directories', async (req, res) => {
   }
 });
 
+// Route for getting files in a specific directory
 app.get('/directories/:directoryName/files', async (req, res) => {
   const { directoryName } = req.params;
   const dirPath = path.join(uploadDir, directoryName);
@@ -151,6 +175,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
   }
 });
 
+// Route for getting all files
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
@@ -164,71 +189,7 @@ app.get('/files', async (req, res) => {
   }
 });
 
-async function getRandomAudioFromDirectory(directory) {
-  const targetDir = path.join(uploadDir, directory);
-
-  try {
-    const files = await getAllFiles(targetDir);
-    const audioFiles = files.filter(file => ['.mp3', '.wav', '.ogg'].includes(path.extname(file)));
-
-    if (audioFiles.length === 0) {
-      throw new Error('No audio files found in the specified directory');
-    }
-
-    const randomFile = audioFiles[Math.floor(Math.random() * audioFiles.length)];
-    const relativeFilePath = path.relative(uploadDir, path.join(targetDir, randomFile));
-    return relativeFilePath.replace(/\\/g, '/');
-  } catch (error) {
-    console.error('Error selecting random file:', error);
-    throw error;
-  }
-}
-
-// Маршрут для получения случайного аудио файла
-const getRandomFileFromDirectory = async (directory) => {
-  const targetDir = path.join(uploadDir, directory);
-  const files = await getAllFiles(targetDir);
-  const audioFiles = files.filter(file => ['.mp3', '.wav', '.ogg'].includes(path.extname(file)));
-
-  if (audioFiles.length === 0) {
-    throw new Error('No audio files found in the specified directory');
-  }
-
-  return audioFiles[Math.floor(Math.random() * audioFiles.length)];
-};
-
-app.get('/play/:directory', async (req, res) => {
-  const { directory } = req.params;
-
-  try {
-    const randomFile = await getRandomFileFromDirectory(directory);
-    const filePath = path.join(uploadDir, randomFile);
-
-    res.sendFile(filePath, (err) => {
-      if (err) {
-        console.error('Error sending file:', err);
-        res.status(404).send('File not found');
-      }
-    });
-  } catch (error) {
-    console.error('Error selecting random file:', error);
-    res.status(404).send('No audio files found in the specified directory');
-  }
-});
-
-// Обновленный маршрут для получения информации о случайном файле
-app.get('/api/random-audio/:directory', async (req, res) => {
-  const { directory } = req.params;
-
-  try {
-    const randomFile = await getRandomFileFromDirectory(directory);
-    const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory}/${path.basename(randomFile)}`;
-    res.json({ audioUrl });
-  } catch (error) {
-    res.status(404).json({ error: error.message });
-  }
-});
-
+// Helper function to get all files recursively
 async function getAllFiles(dir) {
   console.log(`Scanning directory: ${dir}`);
   try {
@@ -247,6 +208,8 @@ async function getAllFiles(dir) {
     return [];
   }
 }
+
+// Route for deleting a file
 app.delete('/delete/:filename', async (req, res) => {
   const filename = req.params.filename;
   try {
@@ -267,6 +230,7 @@ app.delete('/delete/:filename', async (req, res) => {
   }
 });
 
+// Route for serving audio files (used by the audio player)
 app.get('/uploads/:filename', async (req, res) => {
   const { filename } = req.params;
   console.log('Audio file requested:', filename);
@@ -297,21 +261,61 @@ app.get('/uploads/:filename', async (req, res) => {
   }
 });
 
-app.use('/uploads', express.static(uploadDir));
+// Route for serving static files (React build)
 app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: '1d' }));
 
+// Route for playing a specific file
 app.get('/play/:filename', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
+// NFC route for playing random audio from a specific directory
+app.get('/:directoryName', async (req, res) => {
+  const { directoryName } = req.params;
+
+  try {
+    const fileName = await getRandomAudioFile(directoryName);
+    const filePath = path.join(uploadDir, directoryName, fileName);
+
+    res.sendFile(filePath, (err) => {
+      if (err) {
+        console.error('Error sending file:', err);
+        res.status(404).send('Audio file not found');
+      }
+    });
+  } catch (error) {
+    console.error('Error serving random audio:', error);
+    res.status(404).send('Audio not found');
+  }
+});
+
+// API route for getting info about a random audio file
+app.get('/api/audio-info/:directoryName', async (req, res) => {
+  const { directoryName } = req.params;
+
+  try {
+    const fileName = await getRandomAudioFile(directoryName);
+    res.json({
+      audioUrl: `/${directoryName}/${fileName}`,
+      fileName: fileName
+    });
+  } catch (error) {
+    console.error('Error getting audio info:', error);
+    res.status(404).json({ error: 'Audio not found' });
+  }
+});
+
+// Catch-all route for React router
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
+// Start the server
 const server = app.listen(port, '0.0.0.0', () => {
   console.log(`Server running at http://0.0.0.0:${port} in ${nodeEnv} mode`);
 });
 
+// Graceful shutdown
 process.on('SIGTERM', () => {
   console.log('SIGTERM signal received: closing HTTP server');
   server.close(() => {

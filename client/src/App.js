@@ -4,7 +4,7 @@ import LoginPage from './components/LoginPage';
 import UploadPage from './components/UploadPage';
 import PlayerPage from './components/PlayerPage';
 import ProtectedRoute from './components/ProtectedRoute';
-import DirectoryPlayerPage from './components/DirectoryPlayerPage';
+import NFCAudioPlayer from './components/NFCAudioPlayer';
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -25,7 +25,7 @@ function App() {
           <Route path="/play/:filename" element={<PlayerPage />} />
           <Route path="/play" element={<PlayerPage />} />
           <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/play/:directory" element={<DirectoryPlayerPage />} />
+          <Route path="/:directoryName" element={<NFCAudioPlayer />} />
         </Routes>
       </div>
     </Router>
