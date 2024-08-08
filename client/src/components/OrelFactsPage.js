@@ -21,19 +21,13 @@ const OrelFactsPage = () => {
     fetchRandomFact();
   }, [fetchRandomFact]);
 
-  const handleNextFact = () => {
-    fetchRandomFact();
-  };
-
   if (error) {
     return <div>Error: {error}</div>;
   }
 
   return (
     <div className="orel-facts-page">
-      <h1>Случайный факт об орлах</h1>
       {audioUrl && <AudioPlayer audioUrl={audioUrl} />}
-      <button onClick={handleNextFact}>Следующий факт</button>
     </div>
   );
 };

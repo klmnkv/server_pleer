@@ -4,6 +4,7 @@ import LoginPage from './components/LoginPage';
 import UploadPage from './components/UploadPage';
 import PlayerPage from './components/PlayerPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import OrelFactsPage from './components/OrelFactsPage';
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -24,6 +25,7 @@ function App() {
           <Route path="/play/:filename" element={<PlayerPage />} />
           <Route path="/play" element={<PlayerPage />} />
           <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/orel_facts" element={<OrelFactsPage />} />
         </Routes>
       </div>
     </Router>
