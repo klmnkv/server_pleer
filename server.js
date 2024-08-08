@@ -164,6 +164,45 @@ app.get('/files', async (req, res) => {
   }
 });
 
+async function getRandomAudioFromDirectory(directory) {
+  const targetDir = path.join(uploadDir, directory);
+
+  try {
+    const files = await getAllFiles(targetDir);
+    const audioFiles = files.filter(file => ['.mp3', '.wav', '.ogg'].includes(path.extname(file)));
+
+    if (audioFiles.length === 0) {
+      throw new Error('No audio files found in the specified directory');
+    }
+
+    const randomFile = audioFiles[Math.floor(Math.random() * audioFiles.length)];
+    const relativeFilePath = path.relative(uploadDir, path.join(targetDir, randomFile));
+    return relativeFilePath.replace(/\\/g, '/');
+  } catch (error) {
+    console.error('Error selecting random file:', error);
+    throw error;
+  }
+}
+
+// Маршрут для получения случайного аудио файла
+app.get('/api/random-audio/:directory', async (req, res) => {
+  const { directory } = req.params;
+
+  try {
+    const randomFile = await getRandomAudioFromDirectory(directory);
+    const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${randomFile}`;
+    res.json({ audioUrl });
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+});
+
+// Маршрут для рендеринга страницы воспроизведения
+app.get('/play/:directory', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
+
+
 async function getAllFiles(dir) {
   console.log(`Scanning directory: ${dir}`);
   try {
