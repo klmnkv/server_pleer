@@ -86,12 +86,12 @@ app.post('/upload', upload.single('audio'), (req, res) => {
   const directory = req.body.directory || '';
   const targetDir = path.join(uploadDir, directory);
 
-  // Create directory if it doesn't exist
+  // Создаем директорию, если она не существует
   if (!fs.existsSync(targetDir)) {
     fs.mkdirSync(targetDir, { recursive: true });
   }
 
-  // Move file to the target directory
+  // Перемещаем файл в нужную директорию
   const oldPath = req.file.path;
   const newPath = path.join(targetDir, req.file.filename);
   fs.renameSync(oldPath, newPath);
@@ -104,7 +104,6 @@ app.post('/upload', upload.single('audio'), (req, res) => {
   console.log(`File uploaded: ${audioUrl}`);
   res.json({ audioUrl });
 });
-
 // Route for creating a new directory
 app.post('/create-directory', async (req, res) => {
   const { directoryName } = req.body;
@@ -174,7 +173,6 @@ app.get('/directories/:directoryName/files', async (req, res) => {
     }
   }
 });
-
 // Route for getting all files
 app.get('/files', async (req, res) => {
   try {
@@ -231,17 +229,35 @@ app.delete('/delete/:filename', async (req, res) => {
 });
 
 // Route for serving audio files (used by the audio player)
-app.get('/uploads/:directory/:filename', (req, res) => {
-  const { directory, filename } = req.params;
-  const filePath = path.join(uploadDir, directory, filename);
-  res.sendFile(filePath, (err) => {
-    if (err) {
-      console.error('Error sending file:', err);
-      res.status(404).send('File not found');
-    }
-  });
-});
+app.get('/uploads/:filename', async (req, res) => {
+  const { filename } = req.params;
+  console.log('Audio file requested:', filename);
 
+  try {
+    const files = await getAllFiles(uploadDir);
+    const filePath = files.find(file => path.basename(file) === filename);
+
+    if (!filePath) {
+      console.error('File not found:', filename);
+      return res.status(404).send('File not found');
+    }
+
+    const fullPath = path.join(uploadDir, filePath);
+    console.log('Full file path:', fullPath);
+
+    res.sendFile(fullPath, (err) => {
+      if (err) {
+        console.error('Error sending file:', err);
+        res.status(500).send('Error sending file');
+      } else {
+        console.log('File sent successfully');
+      }
+    });
+  } catch (error) {
+    console.error('Error accessing file:', error);
+    res.status(500).send('Internal server error');
+  }
+});
 // API for getting info about a random audio file from orel_facts directory
 app.get('/api/random-orel-fact', async (req, res) => {
   try {
