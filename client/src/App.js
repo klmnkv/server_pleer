@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginPage from './components/LoginPage';
 import UploadPage from './components/UploadPage';
 import PlayerPage from './components/PlayerPage';
+import RandomFactPlayer from './components/RandomFactPlayer';
 import ProtectedRoute from './components/ProtectedRoute';
-import NFCAudioPlayer from './components/NFCAudioPlayer';
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -25,7 +25,7 @@ function App() {
           <Route path="/play/:filename" element={<PlayerPage />} />
           <Route path="/play" element={<PlayerPage />} />
           <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/:directoryName" element={<NFCAudioPlayer />} />
+          <Route path="/orel_facts" element={<RandomFactPlayer />} />
         </Routes>
       </div>
     </Router>

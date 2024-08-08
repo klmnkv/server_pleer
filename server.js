@@ -261,49 +261,20 @@ app.get('/uploads/:filename', async (req, res) => {
   }
 });
 
-// Route for serving static files (React build)
-app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: '1d' }));
-
-// Route for playing a specific file
-app.get('/play/:filename', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
-
-// NFC route for playing random audio from a specific directory
-app.get('/:directoryName', async (req, res) => {
-  const { directoryName } = req.params;
-
+// API for getting info about a random audio file from orel_facts directory
+app.get('/api/audio-info/orel_facts', async (req, res) => {
   try {
-    const fileName = await getRandomAudioFile(directoryName);
-    const filePath = path.join(uploadDir, directoryName, fileName);
-
-    res.sendFile(filePath, (err) => {
-      if (err) {
-        console.error('Error sending file:', err);
-        res.status(404).send('Audio file not found');
-      }
-    });
+    const fileName = await getRandomAudioFile('orel_facts');
+    const audioUrl = `/uploads/orel_facts/${fileName}`;
+    res.json({ audioUrl, fileName });
   } catch (error) {
-    console.error('Error serving random audio:', error);
-    res.status(404).send('Audio not found');
-  }
-});
-
-// API route for getting info about a random audio file
-app.get('/api/audio-info/:directoryName', async (req, res) => {
-  const { directoryName } = req.params;
-
-  try {
-    const fileName = await getRandomAudioFile(directoryName);
-    res.json({
-      audioUrl: `/${directoryName}/${fileName}`,
-      fileName: fileName
-    });
-  } catch (error) {
-    console.error('Error getting audio info:', error);
+    console.error('Error getting random audio info:', error);
     res.status(404).json({ error: 'Audio not found' });
   }
 });
+
+// Route for serving static files (React build)
+app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: '1d' }));
 
 // Catch-all route for React router
 app.get('*', (req, res) => {
