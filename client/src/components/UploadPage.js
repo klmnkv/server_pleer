@@ -226,10 +226,16 @@ const UploadPage = () => {
       <List>
         <ListItem button onClick={() => handleDirectoryChange('')}>
           <ListItemText primary="Root directory" />
+          <Button component={Link} to="/play/root" variant="outlined" size="small">
+            Play Random
+          </Button>
         </ListItem>
         {directories.map((dir, index) => (
-          <ListItem button key={index} onClick={() => handleDirectoryChange(dir)}>
+          <ListItem key={index} button onClick={() => handleDirectoryChange(dir)}>
             <ListItemText primary={dir} />
+            <Button component={Link} to={`/play/${dir}`} variant="outlined" size="small">
+              Play Random
+            </Button>
             <IconButton onClick={(e) => { e.stopPropagation(); handleDeleteDirectory(dir); }} edge="end">
               <DeleteIcon />
             </IconButton>
@@ -241,24 +247,20 @@ const UploadPage = () => {
       </Typography>
       {fileError && <Typography color="error">{fileError}</Typography>}
       <List>
-       {files.length > 0 ? (
-  files.map((file, index) => (
-    <ListItem key={index}>
-      <ListItemText
-        primary={
-          <Link to={`/play/${encodeURIComponent(file.replace(/^http:\/\/bred-audio\.ru\//, ''))}`}>
-            {file.split('/').pop()}
-          </Link>
-        }
-      />
-      <IconButton onClick={() => handleDelete(file.split('/').pop())} edge="end">
-        <DeleteIcon />
-      </IconButton>
-    </ListItem>
-  ))
-) : (
-  <Typography>No files in this directory</Typography>
-)}
+        {files.length > 0 ? (
+          files.map((file, index) => (
+            <ListItem key={index}>
+              <ListItemText
+                primary={<Link to={`/play/${encodeURIComponent(file)}`}>{file}</Link>}
+              />
+              <IconButton onClick={() => handleDelete(file)} edge="end">
+                <DeleteIcon />
+              </IconButton>
+            </ListItem>
+          ))
+        ) : (
+          <Typography>No files in this directory</Typography>
+        )}
       </List>
     </Container>
   );

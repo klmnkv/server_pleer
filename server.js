@@ -179,10 +179,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
-    const fileUrls = files.map(file => {
-      const relativePath = path.relative(uploadDir, file);
-      return `/uploads/${relativePath.replace(/\\/g, '/')}`;
-    });
+    const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file}`);
     console.log(`Files retrieved: ${fileUrls.length}`);
     console.log('Files:', fileUrls);
     res.send(fileUrls);
@@ -202,7 +199,7 @@ async function getAllFiles(dir) {
       if (entry.isDirectory()) {
         return getAllFiles(fullPath);
       } else {
-        return fullPath;
+        return path.relative(uploadDir, fullPath);
       }
     }));
     return files.flat();
@@ -223,7 +220,8 @@ app.delete('/delete/:filename', async (req, res) => {
       return res.status(404).send({ error: 'File not found' });
     }
 
-    await fsPromises.unlink(filePath);
+    const fullPath = path.join(uploadDir, filePath);
+    await fsPromises.unlink(fullPath);
     console.log(`File deleted: ${filename}`);
     res.send({ message: 'File deleted successfully' });
   } catch (error) {
@@ -233,53 +231,51 @@ app.delete('/delete/:filename', async (req, res) => {
 });
 
 // Route for serving audio files (used by the audio player)
-app.get('/uploads/:directory?/:filename', (req, res) => {
-  const { directory, filename } = req.params;
-  let filePath;
+app.get('/uploads/:filename', async (req, res) => {
+  const { filename } = req.params;
+  console.log('Audio file requested:', filename);
 
-  if (directory) {
-    filePath = path.join(uploadDir, directory, filename);
-  } else {
-    filePath = path.join(uploadDir, filename);
-  }
-
-  console.log('Requested file path:', filePath);
-
-  res.sendFile(filePath, (err) => {
-    if (err) {
-      console.error('Error sending file:', err);
-      res.status(404).send('File not found');
-    }
-  });
-});
-
-// API for getting info about a random audio file from a specific directory
-app.get('/api/random-audio/:directory', async (req, res) => {
-  const { directory } = req.params;
   try {
-    const fileName = await getRandomAudioFile(directory);
-    const audioUrl = `/uploads/${directory}/${fileName}`;
-    res.json({ audioUrl, fileName });
+    const files = await getAllFiles(uploadDir);
+    const filePath = files.find(file => path.basename(file) === filename);
+
+    if (!filePath) {
+      console.error('File not found:', filename);
+      return res.status(404).send('File not found');
+    }
+
+    const fullPath = path.join(uploadDir, filePath);
+    console.log('Full file path:', fullPath);
+
+    res.sendFile(fullPath, (err) => {
+      if (err) {
+        console.error('Error sending file:', err);
+        res.status(500).send('Error sending file');
+      } else {
+        console.log('File sent successfully');
+      }
+    });
   } catch (error) {
-    console.error('Error getting random audio info:', error);
-    res.status(404).json({ error: 'Audio not found' });
+    console.error('Error accessing file:', error);
+    res.status(500).send('Internal server error');
   }
 });
 
-// Route for serving static files (React build)
+app.use('/uploads', express.static(uploadDir));
 app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: '1d' }));
 
-// Catch-all route for React router
+app.get('/play/:filename', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
-// Start the server
 const server = app.listen(port, '0.0.0.0', () => {
   console.log(`Server running at http://0.0.0.0:${port} in ${nodeEnv} mode`);
 });
 
-// Graceful shutdown
 process.on('SIGTERM', () => {
   console.log('SIGTERM signal received: closing HTTP server');
   server.close(() => {
