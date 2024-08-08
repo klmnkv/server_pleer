@@ -179,7 +179,10 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
-    const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file}`);
+    const fileUrls = files.map(file => {
+      const relativePath = path.relative(uploadDir, file);
+      return `/uploads/${relativePath.replace(/\\/g, '/')}`;
+    });
     console.log(`Files retrieved: ${fileUrls.length}`);
     console.log('Files:', fileUrls);
     res.send(fileUrls);
@@ -199,7 +202,7 @@ async function getAllFiles(dir) {
       if (entry.isDirectory()) {
         return getAllFiles(fullPath);
       } else {
-        return path.relative(uploadDir, fullPath);
+        return fullPath;
       }
     }));
     return files.flat();
@@ -220,8 +223,7 @@ app.delete('/delete/:filename', async (req, res) => {
       return res.status(404).send({ error: 'File not found' });
     }
 
-    const fullPath = path.join(uploadDir, filePath);
-    await fsPromises.unlink(fullPath);
+    await fsPromises.unlink(filePath);
     console.log(`File deleted: ${filename}`);
     res.send({ message: 'File deleted successfully' });
   } catch (error) {
@@ -231,9 +233,18 @@ app.delete('/delete/:filename', async (req, res) => {
 });
 
 // Route for serving audio files (used by the audio player)
-app.get('/uploads/:directory/:filename', (req, res) => {
+app.get('/uploads/:directory?/:filename', (req, res) => {
   const { directory, filename } = req.params;
-  const filePath = path.join(uploadDir, directory, filename);
+  let filePath;
+
+  if (directory) {
+    filePath = path.join(uploadDir, directory, filename);
+  } else {
+    filePath = path.join(uploadDir, filename);
+  }
+
+  console.log('Requested file path:', filePath);
+
   res.sendFile(filePath, (err) => {
     if (err) {
       console.error('Error sending file:', err);
@@ -242,11 +253,12 @@ app.get('/uploads/:directory/:filename', (req, res) => {
   });
 });
 
-// API for getting info about a random audio file from orel_facts directory
-app.get('/api/random-orel-fact', async (req, res) => {
+// API for getting info about a random audio file from a specific directory
+app.get('/api/random-audio/:directory', async (req, res) => {
+  const { directory } = req.params;
   try {
-    const fileName = await getRandomAudioFile('orel_facts');
-    const audioUrl = `/uploads/orel_facts/${fileName}`;
+    const fileName = await getRandomAudioFile(directory);
+    const audioUrl = `/uploads/${directory}/${fileName}`;
     res.json({ audioUrl, fileName });
   } catch (error) {
     console.error('Error getting random audio info:', error);
