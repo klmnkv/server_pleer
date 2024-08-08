@@ -30,10 +30,8 @@ const OrelFactsPage = () => {
   }
 
   return (
-    <div className="orel-facts-page">
-      <h1>Случайный факт об орлах</h1>
+  <div className="orel-facts-page">
       {audioUrl && <AudioPlayer audioUrl={audioUrl} />}
-      <button onClick={handleNextFact}>Следующий факт</button>
     </div>
   );
 };
