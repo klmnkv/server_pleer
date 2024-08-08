@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginPage from './components/LoginPage';
 import UploadPage from './components/UploadPage';
 import PlayerPage from './components/PlayerPage';
-import RandomFactPlayer from './components/RandomFactPlayer';
+import OrelFactsPage from './components/OrelFactsPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -24,8 +24,8 @@ function App() {
           />
           <Route path="/play/:filename" element={<PlayerPage />} />
           <Route path="/play" element={<PlayerPage />} />
+          <Route path="/orel_facts" element={<OrelFactsPage />} />
           <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/orel_facts" element={<RandomFactPlayer />} />
         </Routes>
       </div>
     </Router>

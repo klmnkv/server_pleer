@@ -231,38 +231,19 @@ app.delete('/delete/:filename', async (req, res) => {
 });
 
 // Route for serving audio files (used by the audio player)
-app.get('/uploads/:filename', async (req, res) => {
-  const { filename } = req.params;
-  console.log('Audio file requested:', filename);
-
-  try {
-    const files = await getAllFiles(uploadDir);
-    const filePath = files.find(file => path.basename(file) === filename);
-
-    if (!filePath) {
-      console.error('File not found:', filename);
-      return res.status(404).send('File not found');
+app.get('/uploads/:directory/:filename', (req, res) => {
+  const { directory, filename } = req.params;
+  const filePath = path.join(uploadDir, directory, filename);
+  res.sendFile(filePath, (err) => {
+    if (err) {
+      console.error('Error sending file:', err);
+      res.status(404).send('File not found');
     }
-
-    const fullPath = path.join(uploadDir, filePath);
-    console.log('Full file path:', fullPath);
-
-    res.sendFile(fullPath, (err) => {
-      if (err) {
-        console.error('Error sending file:', err);
-        res.status(500).send('Error sending file');
-      } else {
-        console.log('File sent successfully');
-      }
-    });
-  } catch (error) {
-    console.error('Error accessing file:', error);
-    res.status(500).send('Internal server error');
-  }
+  });
 });
 
 // API for getting info about a random audio file from orel_facts directory
-app.get('/api/audio-info/orel_facts', async (req, res) => {
+app.get('/api/random-orel-fact', async (req, res) => {
   try {
     const fileName = await getRandomAudioFile('orel_facts');
     const audioUrl = `/uploads/orel_facts/${fileName}`;
