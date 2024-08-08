@@ -226,16 +226,10 @@ const UploadPage = () => {
       <List>
         <ListItem button onClick={() => handleDirectoryChange('')}>
           <ListItemText primary="Root directory" />
-          <Button component={Link} to="/play/root" variant="outlined" size="small">
-            Play Random
-          </Button>
         </ListItem>
         {directories.map((dir, index) => (
-          <ListItem key={index} button onClick={() => handleDirectoryChange(dir)}>
+          <ListItem button key={index} onClick={() => handleDirectoryChange(dir)}>
             <ListItemText primary={dir} />
-            <Button component={Link} to={`/play/${dir}`} variant="outlined" size="small">
-              Play Random
-            </Button>
             <IconButton onClick={(e) => { e.stopPropagation(); handleDeleteDirectory(dir); }} edge="end">
               <DeleteIcon />
             </IconButton>
