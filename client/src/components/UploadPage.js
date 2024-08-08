@@ -216,9 +216,7 @@ const UploadPage = () => {
       {dirError && <Typography color="error">{dirError}</Typography>}
       {audioUrl && (
         <Box sx={{ marginBottom: 2 }}>
-          <Typography>
-            Audio URL: <Link to={`/play/${encodeURIComponent(audioUrl.split('/').pop())}`}>{audioUrl}</Link>
-          </Typography>
+          <Typography>Audio URL: <Link to={`/play/${encodeURIComponent(audioUrl.split('/').pop())}`}>{audioUrl}</Link></Typography>
           <audio controls src={audioUrl} />
         </Box>
       )}
@@ -226,18 +224,12 @@ const UploadPage = () => {
         Directories
       </Typography>
       <List>
-        <ListItem>
+        <ListItem button onClick={() => handleDirectoryChange('')}>
           <ListItemText primary="Root directory" />
-          <Button component={Link} to="/play/root" variant="outlined" size="small">
-            Play Random
-          </Button>
         </ListItem>
         {directories.map((dir, index) => (
-          <ListItem key={index}>
+          <ListItem button key={index} onClick={() => handleDirectoryChange(dir)}>
             <ListItemText primary={dir} />
-            <Button component={Link} to={`/play/${dir}`} variant="outlined" size="small">
-              Play Random
-            </Button>
             <IconButton onClick={(e) => { e.stopPropagation(); handleDeleteDirectory(dir); }} edge="end">
               <DeleteIcon />
             </IconButton>
@@ -253,9 +245,9 @@ const UploadPage = () => {
           files.map((file, index) => (
             <ListItem key={index}>
               <ListItemText
-                primary={<Link to={`/play/${encodeURIComponent(file.split('/').pop())}`}>{file}</Link>}
+                primary={<Link to={`/play/${encodeURIComponent(file)}`}>{file}</Link>}
               />
-              <IconButton onClick={() => handleDelete(file.split('/').pop())} edge="end">
+              <IconButton onClick={() => handleDelete(file)} edge="end">
                 <DeleteIcon />
               </IconButton>
             </ListItem>
