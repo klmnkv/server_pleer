@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginPage from './components/LoginPage';
 import UploadPage from './components/UploadPage';
 import PlayerPage from './components/PlayerPage';
-import ProtectedRoute from './components/ProtectedRoute';
 import OrelFactsPage from './components/OrelFactsPage';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -24,8 +24,8 @@ function App() {
           />
           <Route path="/play/:filename" element={<PlayerPage />} />
           <Route path="/play" element={<PlayerPage />} />
-          <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/orel_facts" element={<OrelFactsPage />} />
+          <Route path="/" element={<Navigate to="/login" />} />
         </Routes>
       </div>
     </Router>

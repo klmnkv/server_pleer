@@ -231,51 +231,43 @@ app.delete('/delete/:filename', async (req, res) => {
 });
 
 // Route for serving audio files (used by the audio player)
-app.get('/uploads/:filename', async (req, res) => {
-  const { filename } = req.params;
-  console.log('Audio file requested:', filename);
-
-  try {
-    const files = await getAllFiles(uploadDir);
-    const filePath = files.find(file => path.basename(file) === filename);
-
-    if (!filePath) {
-      console.error('File not found:', filename);
-      return res.status(404).send('File not found');
+app.get('/uploads/:directory/:filename', (req, res) => {
+  const { directory, filename } = req.params;
+  const filePath = path.join(uploadDir, directory, filename);
+  res.sendFile(filePath, (err) => {
+    if (err) {
+      console.error('Error sending file:', err);
+      res.status(404).send('File not found');
     }
+  });
+});
 
-    const fullPath = path.join(uploadDir, filePath);
-    console.log('Full file path:', fullPath);
-
-    res.sendFile(fullPath, (err) => {
-      if (err) {
-        console.error('Error sending file:', err);
-        res.status(500).send('Error sending file');
-      } else {
-        console.log('File sent successfully');
-      }
-    });
+// API for getting info about a random audio file from orel_facts directory
+app.get('/api/random-orel-fact', async (req, res) => {
+  try {
+    const fileName = await getRandomAudioFile('orel_facts');
+    const audioUrl = `/uploads/orel_facts/${fileName}`;
+    res.json({ audioUrl, fileName });
   } catch (error) {
-    console.error('Error accessing file:', error);
-    res.status(500).send('Internal server error');
+    console.error('Error getting random audio info:', error);
+    res.status(404).json({ error: 'Audio not found' });
   }
 });
 
-app.use('/uploads', express.static(uploadDir));
+// Route for serving static files (React build)
 app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: '1d' }));
 
-app.get('/play/:filename', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
-
+// Catch-all route for React router
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
+// Start the server
 const server = app.listen(port, '0.0.0.0', () => {
   console.log(`Server running at http://0.0.0.0:${port} in ${nodeEnv} mode`);
 });
 
+// Graceful shutdown
 process.on('SIGTERM', () => {
   console.log('SIGTERM signal received: closing HTTP server');
   server.close(() => {
