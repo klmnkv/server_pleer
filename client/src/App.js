@@ -21,8 +21,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/play/:filename" element={<PlayerPage />} />
-          <Route path="/play" element={<PlayerPage />} />
+          <Route path="/play/uploads/:directory/:filename" element={<PlayerPage />} />
           <Route path="/" element={<Navigate to="/login" />} />
         </Routes>
       </div>

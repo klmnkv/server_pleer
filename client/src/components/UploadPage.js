@@ -241,20 +241,20 @@ const UploadPage = () => {
       </Typography>
       {fileError && <Typography color="error">{fileError}</Typography>}
       <List>
-        {files.length > 0 ? (
-          files.map((file, index) => (
-            <ListItem key={index}>
-              <ListItemText
-                primary={<Link to={`/play/${encodeURIComponent(file)}`}>{file}</Link>}
-              />
-              <IconButton onClick={() => handleDelete(file)} edge="end">
-                <DeleteIcon />
-              </IconButton>
-            </ListItem>
-          ))
-        ) : (
-          <Typography>No files in this directory</Typography>
-        )}
+{files.length > 0 ? (
+  files.map((file, index) => (
+    <ListItem key={index}>
+      <ListItemText
+        primary={<Link to={`/play${file}`}>{decodeURIComponent(file.split('/').pop())}</Link>}
+      />
+      <IconButton onClick={() => handleDelete(file.split('/').pop())} edge="end">
+        <DeleteIcon />
+      </IconButton>
+    </ListItem>
+  ))
+) : (
+  <Typography>No files in this directory</Typography>
+)}
       </List>
     </Container>
   );
