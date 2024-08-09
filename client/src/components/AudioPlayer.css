@@ -1,20 +1,22 @@
-body {
-  background-image: url('background.PNG'); /* Фон для всей страницы */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+/* Стиль для страницы с аудиоплеером */
+.audio-player-page {
+  background-image: url('background.PNG'); /* Указываем изображение для фона */
+  background-size: cover; /* Изображение покрывает всю страницу */
+  background-position: center; /* Центрируем изображение */
+  background-repeat: no-repeat; /* Изображение не повторяется */
+  min-height: 100vh; /* Минимальная высота страницы */
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
 }
 
+/* Стиль для аудиоплеера */
 .audio-player {
   max-width: 600px;
   margin: 0 auto;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  background-color: #f9f9f9;
+  background-color: rgba(249, 249, 249, 0.9); /* Прозрачный фон для улучшения читаемости */
 }
 
 .controls {
