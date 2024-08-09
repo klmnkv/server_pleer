@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import AudioPlayer from './AudioPlayer';
+import './AudioPlayer.css'; // Убедитесь, что этот импорт присутствует
 
 const PlayerPage = () => {
   const location = useLocation();
@@ -21,8 +22,10 @@ const PlayerPage = () => {
   }
 
   return (
-    <div className="container">
-      <AudioPlayer audioUrl={audioUrl} />
+    <div className="audio-player-page">
+      <div className="container">
+        <AudioPlayer audioUrl={audioUrl} />
+      </div>
     </div>
   );
 };

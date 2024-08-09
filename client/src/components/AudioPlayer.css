@@ -1,25 +1,35 @@
-/* Стиль для страницы с аудиоплеером */
-.audio-player-page {
-  background-image: url('background.PNG'); /* Фоновое изображение для страницы */
-  background-size: cover; /* Изображение покрывает всю страницу */
-  background-position: center; /* Центрируем изображение */
-  background-repeat: no-repeat; /* Изображение не повторяется */
-  min-height: 100vh; /* Минимальная высота страницы */
+/* Базовые стили для всей страницы */
+html, body, #root {
+  height: 100%;
   margin: 0;
   padding: 0;
+}
+
+/* Стиль для страницы с аудиоплеером */
+.audio-player-page {
+  background-image: url('background.PNG'); /* Замените на правильный путь к вашему изображению */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/* Контейнер для центрирования плеера */
+.container {
+  max-width: 600px;
+  width: 100%;
+}
+
 /* Стиль для аудиоплеера */
 .audio-player {
-  max-width: 600px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  background-color: rgba(249, 249, 249, 0.9); /* Полупрозрачный фон для плеера */
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Тень для лучшей видимости */
+  background-color: rgba(249, 249, 249, 0.9);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
 }
 
 .controls {
@@ -32,8 +42,8 @@
   font-size: 2.5em;
   padding: 20px 40px;
   margin-bottom: 20px;
-  background-color: #000; /* Чёрный цвет для высокой контрастности */
-  color: #fff; /* Белый текст */
+  background-color: #000;
+  color: #fff;
   border: none;
   border-radius: 50px;
   cursor: pointer;
@@ -64,6 +74,7 @@
   margin-top: 5px;
 }
 
+/* Медиа-запрос для больших экранов */
 @media (min-width: 768px) {
   .controls {
     flex-direction: row;
