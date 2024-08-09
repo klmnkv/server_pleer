@@ -1,9 +1,5 @@
 /* Стили для страницы с аудиоплеером */
 .player-page {
-  background-image: url('background.PNG');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   min-height: 100vh;
   padding: 20px;
   box-sizing: border-box;
@@ -13,6 +9,12 @@
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
+  background-image: url('background.PNG'); /* Фон перемещен сюда */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 20px; /* Отступы, чтобы фон выглядел красивее */
+  border-radius: 15px; /* Слегка скругляем углы */
 }
 
 /* Стили для аудиоплеера */
