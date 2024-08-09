@@ -5,16 +5,14 @@
   background-position: center;
   background-repeat: no-repeat;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding: 0;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .player-container {
   max-width: 600px;
   width: 100%;
+  margin: 0 auto;
 }
 
 /* Стили для аудиоплеера */
