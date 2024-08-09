@@ -1,13 +1,6 @@
-/* Базовые стили для всей страницы */
-html, body, #root {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-/* Стиль для страницы с аудиоплеером */
-.audio-player-page {
-  background-image: url('background.PNG'); /* Замените на правильный путь к вашему изображению */
+/* Стили для страницы с аудиоплеером */
+.player-page {
+  background-image: url('background.PNG');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -15,15 +8,16 @@ html, body, #root {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
-/* Контейнер для центрирования плеера */
-.container {
+.player-container {
   max-width: 600px;
   width: 100%;
 }
 
-/* Стиль для аудиоплеера */
+/* Стили для аудиоплеера */
 .audio-player {
   padding: 20px;
   border: 1px solid #ccc;
@@ -74,7 +68,6 @@ html, body, #root {
   margin-top: 5px;
 }
 
-/* Медиа-запрос для больших экранов */
 @media (min-width: 768px) {
   .controls {
     flex-direction: row;
