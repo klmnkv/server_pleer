@@ -78,10 +78,10 @@ const AudioPlayer = ({ audioUrl }) => {
         <button
           className="play-pause-button"
           onClick={handlePlayPauseClick}
-          aria-label={isPlaying ? "Пауза" : "Плэй"}
+          aria-label={isPlaying ? "Пауза" : "Старт"}
           aria-pressed={isPlaying}
         >
-          {isPlaying ? "Пауза" : "Плэй"}
+          {isPlaying ? "Пауза" : "Старт"}
         </button>
         <div className="time-control" role="group" aria-label="Time control">
           <input
