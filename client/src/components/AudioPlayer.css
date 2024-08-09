@@ -3,18 +3,34 @@
   min-height: 100vh;
   padding: 20px;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
-.player-container {
-  max-width: 600px;
+/* Фон под проигрывателем */
+.player-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
-  margin: 0 auto;
-  background-image: url('background.PNG'); /* Фон перемещен сюда */
+  max-width: 600px;
+  height: 300px; /* Высота фона */
+  background-image: url('background.PNG');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 20px; /* Отступы, чтобы фон выглядел красивее */
-  border-radius: 15px; /* Слегка скругляем углы */
+  border-radius: 15px;
+  z-index: 1;
+}
+
+.player-container {
+  position: relative;
+  max-width: 600px;
+  width: 100%;
+  z-index: 2;
 }
 
 /* Стили для аудиоплеера */
