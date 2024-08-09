@@ -1,24 +1,25 @@
-/* Убедитесь, что глобального стиля для body, устанавливающего фон, больше нет */
-
 /* Стиль для страницы с аудиоплеером */
 .audio-player-page {
-  background-image: url('background.PNG'); /* Фоновое изображение только для этой страницы */
+  background-image: url('background.PNG'); /* Фоновое изображение для страницы */
   background-size: cover; /* Изображение покрывает всю страницу */
   background-position: center; /* Центрируем изображение */
   background-repeat: no-repeat; /* Изображение не повторяется */
   min-height: 100vh; /* Минимальная высота страницы */
   margin: 0;
   padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Стиль для аудиоплеера */
 .audio-player {
   max-width: 600px;
-  margin: 0 auto;
-  padding: 10px;
+  padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  background-color: rgba(249, 249, 249, 0.9); /* Полупрозрачный фон для лучшей читаемости */
+  background-color: rgba(249, 249, 249, 0.9); /* Полупрозрачный фон для плеера */
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Тень для лучшей видимости */
 }
 
 .controls {
@@ -28,10 +29,10 @@
 }
 
 .play-pause-button {
-  font-size: 2.5em; /* Увеличенный размер шрифта */
-  padding: 20px 40px; /* Увеличенный внутренний отступ */
+  font-size: 2.5em;
+  padding: 20px 40px;
   margin-bottom: 20px;
-  background-color: #000; /* Чёрный цвет фона для высокой контрастности */
+  background-color: #000; /* Чёрный цвет для высокой контрастности */
   color: #fff; /* Белый текст */
   border: none;
   border-radius: 50px;
@@ -42,7 +43,7 @@
 
 .play-pause-button:focus,
 .play-pause-button:hover {
-  background-color: #333; /* Тёмно-серый цвет при наведении и фокусе */
+  background-color: #333;
 }
 
 .time-control,
@@ -70,8 +71,8 @@
   }
 
   .play-pause-button {
-    font-size: 3em; /* Ещё больший размер шрифта на больших экранах */
-    padding: 30px 60px; /* Увеличенный отступ на больших экранах */
+    font-size: 3em;
+    padding: 30px 60px;
   }
 
   .time-control,
