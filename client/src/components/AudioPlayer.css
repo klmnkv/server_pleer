@@ -1,3 +1,13 @@
+body {
+  background-image: url('background.PNG'); /* Фон для всей страницы */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
 .audio-player {
   max-width: 600px;
   margin: 0 auto;
@@ -14,11 +24,11 @@
 }
 
 .play-pause-button {
-  font-size: 1.5em;
-  padding: 10px 20px;
-  margin-bottom: 10px;
-  background-color: #007bff;
-  color: #fff;
+  font-size: 2.5em; /* Увеличенный размер шрифта */
+  padding: 20px 40px; /* Увеличенный внутренний отступ */
+  margin-bottom: 20px;
+  background-color: #000; /* Чёрный цвет фона для высокой контрастности */
+  color: #fff; /* Белый текст */
   border: none;
   border-radius: 50px;
   cursor: pointer;
@@ -28,7 +38,7 @@
 
 .play-pause-button:focus,
 .play-pause-button:hover {
-  background-color: #0056b3;
+  background-color: #333; /* Тёмно-серый цвет при наведении и фокусе */
 }
 
 .time-control,
@@ -56,8 +66,8 @@
   }
 
   .play-pause-button {
-    font-size: 2em;
-    padding: 15px 30px;
+    font-size: 3em; /* Ещё больший размер шрифта на больших экранах */
+    padding: 30px 60px; /* Увеличенный отступ на больших экранах */
   }
 
   .time-control,
