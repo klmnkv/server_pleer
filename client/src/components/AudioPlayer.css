@@ -24,6 +24,19 @@
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* Высококонтрастный режим */
+.high-contrast .play-pause-button {
+  background-color: yellow; /* Высококонтрастный цвет */
+  color: black;
+  border: 2px solid black; /* Добавление четкой границы */
+}
+
+.high-contrast .audio-player {
+  background-color: black;
+  color: white;
+  border-color: white;
+}
+
 .controls {
   display: flex;
   flex-direction: column;
@@ -31,13 +44,13 @@
 }
 
 .play-pause-button {
-  font-size: 2.5em;
-  padding: 20px 40px;
-  margin-bottom: 20px;
+  font-size: 3em; /* Увеличение размера шрифта */
+  padding: 30px 70px; /* Увеличение внутреннего отступа */
+  margin-bottom: 30px; /* Добавление больше места между элементами */
   background-color: #000;
   color: #fff;
   border: none;
-  border-radius: 50px;
+  border-radius: 60px; /* Увеличение радиуса скругления */
   cursor: pointer;
   outline: none;
   transition: background-color 0.3s ease;
@@ -60,6 +73,7 @@
 .time-control input,
 .volume-control input {
   width: 100%;
+  height: 15px; /* Увеличение высоты ползунков */
 }
 
 .time-display {
@@ -74,7 +88,7 @@
 
   .play-pause-button {
     font-size: 3em;
-    padding: 30px 60px;
+    padding: 30px 70px;
   }
 
   .time-control,
@@ -86,7 +100,8 @@
 
   .time-control input,
   .volume-control input {
-    width: auto;
+    width: 150px; /* Увеличение ширины на больших экранах */
+    height: 20px; /* Еще большее увеличение высоты */
     margin-left: 10px;
   }
 }
