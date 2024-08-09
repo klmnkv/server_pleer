@@ -1,6 +1,8 @@
+/* Убедитесь, что глобального стиля для body, устанавливающего фон, больше нет */
+
 /* Стиль для страницы с аудиоплеером */
 .audio-player-page {
-  background-image: url('background.PNG'); /* Указываем изображение для фона */
+  background-image: url('background.PNG'); /* Фоновое изображение только для этой страницы */
   background-size: cover; /* Изображение покрывает всю страницу */
   background-position: center; /* Центрируем изображение */
   background-repeat: no-repeat; /* Изображение не повторяется */
@@ -16,7 +18,7 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  background-color: rgba(249, 249, 249, 0.9); /* Прозрачный фон для улучшения читаемости */
+  background-color: rgba(249, 249, 249, 0.9); /* Полупрозрачный фон для лучшей читаемости */
 }
 
 .controls {
