@@ -10,12 +10,19 @@ const PlayerPage = () => {
 
   let audioUrl;
   if (filename) {
-    audioUrl = `/uploads/${filename}`;
+    // Если filename передан как параметр пути, используем его напрямую
+    audioUrl = decodeURIComponent(filename);
+
+    // Если filename не начинается с '/', добавляем '/uploads/'
+    if (!audioUrl.startsWith('/')) {
+      audioUrl = `/uploads/${audioUrl}`;
+    }
   } else {
-    audioUrl = decodeURIComponent(params.get('url'));
+    // Если filename отсутствует, пытаемся получить URL из параметров запроса
+    audioUrl = params.get('url');
   }
 
-  console.log('Decoded Audio URL:', audioUrl);
+  console.log('Audio URL:', audioUrl);
 
   if (!audioUrl) {
     return <p>No audio URL provided</p>;
