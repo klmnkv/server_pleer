@@ -90,12 +90,13 @@ app.post('/upload', upload.array('audio'), (req, res) => {
     console.log('File path:', newPath);
     console.log('File size:', file.size);
 
-    // Save original file name
-    originalFileNames.set(file.filename, file.originalname);
+    // Используем Buffer для корректной обработки кодировки
+    const originalName = Buffer.from(file.originalname, 'latin1').toString('utf8');
+    originalFileNames.set(file.filename, originalName);
 
-    const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${file.filename}`;
+    const audioUrl = `/uploads/${directory ? directory + '/' : ''}${file.filename}`;
     console.log(`File uploaded: ${audioUrl}`);
-    return { filename: file.filename, originalName: file.originalname, audioUrl };
+    return { filename: file.filename, originalName, audioUrl };
   });
 
   res.json({ uploadedFiles });

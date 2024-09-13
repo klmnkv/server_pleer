@@ -263,7 +263,7 @@ const UploadPage = () => {
             {uploadedFiles.map((file, index) => (
               <ListItem key={index}>
                 <ListItemText
-                  primary={<Link to={`/play/${encodeURIComponent(file.audioUrl.split('/').pop())}`}>{file.originalName}</Link>}
+                  primary={<Link to={`/play/${encodeURIComponent(file.audioUrl)}`}>{file.originalName}</Link>}
                   secondary={file.audioUrl}
                 />
               </ListItem>
@@ -297,7 +297,7 @@ const UploadPage = () => {
           fileList.map((file, index) => (
             <ListItem key={index}>
               <ListItemText
-                primary={<Link to={`/play/${encodeURIComponent(file.url.split('/').pop())}`}>{file.name}</Link>}
+                primary={<Link to={`/play/${encodeURIComponent(file.url)}`}>{file.name}</Link>}
               />
               <IconButton onClick={() => handleDelete(file.url)} edge="end">
                 <DeleteIcon />
