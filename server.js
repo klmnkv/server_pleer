@@ -233,15 +233,15 @@ async function getAllFiles(dir) {
 }
 
 // Route for deleting a file
-app.delete('/delete/:filename', async (req, res) => {
+app.delete('/delete/:filename(*)', async (req, res) => {
   let filename = req.params.filename;
-  console.log(`Attempting to delete file: ${filename}`);
+  console.log(`Received delete request for: ${filename}`);
 
-  // Удаляем префикс URL, если он присутствует
-  const prefix = 'http://bred-audio.ru/uploads/';
-  if (filename.startsWith(prefix)) {
-    filename = filename.slice(prefix.length);
-  }
+  // Извлекаем имя файла из полного URL
+  const urlParts = filename.split('/');
+  filename = urlParts[urlParts.length - 1];
+
+  console.log(`Attempting to delete file: ${filename}`);
 
   try {
     const files = await getAllFiles(uploadDir);

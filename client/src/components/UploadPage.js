@@ -158,14 +158,17 @@ const UploadPage = () => {
     }
   }, [files, selectedDirectory, fetchFiles]);
 
-  const handleDelete = useCallback(async (filename) => {
-    try {
-      await axios.delete(`/delete/${filename}`);
-      await fetchFiles(selectedDirectory);
-    } catch (error) {
-      console.error('Delete error:', error);
-    }
-  }, [fetchFiles, selectedDirectory]);
+const handleDelete = useCallback(async (filename) => {
+  try {
+    console.log(`Attempting to delete file: ${filename}`);
+    await axios.delete(`/delete/${encodeURIComponent(filename)}`);
+    console.log(`Delete request sent for file: ${filename}`);
+    await fetchFiles(selectedDirectory);
+  } catch (error) {
+    console.error('Delete error:', error);
+    // Добавьте здесь обработку ошибок, например, показ уведомления пользователю
+  }
+}, [fetchFiles, selectedDirectory]);
 
   return (
     <Container maxWidth="md">
