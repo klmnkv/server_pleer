@@ -235,17 +235,29 @@ async function getAllFiles(dir) {
 // Route for deleting a file
 app.delete('/delete/:filename', async (req, res) => {
   const filename = req.params.filename;
+  console.log(`Attempting to delete file: ${filename}`);
   try {
     const files = await getAllFiles(uploadDir);
+    console.log('All files:', files);
     const filePath = files.find(file => path.basename(file) === filename);
+    console.log(`File path found: ${filePath}`);
 
     if (!filePath) {
+      console.log('File not found');
       return res.status(404).send({ error: 'File not found' });
     }
 
-    const fullPath = path.join(uploadDir, filePath);
+    let fullPath;
+    if (path.dirname(filePath) === '.') {
+      fullPath = path.join(uploadDir, filename);
+      console.log('File in root directory. Full path:', fullPath);
+    } else {
+      fullPath = path.join(uploadDir, filePath);
+      console.log('File in subdirectory. Full path:', fullPath);
+    }
+
     await fsPromises.unlink(fullPath);
-    console.log(`File deleted: ${filename}`);
+    console.log(`File deleted successfully: ${filename}`);
     res.send({ message: 'File deleted successfully' });
   } catch (error) {
     console.error('Error deleting file:', error);
