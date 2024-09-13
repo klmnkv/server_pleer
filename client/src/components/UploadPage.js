@@ -17,7 +17,6 @@ import {
   CircularProgress,
   Box,
   Paper,
-  Chip,
   LinearProgress,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -158,17 +157,14 @@ const UploadPage = () => {
     }
   }, [files, selectedDirectory, fetchFiles]);
 
-const handleDelete = useCallback(async (filename) => {
-  try {
-    console.log(`Attempting to delete file: ${filename}`);
-    await axios.delete(`/delete/${encodeURIComponent(filename)}`);
-    console.log(`Delete request sent for file: ${filename}`);
-    await fetchFiles(selectedDirectory);
-  } catch (error) {
-    console.error('Delete error:', error);
-    // Добавьте здесь обработку ошибок, например, показ уведомления пользователю
-  }
-}, [fetchFiles, selectedDirectory]);
+  const handleDelete = useCallback(async (fileUrl) => {
+    try {
+      await axios.delete(`/delete/${encodeURIComponent(fileUrl)}`);
+      await fetchFiles(selectedDirectory);
+    } catch (error) {
+      console.error('Delete error:', error);
+    }
+  }, [fetchFiles, selectedDirectory]);
 
   return (
     <Container maxWidth="md">
@@ -267,7 +263,7 @@ const handleDelete = useCallback(async (filename) => {
             {uploadedFiles.map((file, index) => (
               <ListItem key={index}>
                 <ListItemText
-                  primary={<Link to={`/play/${encodeURIComponent(file.filename)}`}>{file.filename}</Link>}
+                  primary={<Link to={`/play/${encodeURIComponent(file.audioUrl.split('/').pop())}`}>{file.originalName}</Link>}
                   secondary={file.audioUrl}
                 />
               </ListItem>
@@ -301,9 +297,9 @@ const handleDelete = useCallback(async (filename) => {
           fileList.map((file, index) => (
             <ListItem key={index}>
               <ListItemText
-                primary={<Link to={`/play/${encodeURIComponent(file)}`}>{file}</Link>}
+                primary={<Link to={`/play/${encodeURIComponent(file.url.split('/').pop())}`}>{file.name}</Link>}
               />
-              <IconButton onClick={() => handleDelete(file)} edge="end">
+              <IconButton onClick={() => handleDelete(file.url)} edge="end">
                 <DeleteIcon />
               </IconButton>
             </ListItem>
