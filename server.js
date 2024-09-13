@@ -234,8 +234,15 @@ async function getAllFiles(dir) {
 
 // Route for deleting a file
 app.delete('/delete/:filename', async (req, res) => {
-  const filename = req.params.filename;
+  let filename = req.params.filename;
   console.log(`Attempting to delete file: ${filename}`);
+
+  // Удаляем префикс URL, если он присутствует
+  const prefix = 'http://bred-audio.ru/uploads/';
+  if (filename.startsWith(prefix)) {
+    filename = filename.slice(prefix.length);
+  }
+
   try {
     const files = await getAllFiles(uploadDir);
     console.log('All files:', files);
@@ -247,14 +254,8 @@ app.delete('/delete/:filename', async (req, res) => {
       return res.status(404).send({ error: 'File not found' });
     }
 
-    let fullPath;
-    if (path.dirname(filePath) === '.') {
-      fullPath = path.join(uploadDir, filename);
-      console.log('File in root directory. Full path:', fullPath);
-    } else {
-      fullPath = path.join(uploadDir, filePath);
-      console.log('File in subdirectory. Full path:', fullPath);
-    }
+    const fullPath = path.join(uploadDir, filePath);
+    console.log('Full path to delete:', fullPath);
 
     await fsPromises.unlink(fullPath);
     console.log(`File deleted successfully: ${filename}`);
