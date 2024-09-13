@@ -298,6 +298,7 @@ const UploadPage = () => {
             <ListItem key={index}>
               <ListItemText
                 primary={<Link to={`/play/${encodeURIComponent(file.url)}`}>{file.name}</Link>}
+                secondary={!selectedDirectory && file.directory !== 'Root' ? `Directory: ${file.directory}` : null}
               />
               <IconButton onClick={() => handleDelete(file.url)} edge="end">
                 <DeleteIcon />

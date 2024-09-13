@@ -132,14 +132,17 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 });
 
 // Route for getting all files
+// Route for getting all files
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
     const fileInfos = files.map(file => {
       const fileName = path.basename(file);
+      const directory = path.dirname(file);
       return {
         name: originalFileNames.get(fileName) || fileName,
-        url: `/uploads/${file}`
+        url: `/uploads/${file}`,
+        directory: directory === '.' ? 'Root' : directory
       };
     });
     console.log(`Files retrieved: ${fileInfos.length}`);
