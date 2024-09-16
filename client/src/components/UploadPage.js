@@ -159,7 +159,7 @@ const UploadPage = () => {
 
   const handleDelete = useCallback(async (fileUrl) => {
     try {
-      await axios.delete(`/delete/${encodeURIComponent(fileUrl)}`);
+      await axios.delete(`/delete/${fileUrl.split('/').pop()}`);
       await fetchFiles(selectedDirectory);
     } catch (error) {
       console.error('Delete error:', error);
@@ -230,7 +230,6 @@ const UploadPage = () => {
       </Paper>
       {dirError && <Typography color="error">{dirError}</Typography>}
 
-      {/* Display selected files */}
       {files.length > 0 && (
         <Box sx={{ marginTop: 2, marginBottom: 2 }}>
           <Typography variant="h6">Selected Files ({files.length}):</Typography>
@@ -247,7 +246,6 @@ const UploadPage = () => {
         </Box>
       )}
 
-      {/* Display upload progress */}
       {loading && (
         <Box sx={{ marginTop: 2, marginBottom: 2 }}>
           <Typography variant="body1">Upload Progress: {uploadProgress}%</Typography>
@@ -255,7 +253,6 @@ const UploadPage = () => {
         </Box>
       )}
 
-      {/* Display uploaded files */}
       {uploadedFiles.length > 0 && (
         <Box sx={{ marginTop: 2, marginBottom: 2 }}>
           <Typography variant="h6">Uploaded Files:</Typography>
@@ -263,8 +260,8 @@ const UploadPage = () => {
             {uploadedFiles.map((file, index) => (
               <ListItem key={index}>
                 <ListItemText
-                  primary={<Link to={`/play/${encodeURIComponent(file.audioUrl)}`}>{file.originalName}</Link>}
-                  secondary={file.audioUrl}
+                  primary={<Link to={`/play/${file.filename}`}>{file.originalName}</Link>}
+                  secondary={`https://bred-audio.ru/play/${file.filename}`}
                 />
               </ListItem>
             ))}
@@ -297,8 +294,8 @@ const UploadPage = () => {
           fileList.map((file, index) => (
             <ListItem key={index}>
               <ListItemText
-                primary={<Link to={`/play/${encodeURIComponent(file.url)}`}>{file.name}</Link>}
-                secondary={!selectedDirectory && file.directory !== 'Root' ? `Directory: ${file.directory}` : null}
+                primary={<Link to={`/play/${file.url.split('/').pop()}`}>{file.name}</Link>}
+                secondary={`https://bred-audio.ru${file.url}`}
               />
               <IconButton onClick={() => handleDelete(file.url)} edge="end">
                 <DeleteIcon />
