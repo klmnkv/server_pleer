@@ -264,7 +264,7 @@ const UploadPage = () => {
               <ListItem key={index}>
                 <ListItemText
                   primary={<Link to={file.audioUrl}>{file.originalName}</Link>}
-                  secondary={file.audioUrl}
+                  secondary={`https://bred-audio.ru${file.audioUrl}`}
                 />
               </ListItem>
             ))}
@@ -298,7 +298,13 @@ const UploadPage = () => {
             <ListItem key={index}>
               <ListItemText
                 primary={<Link to={file.url}>{file.name}</Link>}
-                secondary={!selectedDirectory && file.directory !== 'Root' ? `Directory: ${file.directory}` : null}
+                secondary={
+                  <>
+                    {!selectedDirectory && file.directory !== 'Root' && `Directory: ${file.directory}`}
+                    <br />
+                    {`https://bred-audio.ru${file.url}`}
+                  </>
+                }
               />
               <IconButton onClick={() => handleDelete(file.url)} edge="end">
                 <DeleteIcon />

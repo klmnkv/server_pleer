@@ -93,7 +93,7 @@ app.post('/upload', upload.array('audio'), (req, res) => {
     const originalName = Buffer.from(file.originalname, 'latin1').toString('utf8');
     originalFileNames.set(file.filename, originalName);
 
-    const audioUrl = `/play/uploads/${directory ? directory + '/' : ''}${file.filename}`;
+    const audioUrl = `/play/${file.filename}`;
     console.log(`File uploaded: ${audioUrl}`);
     return { filename: file.filename, originalName, audioUrl };
   });
@@ -114,7 +114,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
       const fileName = path.basename(file);
       return {
         name: originalFileNames.get(fileName) || fileName,
-        url: `/play/uploads/${directoryName ? directoryName + '/' : ''}${fileName}`
+        url: `/play/${fileName}`
       };
     });
     console.log(`Files found in ${directoryName}:`, fileInfos);
@@ -130,7 +130,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
   }
 });
 
-// Route for getting all files
+// Updated route for getting all files
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
@@ -139,7 +139,7 @@ app.get('/files', async (req, res) => {
       const directory = path.dirname(file);
       return {
         name: originalFileNames.get(fileName) || fileName,
-        url: `/play/uploads/${file}`,
+        url: `/play/${fileName}`,
         directory: directory === '.' ? 'Root' : directory
       };
     });
@@ -250,8 +250,18 @@ app.get('/directories', async (req, res) => {
   }
 });
 
-// Route for serving audio files
-app.use('/uploads', express.static(uploadDir));
+// New route for serving audio files
+app.get('/play/:filename', (req, res) => {
+  const { filename } = req.params;
+  const filePath = path.join(uploadDir, filename);
+
+  // Проверяем, существует ли файл
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+  } else {
+    res.status(404).send('File not found');
+  }
+});
 
 // For serving the React app (assuming it's built and placed in the 'client/build' directory)
 app.use(express.static(path.join(__dirname, 'client/build')));

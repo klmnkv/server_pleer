@@ -11,8 +11,8 @@ const PlayerPage = () => {
 
   console.log('Audio URL:', audioUrl);
 
-  if (!audioUrl) {
-    return <p>No audio URL provided</p>;
+  if (!audioUrl || !audioUrl.startsWith('/play/')) {
+    return <p>Invalid audio URL</p>;
   }
 
   return (
