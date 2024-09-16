@@ -5,12 +5,17 @@ import './AudioPlayer.css';
 
 const PlayerPage = () => {
   const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const { filename } = useParams();
 
-  // URL аудио теперь формируется напрямую из пути
-  const audioUrl = location.pathname;
+  let audioUrl;
+  if (filename) {
+    audioUrl = `/uploads/${filename}`;
+  } else {
+    audioUrl = decodeURIComponent(params.get('url'));
+  }
 
-  console.log('Audio URL:', audioUrl);
+  console.log('Decoded Audio URL:', audioUrl);
 
   if (!audioUrl) {
     return <p>No audio URL provided</p>;

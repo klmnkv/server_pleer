@@ -216,7 +216,7 @@ const UploadPage = () => {
       {dirError && <Typography color="error">{dirError}</Typography>}
       {audioUrl && (
         <Box sx={{ marginBottom: 2 }}>
-          <Typography>Audio URL: <Link to={audioUrl}>{audioUrl}</Link></Typography>
+          <Typography>Audio URL: <Link to={`/play/${encodeURIComponent(audioUrl.split('/').pop())}`}>{audioUrl}</Link></Typography>
           <audio controls src={audioUrl} />
         </Box>
       )}
@@ -245,9 +245,9 @@ const UploadPage = () => {
           files.map((file, index) => (
             <ListItem key={index}>
               <ListItemText
-                primary={<Link to={`/play/${file}`}>{file}</Link>}
+                primary={<Link to={`/play/${encodeURIComponent(file.split('/').pop())}`}>{file}</Link>}
               />
-              <IconButton onClick={() => handleDelete(file)} edge="end">
+              <IconButton onClick={() => handleDelete(file.split('/').pop())} edge="end">
                 <DeleteIcon />
               </IconButton>
             </ListItem>
