@@ -1,18 +1,19 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import AudioPlayer from './AudioPlayer';
 import './AudioPlayer.css';
 
 const PlayerPage = () => {
   const location = useLocation();
+  const { filename } = useParams();
 
-  // Извлекаем URL аудио из пути
+  // URL аудио теперь формируется напрямую из пути
   const audioUrl = location.pathname;
 
   console.log('Audio URL:', audioUrl);
 
-  if (!audioUrl || !audioUrl.startsWith('/play/')) {
-    return <p>Invalid audio URL</p>;
+  if (!audioUrl) {
+    return <p>No audio URL provided</p>;
   }
 
   return (

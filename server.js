@@ -93,9 +93,9 @@ app.post('/upload', upload.array('audio'), (req, res) => {
     const originalName = Buffer.from(file.originalname, 'latin1').toString('utf8');
     originalFileNames.set(file.filename, originalName);
 
-    const audioUrl = `/play/${file.filename}`;
-    console.log(`File uploaded: ${audioUrl}`);
-    return { filename: file.filename, originalName, audioUrl };
+  const audioUrl = `/play/${req.file.filename}`;
+  console.log(`File uploaded: ${audioUrl}`);
+  res.json({ audioUrl });
   });
 
   res.json({ uploadedFiles });
@@ -134,17 +134,10 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
-    const fileInfos = files.map(file => {
-      const fileName = path.basename(file);
-      const directory = path.dirname(file);
-      return {
-        name: originalFileNames.get(fileName) || fileName,
-        url: `/play/${fileName}`,
-        directory: directory === '.' ? 'Root' : directory
-      };
-    });
-    console.log(`Files retrieved: ${fileInfos.length}`);
-    res.send(fileInfos);
+    const fileUrls = files.map(file => `/play/${path.basename(file)}`);
+    console.log(`Files retrieved: ${fileUrls.length}`);
+    console.log('Files:', fileUrls);
+    res.send(fileUrls);
   } catch (error) {
     console.error('Error reading upload directory:', error);
     res.status(500).send({ error: 'Unable to retrieve files' });
@@ -251,15 +244,34 @@ app.get('/directories', async (req, res) => {
 });
 
 // New route for serving audio files
-app.get('/play/:filename', (req, res) => {
+app.get('/play/:filename', async (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   const { filename } = req.params;
-  const filePath = path.join(uploadDir, filename);
+  console.log('Audio file requested:', filename);
 
-  // Проверяем, существует ли файл
-  if (fs.existsSync(filePath)) {
-    res.sendFile(filePath);
-  } else {
-    res.status(404).send('File not found');
+  try {
+    const files = await getAllFiles(uploadDir);
+    const filePath = files.find(file => path.basename(file) === filename);
+
+    if (!filePath) {
+      console.error('File not found:', filename);
+      return res.status(404).send('File not found');
+    }
+
+    const fullPath = path.join(uploadDir, filePath);
+    console.log('Full file path:', fullPath);
+
+    res.sendFile(fullPath, (err) => {
+      if (err) {
+        console.error('Error sending file:', err);
+        res.status(500).send('Error sending file');
+      } else {
+        console.log('File sent successfully');
+      }
+    });
+  } catch (error) {
+    console.error('Error accessing file:', error);
+    res.status(500).send('Internal server error');
   }
 });
 

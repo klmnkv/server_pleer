@@ -17,19 +17,17 @@ import {
   CircularProgress,
   Box,
   Paper,
-  LinearProgress,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const UploadPage = () => {
-  const [files, setFiles] = useState([]);
-  const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [file, setFile] = useState(null);
+  const [audioUrl, setAudioUrl] = useState('');
   const [uploadError, setUploadError] = useState('');
   const [dirError, setDirError] = useState('');
   const [fileError, setFileError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [fileList, setFileList] = useState([]);
+  const [files, setFiles] = useState([]);
   const [directories, setDirectories] = useState([]);
   const [selectedDirectory, setSelectedDirectory] = useState('');
   const [newDirectory, setNewDirectory] = useState('');
@@ -39,12 +37,12 @@ const UploadPage = () => {
     try {
       const response = await axios.get(directory ? `/directories/${directory}/files` : '/files');
       console.log('Fetched files:', response.data);
-      setFileList(response.data);
+      setFiles(response.data);
       setFileError('');
     } catch (error) {
       console.error('Error fetching files:', error);
       setFileError(`Error fetching files: ${error.response?.data?.error || error.message}`);
-      setFileList([]);
+      setFiles([]);
     }
   }, []);
 
@@ -72,12 +70,7 @@ const UploadPage = () => {
   }, [selectedDirectory, fetchFiles]);
 
   const handleFileChange = useCallback((e) => {
-    const selectedFiles = Array.from(e.target.files);
-    setFiles(prevFiles => [...prevFiles, ...selectedFiles]);
-  }, []);
-
-  const handleRemoveFile = useCallback((index) => {
-    setFiles(prevFiles => prevFiles.filter((_, i) => i !== index));
+    setFile(e.target.files[0]);
   }, []);
 
   const handleDirectoryChange = useCallback((value) => {
@@ -120,34 +113,28 @@ const UploadPage = () => {
   }, [fetchDirectories, fetchFiles, selectedDirectory]);
 
   const handleUpload = useCallback(async () => {
-    if (files.length === 0) {
-      setUploadError('Please select at least one file');
+    if (!file) {
+      setUploadError('Please select a file first');
       return;
     }
 
     const formData = new FormData();
-    files.forEach((file) => formData.append('audio', file));
+    formData.append('audio', file);
     formData.append('directory', selectedDirectory || '');
 
-    console.log('Uploading files:', files.map(f => f.name));
+    console.log('Uploading file:', file.name);
     console.log('Selected directory:', selectedDirectory);
 
     setLoading(true);
-    setUploadProgress(0);
     try {
       const response = await axios.post('/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-        onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setUploadProgress(percentCompleted);
-        },
       });
       console.log('Upload response:', response.data);
-      setUploadedFiles(response.data.uploadedFiles);
+      setAudioUrl(response.data.audioUrl);
       setUploadError('');
-      setFiles([]);  // Clear the file selection after successful upload
       await fetchFiles(selectedDirectory);
     } catch (error) {
       console.error('Upload error:', error);
@@ -155,11 +142,11 @@ const UploadPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [files, selectedDirectory, fetchFiles]);
+  }, [file, selectedDirectory, fetchFiles]);
 
-  const handleDelete = useCallback(async (fileUrl) => {
+  const handleDelete = useCallback(async (filename) => {
     try {
-      await axios.delete(`/delete/${encodeURIComponent(fileUrl)}`);
+      await axios.delete(`/delete/${filename}`);
       await fetchFiles(selectedDirectory);
     } catch (error) {
       console.error('Delete error:', error);
@@ -178,7 +165,6 @@ const UploadPage = () => {
             onChange={handleFileChange}
             accept="audio/*"
             id="audio-file-input"
-            multiple
           />
           <FormControl fullWidth sx={{ marginTop: 2 }}>
             <InputLabel id="directory-select-label">Select Directory</InputLabel>
@@ -208,7 +194,6 @@ const UploadPage = () => {
         </Box>
       </Paper>
       {uploadError && <Typography color="error">{uploadError}</Typography>}
-
       <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
         <Box component="form" noValidate autoComplete="off">
           <TextField
@@ -229,49 +214,12 @@ const UploadPage = () => {
         </Box>
       </Paper>
       {dirError && <Typography color="error">{dirError}</Typography>}
-
-      {/* Display selected files */}
-      {files.length > 0 && (
-        <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-          <Typography variant="h6">Selected Files ({files.length}):</Typography>
-          <List>
-            {files.map((file, index) => (
-              <ListItem key={index}>
-                <ListItemText primary={file.name} secondary={`${(file.size / 1024 / 1024).toFixed(2)} MB`} />
-                <IconButton onClick={() => handleRemoveFile(index)} edge="end">
-                  <DeleteIcon />
-                </IconButton>
-              </ListItem>
-            ))}
-          </List>
+      {audioUrl && (
+        <Box sx={{ marginBottom: 2 }}>
+          <Typography>Audio URL: <Link to={audioUrl}>{audioUrl}</Link></Typography>
+          <audio controls src={audioUrl} />
         </Box>
       )}
-
-      {/* Display upload progress */}
-      {loading && (
-        <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-          <Typography variant="body1">Upload Progress: {uploadProgress}%</Typography>
-          <LinearProgress variant="determinate" value={uploadProgress} />
-        </Box>
-      )}
-
-      {/* Display uploaded files */}
-      {uploadedFiles.length > 0 && (
-        <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-          <Typography variant="h6">Uploaded Files:</Typography>
-          <List>
-            {uploadedFiles.map((file, index) => (
-              <ListItem key={index}>
-                <ListItemText
-                  primary={<Link to={file.audioUrl}>{file.originalName}</Link>}
-                  secondary={`https://bred-audio.ru${file.audioUrl}`}
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      )}
-
       <Typography variant="h5" gutterBottom>
         Directories
       </Typography>
@@ -293,20 +241,13 @@ const UploadPage = () => {
       </Typography>
       {fileError && <Typography color="error">{fileError}</Typography>}
       <List>
-        {fileList.length > 0 ? (
-          fileList.map((file, index) => (
+        {files.length > 0 ? (
+          files.map((file, index) => (
             <ListItem key={index}>
               <ListItemText
-                primary={<Link to={file.url}>{file.name}</Link>}
-                secondary={
-                  <>
-                    {!selectedDirectory && file.directory !== 'Root' && `Directory: ${file.directory}`}
-                    <br />
-                    {`https://bred-audio.ru${file.url}`}
-                  </>
-                }
+                primary={<Link to={`/play/${file}`}>{file}</Link>}
               />
-              <IconButton onClick={() => handleDelete(file.url)} edge="end">
+              <IconButton onClick={() => handleDelete(file)} edge="end">
                 <DeleteIcon />
               </IconButton>
             </ListItem>
