@@ -38,6 +38,9 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
 
+// Map to store original file names
+const originalFileNames = new Map();
+
 // Multer setup
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -52,7 +55,6 @@ const storage = multer.diskStorage({
   }
 });
 
-// Configure multer for handling file uploads
 const upload = multer({
   storage: storage,
   limits: {
@@ -75,7 +77,6 @@ app.post('/upload', upload.array('audio'), (req, res) => {
   const directory = req.body.directory || '';
   const targetDir = path.join(uploadDir, directory);
 
-  // Create directory if it doesn't exist
   if (!fs.existsSync(targetDir)) {
     fs.mkdirSync(targetDir, { recursive: true });
   }
@@ -89,42 +90,115 @@ app.post('/upload', upload.array('audio'), (req, res) => {
     console.log('File path:', newPath);
     console.log('File size:', file.size);
 
-    const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${file.filename}`;
+    // Используем Buffer для корректной обработки кодировки
+    const originalName = Buffer.from(file.originalname, 'latin1').toString('utf8');
+    originalFileNames.set(file.filename, originalName);
+
+    const audioUrl = `/uploads/${directory ? directory + '/' : ''}${file.filename}`;
     console.log(`File uploaded: ${audioUrl}`);
-    return { filename: file.filename, audioUrl };
+    return { filename: file.filename, originalName, audioUrl };
   });
 
   res.json({ uploadedFiles });
 });
 
-// Error handling middleware for multer errors
-app.use((err, req, res, next) => {
-  if (err instanceof multer.MulterError) {
-    if (err.code === 'LIMIT_FILE_SIZE') {
-      return res.status(400).json({ error: 'File size is too large. Max limit is 50MB per file.' });
-    }
-    if (err.code === 'LIMIT_FILE_COUNT') {
-      return res.status(400).json({ error: 'Too many files. Max limit is 100 files per upload.' });
+// Updated route for getting files in a specific directory
+app.get('/directories/:directoryName/files', async (req, res) => {
+  const { directoryName } = req.params;
+  const dirPath = path.join(uploadDir, directoryName);
+
+  console.log(`Fetching files for directory: ${dirPath}`);
+
+  try {
+    const files = await getAllFiles(dirPath);
+    const fileInfos = files.map(file => {
+      const fileName = path.basename(file);
+      return {
+        name: originalFileNames.get(fileName) || fileName,
+        url: `/uploads/${directoryName ? directoryName + '/' : ''}${fileName}`
+      };
+    });
+    console.log(`Files found in ${directoryName}:`, fileInfos);
+    res.send(fileInfos);
+  } catch (error) {
+    console.error('Error reading files in directory:', error);
+    if (error.code === 'ENOENT') {
+      console.log(`Directory not found: ${dirPath}`);
+      res.status(404).send({ error: 'Directory not found' });
+    } else {
+      res.status(500).send({ error: 'Unable to retrieve files' });
     }
   }
-  next(err);
 });
 
-// Function to get a random audio file from a directory
-async function getRandomAudioFile(directory) {
-  const dirPath = path.join(uploadDir, directory);
+// Route for getting all files
+app.get('/files', async (req, res) => {
   try {
-    const files = await fsPromises.readdir(dirPath);
-    const audioFiles = files.filter(file => ['.mp3', '.wav', '.ogg'].includes(path.extname(file)));
+    const files = await getAllFiles(uploadDir);
+    const fileInfos = files.map(file => {
+      const fileName = path.basename(file);
+      return {
+        name: originalFileNames.get(fileName) || fileName,
+        url: `/uploads/${file}`
+      };
+    });
+    console.log(`Files retrieved: ${fileInfos.length}`);
+    res.send(fileInfos);
+  } catch (error) {
+    console.error('Error reading upload directory:', error);
+    res.status(500).send({ error: 'Unable to retrieve files' });
+  }
+});
 
-    if (audioFiles.length === 0) {
-      throw new Error('No audio files found in the specified directory');
+// Updated route for deleting a file
+app.delete('/delete/:filename(*)', async (req, res) => {
+  let filename = req.params.filename;
+  console.log(`Attempting to delete file: ${filename}`);
+
+  // Extract filename from full URL if present
+  const urlParts = filename.split('/');
+  filename = urlParts[urlParts.length - 1];
+
+  try {
+    const files = await getAllFiles(uploadDir);
+    const filePath = files.find(file => path.basename(file) === filename);
+
+    if (!filePath) {
+      console.log('File not found');
+      return res.status(404).send({ error: 'File not found' });
     }
 
-    return audioFiles[Math.floor(Math.random() * audioFiles.length)];
+    const fullPath = path.join(uploadDir, filePath);
+    console.log('Full path to delete:', fullPath);
+
+    await fsPromises.unlink(fullPath);
+    // Remove original file name from Map
+    originalFileNames.delete(filename);
+    console.log(`File deleted successfully: ${filename}`);
+    res.send({ message: 'File deleted successfully' });
   } catch (error) {
-    console.error(`Error reading directory ${dirPath}:`, error);
-    throw error;
+    console.error('Error deleting file:', error);
+    res.status(500).send({ error: 'Unable to delete file' });
+  }
+});
+
+// Helper function to get all files recursively
+async function getAllFiles(dir) {
+  console.log(`Scanning directory: ${dir}`);
+  try {
+    const entries = await fsPromises.readdir(dir, { withFileTypes: true });
+    const files = await Promise.all(entries.map(async (entry) => {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        return getAllFiles(fullPath);
+      } else {
+        return path.relative(uploadDir, fullPath);
+      }
+    }));
+    return files.flat();
+  } catch (error) {
+    console.error(`Error scanning directory ${dir}:`, error);
+    return [];
   }
 }
 
@@ -175,137 +249,21 @@ app.get('/directories', async (req, res) => {
   }
 });
 
-// Route for getting files in a specific directory
-app.get('/directories/:directoryName/files', async (req, res) => {
-  const { directoryName } = req.params;
-  const dirPath = path.join(uploadDir, directoryName);
-
-  console.log(`Fetching files for directory: ${dirPath}`);
-
-  try {
-    const files = await getAllFiles(dirPath);
-    const fileNames = files.map(file => path.basename(file));
-    console.log(`Files found in ${directoryName}:`, fileNames);
-    res.send(fileNames);
-  } catch (error) {
-    console.error('Error reading files in directory:', error);
-    if (error.code === 'ENOENT') {
-      console.log(`Directory not found: ${dirPath}`);
-      res.status(404).send({ error: 'Directory not found' });
-    } else {
-      res.status(500).send({ error: 'Unable to retrieve files' });
-    }
-  }
-});
-
-// Route for getting all files
-app.get('/files', async (req, res) => {
-  try {
-    const files = await getAllFiles(uploadDir);
-    const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file}`);
-    console.log(`Files retrieved: ${fileUrls.length}`);
-    console.log('Files:', fileUrls);
-    res.send(fileUrls);
-  } catch (error) {
-    console.error('Error reading upload directory:', error);
-    res.status(500).send({ error: 'Unable to retrieve files' });
-  }
-});
-
-// Helper function to get all files recursively
-async function getAllFiles(dir) {
-  console.log(`Scanning directory: ${dir}`);
-  try {
-    const entries = await fsPromises.readdir(dir, { withFileTypes: true });
-    const files = await Promise.all(entries.map(async (entry) => {
-      const fullPath = path.join(dir, entry.name);
-      if (entry.isDirectory()) {
-        return getAllFiles(fullPath);
-      } else {
-        return path.relative(uploadDir, fullPath);
-      }
-    }));
-    return files.flat();
-  } catch (error) {
-    console.error(`Error scanning directory ${dir}:`, error);
-    return [];
-  }
-}
-
-// Route for deleting a file
-app.delete('/delete/:filename', async (req, res) => {
-  const filename = req.params.filename;
-  try {
-    const files = await getAllFiles(uploadDir);
-    const filePath = files.find(file => path.basename(file) === filename);
-
-    if (!filePath) {
-      return res.status(404).send({ error: 'File not found' });
-    }
-
-    const fullPath = path.join(uploadDir, filePath);
-    await fsPromises.unlink(fullPath);
-    console.log(`File deleted: ${filename}`);
-    res.send({ message: 'File deleted successfully' });
-  } catch (error) {
-    console.error('Error deleting file:', error);
-    res.status(500).send({ error: 'Unable to delete file' });
-  }
-});
-
-// Route for serving audio files (used by the audio player)
-app.get('/uploads/:filename', async (req, res) => {
-  const { filename } = req.params;
-  console.log('Audio file requested:', filename);
-
-  try {
-    const files = await getAllFiles(uploadDir);
-    const filePath = files.find(file => path.basename(file) === filename);
-
-    if (!filePath) {
-      console.error('File not found:', filename);
-      return res.status(404).send('File not found');
-    }
-
-    const fullPath = path.join(uploadDir, filePath);
-    console.log('Full file path:', fullPath);
-
-    res.sendFile(fullPath, (err) => {
-      if (err) {
-        console.error('Error sending file:', err);
-        res.status(500).send('Error sending file');
-      } else {
-        console.log('File sent successfully');
-      }
-    });
-  } catch (error) {
-    console.error('Error accessing file:', error);
-    res.status(500).send('Internal server error');
-  }
-});
-
-// API for getting info about a random audio file from orel_facts directory
-app.get('/api/random-orel-fact', async (req, res) => {
-  try {
-    const fileName = await getRandomAudioFile('orel_facts');
-    const audioUrl = `/uploads/orel_facts/${fileName}`;
-    res.json({ audioUrl, fileName });
-  } catch (error) {
-    console.error('Error getting random audio info:', error);
-    res.status(404).json({ error: 'Audio not found' });
-  }
-});
-
-// Route for serving static files (React build)
+// Route for serving audio files
 app.use('/uploads', express.static(uploadDir));
-app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: '1d' }));
 
-app.get('/play/:filename', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
+// For serving the React app (assuming it's built and placed in the 'client/build' directory)
+app.use(express.static(path.join(__dirname, 'client/build')));
 
+// Catch-all route to return the React app for any unmatched routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
 const server = app.listen(port, '0.0.0.0', () => {
