@@ -50,8 +50,9 @@ const storage = multer.diskStorage({
     cb(null, targetDir);
   },
   filename: function (req, file, cb) {
+    const timestamp = Date.now();
     const originalExtension = path.extname(file.originalname);
-    cb(null, Date.now() + originalExtension);
+    cb(null, `${timestamp}${originalExtension}`);
   }
 });
 
@@ -90,11 +91,10 @@ app.post('/upload', upload.array('audio'), (req, res) => {
     console.log('File path:', newPath);
     console.log('File size:', file.size);
 
-    // Используем Buffer для корректной обработки кодировки
     const originalName = Buffer.from(file.originalname, 'latin1').toString('utf8');
     originalFileNames.set(file.filename, originalName);
 
-    const audioUrl = `/uploads/${directory ? directory + '/' : ''}${file.filename}`;
+    const audioUrl = `/play/${file.filename}`;
     console.log(`File uploaded: ${audioUrl}`);
     return { filename: file.filename, originalName, audioUrl };
   });
@@ -115,7 +115,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
       const fileName = path.basename(file);
       return {
         name: originalFileNames.get(fileName) || fileName,
-        url: `/uploads/${directoryName ? directoryName + '/' : ''}${fileName}`
+        url: `/play/${fileName}`
       };
     });
     console.log(`Files found in ${directoryName}:`, fileInfos);
@@ -131,8 +131,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
   }
 });
 
-// Route for getting all files
-// Route for getting all files
+// Updated route for getting all files
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
@@ -141,7 +140,7 @@ app.get('/files', async (req, res) => {
       const directory = path.dirname(file);
       return {
         name: originalFileNames.get(fileName) || fileName,
-        url: `/uploads/${file}`,
+        url: `/play/${fileName}`,
         directory: directory === '.' ? 'Root' : directory
       };
     });
@@ -252,8 +251,23 @@ app.get('/directories', async (req, res) => {
   }
 });
 
-// Route for serving audio files
-app.use('/uploads', express.static(uploadDir));
+// New route for playing audio files
+app.get('/play/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(uploadDir, filename);
+
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+  } else {
+    res.status(404).send('File not found');
+  }
+});
+
+// Route for serving audio files (now redirects to /play/:filename)
+app.use('/uploads', (req, res) => {
+  const requestedPath = req.path;
+  res.redirect(`/play${requestedPath}`);
+});
 
 // For serving the React app (assuming it's built and placed in the 'client/build' directory)
 app.use(express.static(path.join(__dirname, 'client/build')));
