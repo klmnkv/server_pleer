@@ -52,7 +52,63 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage: storage });
+// Configure multer for handling file uploads
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 50 * 1024 * 1024, // 50 MB limit per file
+    files: 100 // Allow up to 100 files per upload
+  }
+});
+
+// Updated route for uploading multiple audio files
+app.post('/upload', upload.array('audio'), (req, res) => {
+  console.log('Multiple file upload started');
+  console.log('Upload request body:', req.body);
+  console.log('Selected directory from request:', req.body.directory);
+
+  if (!req.files || req.files.length === 0) {
+    console.log('No files received');
+    return res.status(400).json({ error: 'No files uploaded' });
+  }
+
+  const directory = req.body.directory || '';
+  const targetDir = path.join(uploadDir, directory);
+
+  // Create directory if it doesn't exist
+  if (!fs.existsSync(targetDir)) {
+    fs.mkdirSync(targetDir, { recursive: true });
+  }
+
+  const uploadedFiles = req.files.map(file => {
+    const oldPath = file.path;
+    const newPath = path.join(targetDir, file.filename);
+    fs.renameSync(oldPath, newPath);
+
+    console.log('File received:', file);
+    console.log('File path:', newPath);
+    console.log('File size:', file.size);
+
+    const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${file.filename}`;
+    console.log(`File uploaded: ${audioUrl}`);
+    return { filename: file.filename, audioUrl };
+  });
+
+  res.json({ uploadedFiles });
+});
+
+// Error handling middleware for multer errors
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    if (err.code === 'LIMIT_FILE_SIZE') {
+      return res.status(400).json({ error: 'File size is too large. Max limit is 50MB per file.' });
+    }
+    if (err.code === 'LIMIT_FILE_COUNT') {
+      return res.status(400).json({ error: 'Too many files. Max limit is 100 files per upload.' });
+    }
+  }
+  next(err);
+});
 
 // Function to get a random audio file from a directory
 async function getRandomAudioFile(directory) {
@@ -72,38 +128,6 @@ async function getRandomAudioFile(directory) {
   }
 }
 
-// Route for uploading audio files
-app.post('/upload', upload.single('audio'), (req, res) => {
-  console.log('File upload started');
-  console.log('Upload request body:', req.body);
-  console.log('Selected directory from request:', req.body.directory);
-
-  if (!req.file) {
-    console.log('No file received');
-    return res.status(400).json({ error: 'No file uploaded' });
-  }
-
-  const directory = req.body.directory || '';
-  const targetDir = path.join(uploadDir, directory);
-
-  // Создаем директорию, если она не существует
-  if (!fs.existsSync(targetDir)) {
-    fs.mkdirSync(targetDir, { recursive: true });
-  }
-
-  // Перемещаем файл в нужную директорию
-  const oldPath = req.file.path;
-  const newPath = path.join(targetDir, req.file.filename);
-  fs.renameSync(oldPath, newPath);
-
-  console.log('File received:', req.file);
-  console.log('File path:', newPath);
-  console.log('File size:', req.file.size);
-
-  const audioUrl = `${req.protocol}://${req.get('host')}/uploads/${directory ? directory + '/' : ''}${req.file.filename}`;
-  console.log(`File uploaded: ${audioUrl}`);
-  res.json({ audioUrl });
-});
 // Route for creating a new directory
 app.post('/create-directory', async (req, res) => {
   const { directoryName } = req.body;
@@ -173,6 +197,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
     }
   }
 });
+
 // Route for getting all files
 app.get('/files', async (req, res) => {
   try {
@@ -208,19 +233,32 @@ async function getAllFiles(dir) {
 }
 
 // Route for deleting a file
-app.delete('/delete/:filename', async (req, res) => {
-  const filename = req.params.filename;
+app.delete('/delete/:filename(*)', async (req, res) => {
+  let filename = req.params.filename;
+  console.log(`Received delete request for: ${filename}`);
+
+  // Извлекаем имя файла из полного URL
+  const urlParts = filename.split('/');
+  filename = urlParts[urlParts.length - 1];
+
+  console.log(`Attempting to delete file: ${filename}`);
+
   try {
     const files = await getAllFiles(uploadDir);
+    console.log('All files:', files);
     const filePath = files.find(file => path.basename(file) === filename);
+    console.log(`File path found: ${filePath}`);
 
     if (!filePath) {
+      console.log('File not found');
       return res.status(404).send({ error: 'File not found' });
     }
 
     const fullPath = path.join(uploadDir, filePath);
+    console.log('Full path to delete:', fullPath);
+
     await fsPromises.unlink(fullPath);
-    console.log(`File deleted: ${filename}`);
+    console.log(`File deleted successfully: ${filename}`);
     res.send({ message: 'File deleted successfully' });
   } catch (error) {
     console.error('Error deleting file:', error);
@@ -258,6 +296,7 @@ app.get('/uploads/:filename', async (req, res) => {
     res.status(500).send('Internal server error');
   }
 });
+
 // API for getting info about a random audio file from orel_facts directory
 app.get('/api/random-orel-fact', async (req, res) => {
   try {
