@@ -90,11 +90,10 @@ app.post('/upload', upload.array('audio'), (req, res) => {
     console.log('File path:', newPath);
     console.log('File size:', file.size);
 
-    // Используем Buffer для корректной обработки кодировки
     const originalName = Buffer.from(file.originalname, 'latin1').toString('utf8');
     originalFileNames.set(file.filename, originalName);
 
-    const audioUrl = `/uploads/${directory ? directory + '/' : ''}${file.filename}`;
+    const audioUrl = `/play/uploads/${directory ? directory + '/' : ''}${file.filename}`;
     console.log(`File uploaded: ${audioUrl}`);
     return { filename: file.filename, originalName, audioUrl };
   });
@@ -115,7 +114,7 @@ app.get('/directories/:directoryName/files', async (req, res) => {
       const fileName = path.basename(file);
       return {
         name: originalFileNames.get(fileName) || fileName,
-        url: `/uploads/${directoryName ? directoryName + '/' : ''}${fileName}`
+        url: `/play/uploads/${directoryName ? directoryName + '/' : ''}${fileName}`
       };
     });
     console.log(`Files found in ${directoryName}:`, fileInfos);
@@ -140,7 +139,7 @@ app.get('/files', async (req, res) => {
       const directory = path.dirname(file);
       return {
         name: originalFileNames.get(fileName) || fileName,
-        url: `/uploads/${file}`,
+        url: `/play/uploads/${file}`,
         directory: directory === '.' ? 'Root' : directory
       };
     });
