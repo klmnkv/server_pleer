@@ -21,6 +21,7 @@ import {
   LinearProgress,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import FolderIcon from '@mui/icons-material/Folder';
 
 const UploadPage = () => {
   const [files, setFiles] = useState([]);
@@ -158,17 +159,42 @@ const UploadPage = () => {
     }
   }, [files, selectedDirectory, fetchFiles]);
 
-const handleDelete = useCallback(async (filename) => {
-  try {
-    console.log(`Attempting to delete file: ${filename}`);
-    await axios.delete(`/delete/${encodeURIComponent(filename)}`);
-    console.log(`Delete request sent for file: ${filename}`);
-    await fetchFiles(selectedDirectory);
-  } catch (error) {
-    console.error('Delete error:', error);
-    // Добавьте здесь обработку ошибок, например, показ уведомления пользователю
-  }
-}, [fetchFiles, selectedDirectory]);
+  const handleDelete = useCallback(async (filePath) => {
+    try {
+      console.log(`Attempting to delete file: ${filePath}`);
+      await axios.delete(`/delete/${encodeURIComponent(filePath)}`);
+      console.log(`Delete request sent for file: ${filePath}`);
+      await fetchFiles(selectedDirectory);
+    } catch (error) {
+      console.error('Delete error:', error);
+      // Добавьте здесь обработку ошибок, например, показ уведомления пользователю
+    }
+  }, [fetchFiles, selectedDirectory]);
+
+  const renderFileList = () => (
+    <List>
+      {fileList.length > 0 ? (
+        fileList.map((file, index) => (
+          <ListItem key={index}>
+            <ListItemText
+              primary={<Link to={`/play/${encodeURIComponent(file.path)}`}>{file.name}</Link>}
+              secondary={
+                <React.Fragment>
+                  <FolderIcon fontSize="small" style={{ verticalAlign: 'middle', marginRight: '5px' }} />
+                  {file.directory}
+                </React.Fragment>
+              }
+            />
+            <IconButton onClick={() => handleDelete(file.path)} edge="end">
+              <DeleteIcon />
+            </IconButton>
+          </ListItem>
+        ))
+      ) : (
+        <Typography>No files in this directory</Typography>
+      )}
+    </List>
+  );
 
   return (
     <Container maxWidth="md">
@@ -296,22 +322,7 @@ const handleDelete = useCallback(async (filename) => {
         Uploaded Files (Current directory: {selectedDirectory || 'Root'})
       </Typography>
       {fileError && <Typography color="error">{fileError}</Typography>}
-      <List>
-        {fileList.length > 0 ? (
-          fileList.map((file, index) => (
-<ListItem key={index}>
-  <ListItemText
-    primary={<Link to={`/play/${encodeURIComponent(file)}`}>{file}</Link>}
-  />
-  <IconButton onClick={() => handleDelete(file)} edge="end">
-    <DeleteIcon />
-  </IconButton>
-</ListItem>
-          ))
-        ) : (
-          <Typography>No files in this directory</Typography>
-        )}
-      </List>
+      {renderFileList()}
     </Container>
   );
 };

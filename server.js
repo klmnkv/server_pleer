@@ -184,9 +184,13 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 
   try {
     const files = await getAllFiles(dirPath);
-    const fileNames = files.map(file => path.basename(file));
-    console.log(`Files found in ${directoryName}:`, fileNames);
-    res.send(fileNames);
+    const fileInfos = files.map(file => ({
+      name: path.basename(file),
+      directory: directoryName,
+      path: path.join(directoryName, file)
+    }));
+    console.log(`Files found in ${directoryName}:`, fileInfos);
+    res.send(fileInfos);
   } catch (error) {
     console.error('Error reading files in directory:', error);
     if (error.code === 'ENOENT') {
@@ -202,8 +206,12 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
-    const fileNames = files.map(file => path.basename(file));
-    res.send(fileNames);
+    const fileInfos = files.map(file => ({
+      name: path.basename(file),
+      directory: path.dirname(file) === '.' ? 'root' : path.dirname(file),
+      path: file
+    }));
+    res.send(fileInfos);
   } catch (error) {
     console.error('Error reading upload directory:', error);
     res.status(500).send({ error: 'Unable to retrieve files' });
