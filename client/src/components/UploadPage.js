@@ -21,8 +21,6 @@ import {
   LinearProgress,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import FolderIcon from '@mui/icons-material/Folder';
-import AudioFileIcon from '@mui/icons-material/AudioFile';
 
 const UploadPage = () => {
   const [files, setFiles] = useState([]);
@@ -32,23 +30,22 @@ const UploadPage = () => {
   const [fileError, setFileError] = useState('');
   const [loading, setLoading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [fileList, setFileList] = useState([]);
   const [directories, setDirectories] = useState([]);
   const [selectedDirectory, setSelectedDirectory] = useState('');
   const [newDirectory, setNewDirectory] = useState('');
-  const [fileStructure, setFileStructure] = useState({ directories: {}, files: [] });
 
-  const fetchFiles = useCallback(async () => {
-    console.log('Fetching files');
+  const fetchFiles = useCallback(async (directory) => {
+    console.log('Fetching files for directory:', directory);
     try {
-      const response = await axios.get('/files');
+      const response = await axios.get(directory ? `/directories/${directory}/files` : '/files');
       console.log('Fetched files:', response.data);
-      const structure = organizeFiles(response.data);
-      setFileStructure(structure);
+      setFileList(response.data);
       setFileError('');
     } catch (error) {
       console.error('Error fetching files:', error);
       setFileError(`Error fetching files: ${error.response?.data?.error || error.message}`);
-      setFileStructure({ directories: {}, files: [] });
+      setFileList([]);
     }
   }, []);
 
@@ -65,10 +62,15 @@ const UploadPage = () => {
   useEffect(() => {
     const initFetch = async () => {
       await fetchDirectories();
-      await fetchFiles();
+      await fetchFiles('');
     };
     initFetch();
   }, [fetchDirectories, fetchFiles]);
+
+  useEffect(() => {
+    console.log('Selected directory changed:', selectedDirectory);
+    fetchFiles(selectedDirectory);
+  }, [selectedDirectory, fetchFiles]);
 
   const handleFileChange = useCallback((e) => {
     const selectedFiles = Array.from(e.target.files);
@@ -111,8 +113,8 @@ const UploadPage = () => {
       await fetchDirectories();
       if (selectedDirectory === directoryName) {
         setSelectedDirectory('');
+        await fetchFiles('');
       }
-      await fetchFiles();
     } catch (error) {
       console.error('Error deleting directory:', error);
     }
@@ -147,7 +149,7 @@ const UploadPage = () => {
       setUploadedFiles(response.data.uploadedFiles);
       setUploadError('');
       setFiles([]);  // Clear the file selection after successful upload
-      await fetchFiles();
+      await fetchFiles(selectedDirectory);
     } catch (error) {
       console.error('Upload error:', error);
       setUploadError(`Upload failed: ${error.response?.data?.error || error.message || 'Unknown error'}`);
@@ -156,70 +158,17 @@ const UploadPage = () => {
     }
   }, [files, selectedDirectory, fetchFiles]);
 
-  const handleDelete = useCallback(async (filename) => {
-    try {
-      console.log(`Attempting to delete file: ${filename}`);
-      await axios.delete(`/delete/${encodeURIComponent(filename)}`);
-      console.log(`Delete request sent for file: ${filename}`);
-      await fetchFiles();
-    } catch (error) {
-      console.error('Delete error:', error);
-      // Добавьте здесь обработку ошибок, например, показ уведомления пользователю
-    }
-  }, [fetchFiles]);
-
-  const organizeFiles = (files) => {
-    const structure = { directories: {}, files: [] };
-    files.forEach(file => {
-      const parts = file.split('/uploads/')[1].split('/');
-      if (parts.length === 1) {
-        structure.files.push(parts[0]);
-      } else {
-        let currentLevel = structure.directories;
-        for (let i = 0; i < parts.length - 1; i++) {
-          if (!currentLevel[parts[i]]) {
-            currentLevel[parts[i]] = { directories: {}, files: [] };
-          }
-          currentLevel = currentLevel[parts[i]].directories;
-        }
-        currentLevel[parts[parts.length - 2]].files.push(parts[parts.length - 1]);
-      }
-    });
-    return structure;
-  };
-
-  const renderFileStructure = (structure, path = '') => {
-    return (
-      <List>
-        {Object.entries(structure.directories).map(([dirName, content]) => (
-          <ListItem key={dirName}>
-            <FolderIcon />
-            <ListItemText primary={dirName} />
-            {renderFileStructure(content, `${path}${dirName}/`)}
-          </ListItem>
-        ))}
-        {structure.files.map((file) => {
-          const fullPath = `${path}${file}`;
-          const encodedPath = encodeURIComponent(fullPath.replace(/^uploads\//, '')); // Remove 'uploads/' prefix
-          return (
-            <ListItem key={file}>
-              <AudioFileIcon />
-              <ListItemText
-                primary={
-                  <Link to={`/play/${encodedPath}`}>
-                    {file}
-                  </Link>
-                }
-              />
-              <IconButton onClick={() => handleDelete(fullPath)} edge="end">
-                <DeleteIcon />
-              </IconButton>
-            </ListItem>
-          );
-        })}
-      </List>
-    );
-  };
+const handleDelete = useCallback(async (filename) => {
+  try {
+    console.log(`Attempting to delete file: ${filename}`);
+    await axios.delete(`/delete/${encodeURIComponent(filename)}`);
+    console.log(`Delete request sent for file: ${filename}`);
+    await fetchFiles(selectedDirectory);
+  } catch (error) {
+    console.error('Delete error:', error);
+    // Добавьте здесь обработку ошибок, например, показ уведомления пользователю
+  }
+}, [fetchFiles, selectedDirectory]);
 
   return (
     <Container maxWidth="md">
@@ -343,12 +292,26 @@ const UploadPage = () => {
           </ListItem>
         ))}
       </List>
-
       <Typography variant="h5" gutterBottom>
-        Uploaded Files
+        Uploaded Files (Current directory: {selectedDirectory || 'Root'})
       </Typography>
       {fileError && <Typography color="error">{fileError}</Typography>}
-      {renderFileStructure(fileStructure)}
+      <List>
+        {fileList.length > 0 ? (
+          fileList.map((file, index) => (
+            <ListItem key={index}>
+              <ListItemText
+                primary={<Link to={`/play/${encodeURIComponent(file)}`}>{file}</Link>}
+              />
+              <IconButton onClick={() => handleDelete(file)} edge="end">
+                <DeleteIcon />
+              </IconButton>
+            </ListItem>
+          ))
+        ) : (
+          <Typography>No files in this directory</Typography>
+        )}
+      </List>
     </Container>
   );
 };
