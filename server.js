@@ -1,12 +1,11 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
 const fsPromises = fs.promises;
 const cors = require('cors');
 const util = require('util');
 const multer = require('multer');
-
+const fs = require('fs').promises;
 
 const app = express();
 const port = process.env.PORT || 3000;
