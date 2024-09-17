@@ -299,14 +299,14 @@ const handleDelete = useCallback(async (filename) => {
       <List>
         {fileList.length > 0 ? (
           fileList.map((file, index) => (
-            <ListItem key={index}>
-              <ListItemText
-                primary={<Link to={`/play/${encodeURIComponent(file)}`}>{file}</Link>}
-              />
-              <IconButton onClick={() => handleDelete(file)} edge="end">
-                <DeleteIcon />
-              </IconButton>
-            </ListItem>
+<ListItem key={index}>
+  <ListItemText
+    primary={<Link to={`/play/${encodeURIComponent(file)}`}>{file}</Link>}
+  />
+  <IconButton onClick={() => handleDelete(file)} edge="end">
+    <DeleteIcon />
+  </IconButton>
+</ListItem>
           ))
         ) : (
           <Typography>No files in this directory</Typography>

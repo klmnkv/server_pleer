@@ -202,10 +202,8 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
-    const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file}`);
-    console.log(`Files retrieved: ${fileUrls.length}`);
-    console.log('Files:', fileUrls);
-    res.send(fileUrls);
+    const fileNames = files.map(file => path.basename(file));
+    res.send(fileNames);
   } catch (error) {
     console.error('Error reading upload directory:', error);
     res.status(500).send({ error: 'Unable to retrieve files' });
