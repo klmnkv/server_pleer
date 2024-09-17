@@ -10,7 +10,7 @@ const PlayerPage = () => {
 
   let audioUrl;
   if (filename) {
-    audioUrl = `/uploads/${decodeURIComponent(filename)}`;
+    audioUrl = `/uploads/${filename}`;
   } else {
     audioUrl = decodeURIComponent(params.get('url'));
   }

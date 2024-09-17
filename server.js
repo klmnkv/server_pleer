@@ -1,11 +1,11 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const fsPromises = fs.promises;
 const cors = require('cors');
 const util = require('util');
 const multer = require('multer');
-const fs = require('fs').promises;
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -110,25 +110,6 @@ app.use((err, req, res, next) => {
   next(err);
 });
 
-async function findFile(filename, dir) {
-  try {
-    const files = await fs.readdir(dir, { withFileTypes: true });
-    for (const file of files) {
-      const filePath = path.join(dir, file.name);
-      if (file.isDirectory()) {
-        const found = await findFile(filename, filePath);
-        if (found) return found;
-      } else if (file.name === filename) {
-        return filePath;
-      }
-    }
-  } catch (error) {
-    console.error(`Error reading directory ${dir}:`, error);
-  }
-  return null;
-}
-
-
 // Function to get a random audio file from a directory
 async function getRandomAudioFile(directory) {
   const dirPath = path.join(uploadDir, directory);
@@ -203,13 +184,9 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 
   try {
     const files = await getAllFiles(dirPath);
-    const fileInfos = files.map(file => ({
-      name: path.basename(file),
-      directory: directoryName,
-      path: path.join(directoryName, file)
-    }));
-    console.log(`Files found in ${directoryName}:`, fileInfos);
-    res.send(fileInfos);
+    const fileNames = files.map(file => path.basename(file));
+    console.log(`Files found in ${directoryName}:`, fileNames);
+    res.send(fileNames);
   } catch (error) {
     console.error('Error reading files in directory:', error);
     if (error.code === 'ENOENT') {
@@ -225,12 +202,10 @@ app.get('/directories/:directoryName/files', async (req, res) => {
 app.get('/files', async (req, res) => {
   try {
     const files = await getAllFiles(uploadDir);
-    const fileInfos = files.map(file => ({
-      name: path.basename(file),
-      directory: path.dirname(file) === '.' ? 'root' : path.dirname(file),
-      path: file
-    }));
-    res.send(fileInfos);
+    const fileUrls = files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file}`);
+    console.log(`Files retrieved: ${fileUrls.length}`);
+    console.log('Files:', fileUrls);
+    res.send(fileUrls);
   } catch (error) {
     console.error('Error reading upload directory:', error);
     res.status(500).send({ error: 'Unable to retrieve files' });
@@ -292,26 +267,30 @@ app.delete('/delete/:filename(*)', async (req, res) => {
 });
 
 // Route for serving audio files (used by the audio player)
-app.get('/uploads/:filename(*)', async (req, res) => {
-  const filename = decodeURIComponent(req.params.filename);
+app.get('/uploads/:filename', async (req, res) => {
+  const { filename } = req.params;
   console.log('Audio file requested:', filename);
 
   try {
-    const filePath = await findFile(path.basename(filename), uploadDir);
-    if (filePath) {
-      console.log('Full file path:', filePath);
-      res.sendFile(filePath, (err) => {
-        if (err) {
-          console.error('Error sending file:', err);
-          res.status(500).send('Error sending file');
-        } else {
-          console.log('File sent successfully');
-        }
-      });
-    } else {
+    const files = await getAllFiles(uploadDir);
+    const filePath = files.find(file => path.basename(file) === filename);
+
+    if (!filePath) {
       console.error('File not found:', filename);
-      res.status(404).send('File not found');
+      return res.status(404).send('File not found');
     }
+
+    const fullPath = path.join(uploadDir, filePath);
+    console.log('Full file path:', fullPath);
+
+    res.sendFile(fullPath, (err) => {
+      if (err) {
+        console.error('Error sending file:', err);
+        res.status(500).send('Error sending file');
+      } else {
+        console.log('File sent successfully');
+      }
+    });
   } catch (error) {
     console.error('Error accessing file:', error);
     res.status(500).send('Internal server error');
