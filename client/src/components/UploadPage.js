@@ -17,7 +17,6 @@ import {
   CircularProgress,
   Box,
   Paper,
-  Chip,
   LinearProgress,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -36,15 +35,15 @@ const UploadPage = () => {
   const [newDirectory, setNewDirectory] = useState('');
 
   const fetchFiles = useCallback(async (directory) => {
-    console.log('Fetching files for directory:', directory);
+    console.log('Получение файлов для директории:', directory);
     try {
       const response = await axios.get(directory ? `/directories/${directory}/files` : '/files');
-      console.log('Fetched files:', response.data);
+      console.log('Полученные файлы:', response.data);
       setFileList(response.data);
       setFileError('');
     } catch (error) {
-      console.error('Error fetching files:', error);
-      setFileError(`Error fetching files: ${error.response?.data?.error || error.message}`);
+      console.error('Ошибка при получении файлов:', error);
+      setFileError(`Ошибка при получении файлов: ${error.response?.data?.error || error.message}`);
       setFileList([]);
     }
   }, []);
@@ -52,10 +51,10 @@ const UploadPage = () => {
   const fetchDirectories = useCallback(async () => {
     try {
       const response = await axios.get('/directories');
-      console.log('Fetched directories:', response.data);
+      console.log('Полученные директории:', response.data);
       setDirectories(response.data);
     } catch (error) {
-      console.error('Error fetching directories:', error);
+      console.error('Ошибка при получении директорий:', error);
     }
   }, []);
 
@@ -68,7 +67,7 @@ const UploadPage = () => {
   }, [fetchDirectories, fetchFiles]);
 
   useEffect(() => {
-    console.log('Selected directory changed:', selectedDirectory);
+    console.log('Выбранная директория изменена:', selectedDirectory);
     fetchFiles(selectedDirectory);
   }, [selectedDirectory, fetchFiles]);
 
@@ -82,7 +81,7 @@ const UploadPage = () => {
   }, []);
 
   const handleDirectoryChange = useCallback((value) => {
-    console.log('Directory changed to:', value);
+    console.log('Директория изменена на:', value);
     setSelectedDirectory(value);
   }, []);
 
@@ -92,7 +91,7 @@ const UploadPage = () => {
 
   const handleCreateDirectory = useCallback(async () => {
     if (!newDirectory) {
-      setDirError('Please enter a directory name');
+      setDirError('Пожалуйста, введите имя директории');
       return;
     }
 
@@ -102,8 +101,8 @@ const UploadPage = () => {
       setDirError('');
       await fetchDirectories();
     } catch (error) {
-      console.error('Error creating directory:', error);
-      setDirError(`Failed to create directory: ${error.response?.data?.error || error.message}`);
+      console.error('Ошибка при создании директории:', error);
+      setDirError(`Не удалось создать директорию: ${error.response?.data?.error || error.message}`);
     }
   }, [newDirectory, fetchDirectories]);
 
@@ -116,13 +115,13 @@ const UploadPage = () => {
         await fetchFiles('');
       }
     } catch (error) {
-      console.error('Error deleting directory:', error);
+      console.error('Ошибка при удалении директории:', error);
     }
   }, [fetchDirectories, fetchFiles, selectedDirectory]);
 
   const handleUpload = useCallback(async () => {
     if (files.length === 0) {
-      setUploadError('Please select at least one file');
+      setUploadError('Пожалуйста, выберите хотя бы один файл');
       return;
     }
 
@@ -130,8 +129,8 @@ const UploadPage = () => {
     files.forEach((file) => formData.append('audio', file));
     formData.append('directory', selectedDirectory || '');
 
-    console.log('Uploading files:', files.map(f => f.name));
-    console.log('Selected directory:', selectedDirectory);
+    console.log('Загрузка файлов:', files.map(f => f.name));
+    console.log('Выбранная директория:', selectedDirectory);
 
     setLoading(true);
     setUploadProgress(0);
@@ -145,35 +144,40 @@ const UploadPage = () => {
           setUploadProgress(percentCompleted);
         },
       });
-      console.log('Upload response:', response.data);
-      setUploadedFiles(response.data.uploadedFiles);
+      console.log('Ответ загрузки:', response.data);
+      // Изменяем загруженные файлы, чтобы использовать правильный формат URL
+      const modifiedUploadedFiles = response.data.uploadedFiles.map(file => ({
+        ...file,
+        filename: file.audioUrl.split('/').pop() // Извлекаем имя файла из audioUrl
+      }));
+      setUploadedFiles(modifiedUploadedFiles);
       setUploadError('');
-      setFiles([]);  // Clear the file selection after successful upload
+      setFiles([]);  // Очищаем выбор файлов после успешной загрузки
       await fetchFiles(selectedDirectory);
     } catch (error) {
-      console.error('Upload error:', error);
-      setUploadError(`Upload failed: ${error.response?.data?.error || error.message || 'Unknown error'}`);
+      console.error('Ошибка загрузки:', error);
+      setUploadError(`Загрузка не удалась: ${error.response?.data?.error || error.message || 'Неизвестная ошибка'}`);
     } finally {
       setLoading(false);
     }
   }, [files, selectedDirectory, fetchFiles]);
 
-const handleDelete = useCallback(async (filename) => {
-  try {
-    console.log(`Attempting to delete file: ${filename}`);
-    await axios.delete(`/delete/${encodeURIComponent(filename)}`);
-    console.log(`Delete request sent for file: ${filename}`);
-    await fetchFiles(selectedDirectory);
-  } catch (error) {
-    console.error('Delete error:', error);
-    // Добавьте здесь обработку ошибок, например, показ уведомления пользователю
-  }
-}, [fetchFiles, selectedDirectory]);
+  const handleDelete = useCallback(async (filename) => {
+    try {
+      console.log(`Попытка удаления файла: ${filename}`);
+      await axios.delete(`/delete/${encodeURIComponent(filename)}`);
+      console.log(`Запрос на удаление отправлен для файла: ${filename}`);
+      await fetchFiles(selectedDirectory);
+    } catch (error) {
+      console.error('Ошибка удаления:', error);
+      // Добавьте здесь обработку ошибок, например, показ уведомления пользователю
+    }
+  }, [fetchFiles, selectedDirectory]);
 
   return (
     <Container maxWidth="md">
       <Typography variant="h4" gutterBottom>
-        Upload Audio
+        Загрузка аудио
       </Typography>
       <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
         <Box component="form" noValidate autoComplete="off">
@@ -185,15 +189,15 @@ const handleDelete = useCallback(async (filename) => {
             multiple
           />
           <FormControl fullWidth sx={{ marginTop: 2 }}>
-            <InputLabel id="directory-select-label">Select Directory</InputLabel>
+            <InputLabel id="directory-select-label">Выберите директорию</InputLabel>
             <Select
               labelId="directory-select-label"
               value={selectedDirectory}
               onChange={(e) => handleDirectoryChange(e.target.value)}
-              label="Select Directory"
+              label="Выберите директорию"
             >
               <MenuItem value="">
-                <em>Root directory</em>
+                <em>Корневая директория</em>
               </MenuItem>
               {directories.map((dir, index) => (
                 <MenuItem key={index} value={dir}>{dir}</MenuItem>
@@ -207,7 +211,7 @@ const handleDelete = useCallback(async (filename) => {
             disabled={loading}
             sx={{ marginTop: 2 }}
           >
-            {loading ? <CircularProgress size={24} /> : 'Upload'}
+            {loading ? <CircularProgress size={24} /> : 'Загрузить'}
           </Button>
         </Box>
       </Paper>
@@ -219,8 +223,8 @@ const handleDelete = useCallback(async (filename) => {
             fullWidth
             value={newDirectory}
             onChange={handleNewDirectoryChange}
-            placeholder="New directory name"
-            label="New Directory Name"
+            placeholder="Имя новой директории"
+            label="Имя новой директории"
             sx={{ marginBottom: 2 }}
           />
           <Button
@@ -228,20 +232,20 @@ const handleDelete = useCallback(async (filename) => {
             color="primary"
             onClick={handleCreateDirectory}
           >
-            Create Directory
+            Создать директорию
           </Button>
         </Box>
       </Paper>
       {dirError && <Typography color="error">{dirError}</Typography>}
 
-      {/* Display selected files */}
+      {/* Отображение выбранных файлов */}
       {files.length > 0 && (
         <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-          <Typography variant="h6">Selected Files ({files.length}):</Typography>
+          <Typography variant="h6">Выбранные файлы ({files.length}):</Typography>
           <List>
             {files.map((file, index) => (
               <ListItem key={index}>
-                <ListItemText primary={file.name} secondary={`${(file.size / 1024 / 1024).toFixed(2)} MB`} />
+                <ListItemText primary={file.name} secondary={`${(file.size / 1024 / 1024).toFixed(2)} МБ`} />
                 <IconButton onClick={() => handleRemoveFile(index)} edge="end">
                   <DeleteIcon />
                 </IconButton>
@@ -251,18 +255,18 @@ const handleDelete = useCallback(async (filename) => {
         </Box>
       )}
 
-      {/* Display upload progress */}
+      {/* Отображение прогресса загрузки */}
       {loading && (
         <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-          <Typography variant="body1">Upload Progress: {uploadProgress}%</Typography>
+          <Typography variant="body1">Прогресс загрузки: {uploadProgress}%</Typography>
           <LinearProgress variant="determinate" value={uploadProgress} />
         </Box>
       )}
 
-      {/* Display uploaded files */}
+      {/* Отображение загруженных файлов */}
       {uploadedFiles.length > 0 && (
         <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-          <Typography variant="h6">Uploaded Files:</Typography>
+          <Typography variant="h6">Загруженные файлы:</Typography>
           <List>
             {uploadedFiles.map((file, index) => (
               <ListItem key={index}>
@@ -277,11 +281,11 @@ const handleDelete = useCallback(async (filename) => {
       )}
 
       <Typography variant="h5" gutterBottom>
-        Directories
+        Директории
       </Typography>
       <List>
         <ListItem button onClick={() => handleDirectoryChange('')}>
-          <ListItemText primary="Root directory" />
+          <ListItemText primary="Корневая директория" />
         </ListItem>
         {directories.map((dir, index) => (
           <ListItem button key={index} onClick={() => handleDirectoryChange(dir)}>
@@ -293,7 +297,7 @@ const handleDelete = useCallback(async (filename) => {
         ))}
       </List>
       <Typography variant="h5" gutterBottom>
-        Uploaded Files (Current directory: {selectedDirectory || 'Root'})
+        Загруженные файлы (Текущая директория: {selectedDirectory || 'Корневая'})
       </Typography>
       {fileError && <Typography color="error">{fileError}</Typography>}
       <List>
@@ -309,7 +313,7 @@ const handleDelete = useCallback(async (filename) => {
             </ListItem>
           ))
         ) : (
-          <Typography>No files in this directory</Typography>
+          <Typography>В этой директории нет файлов</Typography>
         )}
       </List>
     </Container>
