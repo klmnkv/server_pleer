@@ -267,15 +267,33 @@ app.delete('/delete/:filename(*)', async (req, res) => {
 });
 
 // Route for serving audio files (used by the audio player)
-app.get('/uploads/:path(*)', (req, res) => {
-  const relativePath = req.params.path;
-  const fullPath = path.join(uploadDir, relativePath);
+app.get('/uploads/:filename', async (req, res) => {
+  const { filename } = req.params;
+  console.log('Audio file requested:', filename);
 
-  // Проверяем, существует ли файл
-  if (fs.existsSync(fullPath)) {
-    res.sendFile(fullPath);
-  } else {
-    res.status(404).send('Файл не найден');
+  try {
+    const files = await getAllFiles(uploadDir);
+    const filePath = files.find(file => path.basename(file) === filename);
+
+    if (!filePath) {
+      console.error('File not found:', filename);
+      return res.status(404).send('File not found');
+    }
+
+    const fullPath = path.join(uploadDir, filePath);
+    console.log('Full file path:', fullPath);
+
+    res.sendFile(fullPath, (err) => {
+      if (err) {
+        console.error('Error sending file:', err);
+        res.status(500).send('Error sending file');
+      } else {
+        console.log('File sent successfully');
+      }
+    });
+  } catch (error) {
+    console.error('Error accessing file:', error);
+    res.status(500).send('Internal server error');
   }
 });
 
@@ -295,16 +313,8 @@ app.get('/api/random-orel-fact', async (req, res) => {
 app.use('/uploads', express.static(uploadDir));
 app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: '1d' }));
 
-app.get('/play/:path(*)', (req, res) => {
-  const relativePath = req.params.path;
-  const fullPath = path.join(uploadDir, relativePath);
-
-  // Проверяем, существует ли файл
-  if (fs.existsSync(fullPath)) {
-    res.sendFile(fullPath);
-  } else {
-    res.status(404).send('Файл не найден');
-  }
+app.get('/play/:filename', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 app.get('*', (req, res) => {
