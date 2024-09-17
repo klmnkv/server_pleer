@@ -21,6 +21,7 @@ import {
   LinearProgress,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import FolderIcon from '@mui/icons-material/Folder';
 
 const UploadPage = () => {
   const [files, setFiles] = useState([]);
@@ -40,7 +41,11 @@ const UploadPage = () => {
     try {
       const response = await axios.get(directory ? `/directories/${directory}/files` : '/files');
       console.log('Fetched files:', response.data);
-      setFileList(response.data);
+      const filesWithDir = response.data.map(file => ({
+        name: file,
+        directory: directory || 'Root'
+      }));
+      setFileList(filesWithDir);
       setFileError('');
     } catch (error) {
       console.error('Error fetching files:', error);
@@ -158,17 +163,17 @@ const UploadPage = () => {
     }
   }, [files, selectedDirectory, fetchFiles]);
 
-const handleDelete = useCallback(async (filename) => {
-  try {
-    console.log(`Attempting to delete file: ${filename}`);
-    await axios.delete(`/delete/${encodeURIComponent(filename)}`);
-    console.log(`Delete request sent for file: ${filename}`);
-    await fetchFiles(selectedDirectory);
-  } catch (error) {
-    console.error('Delete error:', error);
-    // Добавьте здесь обработку ошибок, например, показ уведомления пользователю
-  }
-}, [fetchFiles, selectedDirectory]);
+  const handleDelete = useCallback(async (filename) => {
+    try {
+      console.log(`Attempting to delete file: ${filename}`);
+      await axios.delete(`/delete/${encodeURIComponent(filename)}`);
+      console.log(`Delete request sent for file: ${filename}`);
+      await fetchFiles(selectedDirectory);
+    } catch (error) {
+      console.error('Delete error:', error);
+      // Добавьте здесь обработку ошибок, например, показ уведомления пользователю
+    }
+  }, [fetchFiles, selectedDirectory]);
 
   return (
     <Container maxWidth="md">
@@ -301,9 +306,22 @@ const handleDelete = useCallback(async (filename) => {
           fileList.map((file, index) => (
             <ListItem key={index}>
               <ListItemText
-                primary={<Link to={`/play/${encodeURIComponent(file)}`}>{file}</Link>}
+                primary={
+                  <Link to={`/play/${encodeURIComponent(file.directory === 'Root' ? file.name : `${file.directory}/${file.name}`)}`}>
+                    {file.name}
+                  </Link>
+                }
+                secondary={
+                  <Chip
+                    icon={<FolderIcon />}
+                    label={file.directory}
+                    size="small"
+                    variant="outlined"
+                    sx={{ marginTop: 1 }}
+                  />
+                }
               />
-              <IconButton onClick={() => handleDelete(file)} edge="end">
+              <IconButton onClick={() => handleDelete(file.directory === 'Root' ? file.name : `${file.directory}/${file.name}`)} edge="end">
                 <DeleteIcon />
               </IconButton>
             </ListItem>
