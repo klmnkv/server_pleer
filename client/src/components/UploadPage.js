@@ -159,17 +159,17 @@ const UploadPage = () => {
     }
   }, [files, selectedDirectory, fetchFiles]);
 
-  const handleDelete = useCallback(async (filePath) => {
-    try {
-      console.log(`Attempting to delete file: ${filePath}`);
-      await axios.delete(`/delete/${encodeURIComponent(filePath)}`);
-      console.log(`Delete request sent for file: ${filePath}`);
-      await fetchFiles(selectedDirectory);
-    } catch (error) {
-      console.error('Delete error:', error);
-      // Добавьте здесь обработку ошибок, например, показ уведомления пользователю
-    }
-  }, [fetchFiles, selectedDirectory]);
+const handleDelete = useCallback(async (filePath) => {
+  try {
+    console.log(`Attempting to delete file: ${filePath}`);
+    await axios.delete(`/delete/${encodeURIComponent(filePath)}`);
+    console.log(`Delete request sent for file: ${filePath}`);
+    await fetchFiles(selectedDirectory);
+  } catch (error) {
+    console.error('Delete error:', error);
+    // Добавьте здесь обработку ошибок, например, показ уведомления пользователю
+  }
+}, [fetchFiles, selectedDirectory]);
 
 const renderFileList = () => (
   <List>
@@ -185,7 +185,7 @@ const renderFileList = () => (
             secondary={
               <React.Fragment>
                 <FolderIcon fontSize="small" style={{ verticalAlign: 'middle', marginRight: '5px' }} />
-                {file.directory === 'root' ? 'Root' : file.directory}
+                {file.directory}
               </React.Fragment>
             }
           />

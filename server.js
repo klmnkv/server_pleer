@@ -112,14 +112,19 @@ app.use((err, req, res, next) => {
 });
 
 async function findFile(filename, dir) {
-  const files = await fs.readdir(dir, { withFileTypes: true });
-  for (const file of files) {
-    if (file.isDirectory()) {
-      const found = await findFile(filename, path.join(dir, file.name));
-      if (found) return found;
-    } else if (file.name === filename) {
-      return path.join(dir, file.name);
+  try {
+    const files = await fs.readdir(dir, { withFileTypes: true });
+    for (const file of files) {
+      const filePath = path.join(dir, file.name);
+      if (file.isDirectory()) {
+        const found = await findFile(filename, filePath);
+        if (found) return found;
+      } else if (file.name === filename) {
+        return filePath;
+      }
     }
+  } catch (error) {
+    console.error(`Error reading directory ${dir}:`, error);
   }
   return null;
 }
@@ -293,7 +298,7 @@ app.get('/uploads/:filename(*)', async (req, res) => {
   console.log('Audio file requested:', filename);
 
   try {
-    const filePath = await findFile(filename, uploadDir);
+    const filePath = await findFile(path.basename(filename), uploadDir);
     if (filePath) {
       console.log('Full file path:', filePath);
       res.sendFile(filePath, (err) => {
