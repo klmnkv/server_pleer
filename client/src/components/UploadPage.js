@@ -172,29 +172,34 @@ const UploadPage = () => {
   }, [fetchFiles, selectedDirectory]);
 
   const renderFileList = () => (
-    <List>
-      {fileList.length > 0 ? (
-        fileList.map((file, index) => (
-          <ListItem key={index}>
-            <ListItemText
-              primary={<Link to={`/play/${encodeURIComponent(file.path)}`}>{file.name}</Link>}
-              secondary={
-                <React.Fragment>
-                  <FolderIcon fontSize="small" style={{ verticalAlign: 'middle', marginRight: '5px' }} />
-                  {file.directory}
-                </React.Fragment>
-              }
-            />
-            <IconButton onClick={() => handleDelete(file.path)} edge="end">
-              <DeleteIcon />
-            </IconButton>
-          </ListItem>
-        ))
-      ) : (
-        <Typography>No files in this directory</Typography>
-      )}
-    </List>
-  );
+  <List>
+    {fileList.length > 0 ? (
+      fileList.map((file, index) => (
+        <ListItem key={index}>
+          <ListItemText
+            primary={
+              <Link to={`/play/${encodeURIComponent(file.name)}`}>
+                {file.name}
+              </Link>
+            }
+            secondary={
+              <React.Fragment>
+                <FolderIcon fontSize="small" style={{ verticalAlign: 'middle', marginRight: '5px' }} />
+                {file.directory === 'root' ? 'Root' : file.directory}
+              </React.Fragment>
+            }
+          />
+          <IconButton onClick={() => handleDelete(file.path)} edge="end">
+            <DeleteIcon />
+          </IconButton>
+        </ListItem>
+      ))
+    ) : (
+      <Typography>No files in this directory</Typography>
+    )}
+  </List>
+);
+
 
   return (
     <Container maxWidth="md">

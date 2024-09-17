@@ -273,22 +273,15 @@ app.delete('/delete/:filename(*)', async (req, res) => {
 });
 
 // Route for serving audio files (used by the audio player)
-app.get('/uploads/:filename', async (req, res) => {
-  const { filename } = req.params;
-  console.log('Audio file requested:', filename);
+app.get('/uploads/*', async (req, res) => {
+  const filePath = decodeURIComponent(req.params[0]);
+  console.log('Audio file requested:', filePath);
 
-  try {
-    const files = await getAllFiles(uploadDir);
-    const filePath = files.find(file => path.basename(file) === filename);
+  const fullPath = path.join(uploadDir, filePath);
+  console.log('Full file path:', fullPath);
 
-    if (!filePath) {
-      console.error('File not found:', filename);
-      return res.status(404).send('File not found');
-    }
-
-    const fullPath = path.join(uploadDir, filePath);
-    console.log('Full file path:', fullPath);
-
+  // Проверяем, существует ли файл
+  if (fs.existsSync(fullPath)) {
     res.sendFile(fullPath, (err) => {
       if (err) {
         console.error('Error sending file:', err);
@@ -297,9 +290,9 @@ app.get('/uploads/:filename', async (req, res) => {
         console.log('File sent successfully');
       }
     });
-  } catch (error) {
-    console.error('Error accessing file:', error);
-    res.status(500).send('Internal server error');
+  } else {
+    console.error('File not found:', fullPath);
+    res.status(404).send('File not found');
   }
 });
 
