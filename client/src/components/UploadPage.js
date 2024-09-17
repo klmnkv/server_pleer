@@ -17,12 +17,14 @@ import {
   CircularProgress,
   Box,
   Paper,
-  Chip,
+  Collapse,
   LinearProgress,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FolderIcon from '@mui/icons-material/Folder';
 import AudioFileIcon from '@mui/icons-material/AudioFile';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 
 const UploadPage = () => {
   const [files, setFiles] = useState([]);
@@ -36,6 +38,7 @@ const UploadPage = () => {
   const [selectedDirectory, setSelectedDirectory] = useState('');
   const [newDirectory, setNewDirectory] = useState('');
   const [fileStructure, setFileStructure] = useState({ directories: {}, files: [] });
+  const [openFolders, setOpenFolders] = useState({});
 
   const fetchFiles = useCallback(async () => {
     console.log('Fetching files');
@@ -188,19 +191,37 @@ const UploadPage = () => {
     return structure;
   };
 
+  const toggleFolder = (folderPath) => {
+    setOpenFolders(prev => ({
+      ...prev,
+      [folderPath]: !prev[folderPath]
+    }));
+  };
+
   const renderFileStructure = (structure, path = '') => {
     return (
       <List>
-        {Object.entries(structure.directories).map(([dirName, content]) => (
-          <ListItem key={dirName}>
-            <FolderIcon />
-            <ListItemText primary={dirName} />
-            {renderFileStructure(content, `${path}${dirName}/`)}
-          </ListItem>
-        ))}
+        {Object.entries(structure.directories).map(([dirName, content]) => {
+          const fullPath = `${path}${dirName}`;
+          const isOpen = openFolders[fullPath];
+          return (
+            <React.Fragment key={dirName}>
+              <ListItem button onClick={() => toggleFolder(fullPath)}>
+                <FolderIcon />
+                <ListItemText primary={dirName} />
+                {isOpen ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={isOpen} timeout="auto" unmountOnExit>
+                <Box sx={{ pl: 4 }}>
+                  {renderFileStructure(content, `${fullPath}/`)}
+                </Box>
+              </Collapse>
+            </React.Fragment>
+          );
+        })}
         {structure.files.map((file) => {
           const fullPath = `${path}${file}`;
-          const encodedPath = encodeURIComponent(fullPath.replace(/^uploads\//, '')); // Remove 'uploads/' prefix
+          const encodedPath = encodeURIComponent(fullPath);
           return (
             <ListItem key={file}>
               <AudioFileIcon />
