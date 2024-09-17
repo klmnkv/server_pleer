@@ -171,14 +171,14 @@ const UploadPage = () => {
     }
   }, [fetchFiles, selectedDirectory]);
 
-  const renderFileList = () => (
+const renderFileList = () => (
   <List>
     {fileList.length > 0 ? (
       fileList.map((file, index) => (
         <ListItem key={index}>
           <ListItemText
             primary={
-              <Link to={`/play/${encodeURIComponent(file.name)}`}>
+              <Link to={`/play/${encodeURIComponent(file.path)}`}>
                 {file.name}
               </Link>
             }

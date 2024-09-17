@@ -7,6 +7,7 @@ const cors = require('cors');
 const util = require('util');
 const multer = require('multer');
 
+
 const app = express();
 const port = process.env.PORT || 3000;
 const nodeEnv = process.env.NODE_ENV || 'development';
@@ -109,6 +110,20 @@ app.use((err, req, res, next) => {
   }
   next(err);
 });
+
+async function findFile(filename, dir) {
+  const files = await fs.readdir(dir, { withFileTypes: true });
+  for (const file of files) {
+    if (file.isDirectory()) {
+      const found = await findFile(filename, path.join(dir, file.name));
+      if (found) return found;
+    } else if (file.name === filename) {
+      return path.join(dir, file.name);
+    }
+  }
+  return null;
+}
+
 
 // Function to get a random audio file from a directory
 async function getRandomAudioFile(directory) {
@@ -273,26 +288,29 @@ app.delete('/delete/:filename(*)', async (req, res) => {
 });
 
 // Route for serving audio files (used by the audio player)
-app.get('/uploads/*', async (req, res) => {
-  const filePath = decodeURIComponent(req.params[0]);
-  console.log('Audio file requested:', filePath);
+app.get('/uploads/:filename(*)', async (req, res) => {
+  const filename = decodeURIComponent(req.params.filename);
+  console.log('Audio file requested:', filename);
 
-  const fullPath = path.join(uploadDir, filePath);
-  console.log('Full file path:', fullPath);
-
-  // Проверяем, существует ли файл
-  if (fs.existsSync(fullPath)) {
-    res.sendFile(fullPath, (err) => {
-      if (err) {
-        console.error('Error sending file:', err);
-        res.status(500).send('Error sending file');
-      } else {
-        console.log('File sent successfully');
-      }
-    });
-  } else {
-    console.error('File not found:', fullPath);
-    res.status(404).send('File not found');
+  try {
+    const filePath = await findFile(filename, uploadDir);
+    if (filePath) {
+      console.log('Full file path:', filePath);
+      res.sendFile(filePath, (err) => {
+        if (err) {
+          console.error('Error sending file:', err);
+          res.status(500).send('Error sending file');
+        } else {
+          console.log('File sent successfully');
+        }
+      });
+    } else {
+      console.error('File not found:', filename);
+      res.status(404).send('File not found');
+    }
+  } catch (error) {
+    console.error('Error accessing file:', error);
+    res.status(500).send('Internal server error');
   }
 });
 
