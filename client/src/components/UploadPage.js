@@ -145,11 +145,18 @@ const UploadPage = () => {
         },
       });
       console.log('Ответ загрузки:', response.data);
-      // Изменяем загруженные файлы, чтобы использовать правильный формат URL
-      const modifiedUploadedFiles = response.data.uploadedFiles.map(file => ({
-        ...file,
-        filename: file.audioUrl.split('/').pop() // Извлекаем имя файла из audioUrl
-      }));
+      // Изменяем загруженные файлы, чтобы использовать только имя файла и путь
+      const modifiedUploadedFiles = response.data.uploadedFiles.map(file => {
+        const urlParts = file.audioUrl.split('/');
+        const filename = urlParts[urlParts.length - 1];
+        const directory = urlParts[urlParts.length - 2] || '';
+        return {
+          ...file,
+          filename: filename,
+          directory: directory,
+          relativePath: `${directory}/${filename}`
+        };
+      });
       setUploadedFiles(modifiedUploadedFiles);
       setUploadError('');
       setFiles([]);  // Очищаем выбор файлов после успешной загрузки
@@ -271,7 +278,7 @@ const UploadPage = () => {
             {uploadedFiles.map((file, index) => (
               <ListItem key={index}>
                 <ListItemText
-                  primary={<Link to={`/play/${encodeURIComponent(file.filename)}`}>{file.filename}</Link>}
+                  primary={<Link to={`/play/${encodeURIComponent(file.relativePath)}`}>{file.filename}</Link>}
                   secondary={file.audioUrl}
                 />
               </ListItem>
