@@ -145,16 +145,14 @@ const UploadPage = () => {
         },
       });
       console.log('Ответ загрузки:', response.data);
-      // Изменяем загруженные файлы, чтобы использовать только имя файла и путь
+      // Изменяем обработку загруженных файлов
       const modifiedUploadedFiles = response.data.uploadedFiles.map(file => {
-        const urlParts = file.audioUrl.split('/');
-        const filename = urlParts[urlParts.length - 1];
-        const directory = urlParts[urlParts.length - 2] || '';
+        const urlParts = file.audioUrl.split('/uploads/');
+        const relativePath = urlParts[1] || '';
         return {
           ...file,
-          filename: filename,
-          directory: directory,
-          relativePath: `${directory}/${filename}`
+          relativePath: relativePath,
+          filename: relativePath.split('/').pop()
         };
       });
       setUploadedFiles(modifiedUploadedFiles);
