@@ -198,21 +198,25 @@ const UploadPage = () => {
             {renderFileStructure(content, `${path}${dirName}/`)}
           </ListItem>
         ))}
-        {structure.files.map((file) => (
-          <ListItem key={file}>
-            <AudioFileIcon />
-            <ListItemText
-              primary={
-                <Link to={`/play/${encodeURIComponent(`${path}${file}`)}`}>
-                  {file}
-                </Link>
-              }
-            />
-            <IconButton onClick={() => handleDelete(`${path}${file}`)} edge="end">
-              <DeleteIcon />
-            </IconButton>
-          </ListItem>
-        ))}
+        {structure.files.map((file) => {
+          const fullPath = `${path}${file}`;
+          const encodedPath = encodeURIComponent(fullPath.replace(/^uploads\//, '')); // Remove 'uploads/' prefix
+          return (
+            <ListItem key={file}>
+              <AudioFileIcon />
+              <ListItemText
+                primary={
+                  <Link to={`/play/${encodedPath}`}>
+                    {file}
+                  </Link>
+                }
+              />
+              <IconButton onClick={() => handleDelete(fullPath)} edge="end">
+                <DeleteIcon />
+              </IconButton>
+            </ListItem>
+          );
+        })}
       </List>
     );
   };
